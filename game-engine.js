@@ -56,15 +56,16 @@ function apply(s,type,arg={},random=Math.random){
  else throw Error('알 수 없는 행동');
  s.actions--;
 }
-function hit(s,h){if(h.guard){h.guard=false;log(s,'방어 태세로 공격 무효화');return;}const shield=h.items.indexOf(3);if(shield!==-1){h.items.splice(shield,1);log(s,`${classes[h.classId].name}: 수호 방패 자동 사용`);return;}h.hp=Math.max(0,h.hp-2);log(s,`${classes[h.classId].name} 피해 2 · 체력 ${h.hp}`);}
+function hit(s,h){if(h.guard){h.guard=false;log(s,'방어 태세로 공격 무효화');return 0;}const shield=h.items.indexOf(3);if(shield!==-1){h.items.splice(shield,1);log(s,`${classes[h.classId].name}: 수호 방패 자동 사용`);return 0;}const lost=Math.min(h.hp,2);h.hp=Math.max(0,h.hp-2);log(s,`${classes[h.classId].name} 피해 ${lost} · 체력 ${h.hp}`);return lost;}
 function end(s){
  if(s.outcome)throw Error('게임이 끝났습니다.');if(s.pending.length)throw Error('먼저 전리품을 배분하세요.');
+ s.lastEnemyDamage=0;
  s.turn++;
  if(s.turn===s.heroes.length){
   log(s,`라운드 ${s.round} 적 단계`);
   for(const e of s.enemies.filter(e=>e.hp>0)){
    const targets=s.heroes.filter(h=>h.hp>0&&h.pos===e.pos);
-   if(e.boss)targets.forEach(h=>hit(s,h));else if(targets.length)hit(s,targets.reduce((a,b)=>a.hp>=b.hp?a:b));
+   if(e.boss)targets.forEach(h=>{s.lastEnemyDamage+=hit(s,h);});else if(targets.length)s.lastEnemyDamage+=hit(s,targets.reduce((a,b)=>a.hp>=b.hp?a:b));
   }
   if(s.heroes.every(h=>h.hp===0)){s.outcome='lose';log(s,'전원이 쓰러졌습니다. 패배.');return;}
   if(s.round===10){s.outcome='lose';log(s,'10라운드 종료. 용을 처치하지 못했습니다.');return;}
