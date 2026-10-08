@@ -1,173 +1,71 @@
 'use strict';
-const E=window.Elderfall;
-const $=selector=>document.querySelector(selector);
-const SAVE='elderfall-game-v1';
-let state=null, storageAvailable=true,resultDismissed=false;
-let scenePreference='auto';
-let pinnedQuest='A2';
-try{pinnedQuest=localStorage.getItem('elderfall-waypoint')||'A2';}catch{}
-const quests=[{pos:'A2',title:'숲에 드리운 그림자',text:'가시늑대가 마을로 향하는 길을 막고 있습니다. 숲으로 가서 늑대를 처치하세요.',place:'숲',enemy:'가시늑대'},{pos:'E3',title:'멈춰 버린 광산',text:'광산 트롤에게 점령당한 폐광을 되찾고 봉인 조각을 회수하세요.',place:'폐광',enemy:'광산 트롤'},{pos:'B1',title:'망령의 마지막 맹세',text:'옛 성채를 지키는 망령 기사를 쓰러뜨리고 마지막 봉인을 찾으세요.',place:'성채',enemy:'망령 기사'}];
-const portraits=['knight','mage','ranger','priest'];
-const itemSymbols=['✚','ϟ','➶','◇','✦','⌂'];
-const classPicker=$('#class-picker');
-E.classes.forEach((c,i)=>{const label=document.createElement('label');label.className='class-choice';label.innerHTML=`<span class="portrait portrait-${portraits[i]}" aria-hidden="true"></span><input type="checkbox" value="${i}" ${i===0?'checked':''}><strong>${c.name}</strong><span>체력 ${c.hp} · ${c.skill}</span>`;classPicker.append(label);});
+const E=window.Elderfall,$=s=>document.querySelector(s),SAVE='elderfall-campaign-v2';
+const portraits=['knight','mage','ranger','priest'],slotNames={weapon:'무기',armor:'갑옷',trinket:'장신구'},colorNames=['공격','마법','방어'],stanceNames={assault:'강습 · 공격 +1',focus:'집중 · 마법 +2 / 에너지 1',guard:'방어 · 방어 +2',recover:'회복 · 파티 치유 / 에너지 1'};
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let state=null,storageAvailable=true,folio=null,inspected=null,pinned=null,resultDismissed=false;
+E.classes.forEach((c,i)=>{const label=document.createElement('label');label.className='class-choice';label.innerHTML=`<span class="portrait portrait-${portraits[i]}" aria-hidden="true"></span><input type="checkbox" value="${i}" ${i===0?'checked':''}><strong>${c.name}</strong><small>${c.role}</small>`;$('#class-picker').append(label);});
+function message(text){$('#feedback').textContent=text;clearTimeout(message.timer);message.timer=setTimeout(()=>$('#feedback').textContent='',4200);}
 function persist(){try{localStorage.setItem(SAVE,JSON.stringify(state));}catch{storageAvailable=false;}}
-function message(text){$('#feedback').textContent=text;clearTimeout(message.timer);if(text)message.timer=setTimeout(()=>{$('#feedback').textContent='';},5000);}
-function option(select,value,text){const o=document.createElement('option');o.value=value;o.textContent=text;select.append(o);}
-function execute(type,arg={}){
- try{
-  const actingClass=E.hero(state).classId;
-  const beforeEnemy=state.enemies.find(e=>e.pos===arg.pos&&e.hp>0);const beforeHP=beforeEnemy?.hp;
-  const itemId=type==='item'?E.hero(state).items[arg.index]:null;
-  E.apply(state,type,arg);message('');clearTimeout(combatFeedback.timer);$('#battle-result').replaceChildren();if(type==='move'||type==='end'||type==='award')scenePreference='auto';else if(type==='attack'||type==='skill'&&(actingClass===1||actingClass===2))scenePreference='battle';persist();render();
-  if(type==='item'||type==='trade')$('#bag-modal').close();
-  const isAttack=type==='attack'||type==='skill'&&(actingClass===1||actingClass===2)||type==='item'&&[1,4].includes(itemId);
-  if(isAttack&&beforeEnemy){
-   const dealt=beforeHP-beforeEnemy.hp;
-   const usesDie=type==='attack'||type==='skill'&&actingClass===2||type==='item'&&itemId===4;
-   const roll=state.log.find(text=>text.includes('주사위 '))?.match(/주사위 (\d)/)?.[1];
-   combatFeedback(dealt>0?`${beforeEnemy.name} −${dealt} HP`:'공격이 빗나갔습니다',`${usesDie?'주사위 '+roll+' · ':'확정 피해 · '}${beforeEnemy.hp===0?'적 처치!':dealt>0?'명중':'다음 공격을 준비하세요'}`,dealt>0,usesDie);
-  }else if(type==='end'){
-   const lost=state.lastEnemyDamage||0;
-   if(lost>0)combatFeedback('적의 반격!',`파티가 받은 피해 ${lost}`,false,false,true);
-  }
- }catch(error){message(error.message);}
-}
-function combatFeedback(title,subtitle,hit,rollDice=true,heroHit=false){
- const result=$('#battle-result');result.replaceChildren();const strong=document.createElement('strong'),span=document.createElement('span');strong.textContent=title;span.textContent=subtitle;result.append(strong,span);
- result.style.animation='none';void result.offsetWidth;result.style.animation='';
- for(const [selector,animation] of [...(rollDice?[['#die-face','die-rolling']]:[]),['#board','battle-flash'],...(heroHit?[['.hero-card','enemy-hit']]:[]),...(hit?[['#enemy-portrait','enemy-hit']]:[])]){
-  const el=$(selector);el.classList.remove(animation);void el.offsetWidth;el.classList.add(animation);
- }
- clearTimeout(combatFeedback.timer);combatFeedback.timer=setTimeout(()=>result.replaceChildren(),1300);
-}
-const names={A2:'숲',E3:'폐광',B1:'성채',D1:'둥지',C5:'마을'};
+function button(text,type,arg={},disabled=false,extra=''){return `<button data-action="${type}" data-arg="${esc(JSON.stringify(arg))}" ${disabled?'disabled':''} ${extra}>${text}</button>`;}
+function act(type,arg={}){try{E.apply(state,type,arg);inspected=null;persist();render();if(['claim','talent','equip','buy','explore'].includes(type))message(state.log[0]);if(type==='resolve'&&state.lastResult)message(state.lastResult.title+' · '+state.lastResult.text);}catch(e){message(e.message);}}
+function locationName(pos){return E.locations[pos]?.name||'황야 '+pos;}
+function currentGoal(){const h=E.hero(state);return h.quests.find(q=>q.id===pinned)||h.quests.find(q=>q.ready)||h.quests[0];}
+function hint(){const h=E.hero(state),q=currentGoal(),def=q&&E.quests.find(x=>x.id===q.id);if(state.outcome)return state.outcome==='win'?'잿빛 왕국에 평화가 찾아왔습니다. 영웅의 성장 기록을 살펴보세요.':'모험 종료 · 새 캠페인에서 다른 경로와 빌드를 시도해 보세요.';if(state.battle)return state.battle.phase==='plan'?'적의 다음 행동을 확인하고 참여 영웅의 태세를 고르세요. 집중·회복에는 에너지 1이 필요합니다.':'실패한 주사위를 터치하면 에너지 1로 재굴림합니다. 준비되면 「전투 결과 해결」을 누르세요.';if(!state.actions)return '행동을 모두 사용했습니다. 「차례 마치기」로 다음 영웅에게 넘기세요.';if(h.points)return `레벨 ${E.level(h)} 달성! 「영웅」에서 특성을 선택하면 전투 주사위와 능력이 강화됩니다.`;if(q?.ready)return `${def.name} 목표 달성 · 가까운 거점으로 돌아가 「퀘스트」에서 장비 보상을 골라 보고하세요.`;if(q)return `${def.name} → ${locationName(def.pos)} ${def.pos} · ${def.type==='hunt'?'전투 승리':def.type==='escort'?'상단 호위':'지역 조사'} 후 거점에 보고.`;if(state.seals>=2&&E.level(h)>=3)return '레이드 준비 완료 · D1 잿빛 용의 둥지로 이동하세요. 세 번째 봉인을 모으면 용 체력이 6 감소합니다.';return '거점에서 새 퀘스트를 수락하세요. 봉인 2개와 레벨 3이 되면 잿빛 용에 도전할 수 있습니다.';}
 function render(){
- if(!state){$('#setup').hidden=false;$('#game').hidden=true;document.body.classList.remove('playing','combat-mode');returnSideBoard();document.querySelectorAll('.game-menu').forEach(b=>b.hidden=true);return;}
- $('#setup').hidden=true;$('#game').hidden=false;document.body.classList.add('playing');document.querySelectorAll('.game-menu').forEach(b=>b.hidden=false);
- const h=E.hero(state),c=E.classes[h.classId],can=state.actions>0&&!state.outcome&&!state.pending.length&&h.hp>0;
- $('#turn-title').textContent=`${c.name}의 차례`;
- $('#game-status').textContent=`라운드 ${state.round}/10 · 봉인 ${state.seals}/3 · 남은 행동 ${state.actions}`;
- $('#save-notice').textContent=storageAvailable?'✓ 저장됨':'저장 불가';$('#save-notice').title=storageAvailable?'이 브라우저에 진행을 저장합니다.':'페이지를 닫으면 진행이 사라집니다.';
- $('#round-track').innerHTML=Array.from({length:10},(_,i)=>`<span class="${i+1===state.round?'now':i+1<state.round?'past':''}">${i+1}</span>`).join('');
- $('#seal-track').innerHTML=Array.from({length:3},(_,i)=>`<span class="${i<state.seals?'collected':''}">◆</span>`).join('');
- $('#action-budget').innerHTML=`<span>행동</span>`+Array.from({length:state.heroes.length===1?4:3},(_,i)=>`<i class="${i<state.actions?'available':''}"></i>`).join('');
- $('#active-portrait').className=`portrait portrait-${portraits[h.classId]}`;$('#hero-name').textContent=c.name;
- $('#hero-stats').innerHTML=`<span>공격 <b>${c.atk+(h.xp>=1?1:0)}</b></span><span>피해 <b>${c.dmg+(h.xp>=3?1:0)}</b></span><span>레벨 <b>${h.xp>=3?3:h.xp>=1?2:1}</b></span>`;
- const diceMessage=state.log.find(text=>text.includes('주사위 '));const face=diceMessage?Number(diceMessage.match(/주사위 (\d)/)?.[1]||0):0;
- const pipPositions={0:[],1:[5],2:[1,9],3:[1,5,9],4:[1,3,7,9],5:[1,3,5,7,9],6:[1,3,4,6,7,9]};
- $('#die-face').innerHTML=pipPositions[face].map(pos=>`<i style="grid-area:${Math.ceil(pos/3)}/${(pos-1)%3+1}"></i>`).join('');$('#die-face').setAttribute('aria-label',face?'주사위 '+face:'아직 주사위를 굴리지 않았습니다');
- $('#last-event').textContent=state.log[0]||'공격하면 주사위가 굴러갑니다.';
- $('#heal-label').hidden=h.classId!==3;$('#bag-count').textContent=h.items.length;
- $('#outcome').hidden=!state.outcome;$('#outcome').textContent=state.outcome==='win'?'승리! 잿빛 용을 처치했습니다.':state.outcome==='lose'?'모험 종료. 새 파티로 다시 도전해 보세요.':'';
- renderQuests();
- $('#board').replaceChildren();
+ $('#setup').hidden=!!state;$('#game').hidden=!state;document.querySelectorAll('.play-menu').forEach(b=>b.hidden=!state);document.body.classList.toggle('in-battle',!!state?.battle);if(!state)return;
+ const h=E.hero(state),c=E.classes[h.classId],st=E.stats(h),can=!state.outcome&&!state.battle&&state.actions>0&&h.hp>0;
+ $('#turn-title').textContent=`${c.name} · Lv.${E.level(h)}`;$('#round-label').textContent=`라운드 ${state.round} / 20`;$('#round-track').innerHTML=Array.from({length:20},(_,i)=>`<i class="${i+1===state.round?'now':i+1<state.round?'past':''}"></i>`).join('');$('#seal-track').innerHTML=Array.from({length:3},(_,i)=>i<state.seals?'<b>◆</b>':'◆').join('');$('#save-notice').textContent=storageAvailable?'✓ 저장됨':'저장 불가';$('#next-goal').textContent=hint();
+ $('#active-portrait').className=`portrait portrait-${portraits[h.classId]}`;$('#hero-name').textContent=c.name;$('#hero-summary').textContent=`${h.pos} · 체력 ${h.hp}/${st.hp} · 경험치 ${h.xp}`;$('#resources').innerHTML=[['에너지',h.energy+'/4'],['골드',h.gold],['보급',h.supply],['물약',h.potions]].map(([name,value])=>`<span>${name}<b>${value}</b></span>`).join('');
+ $('#board').replaceChildren();const goal=currentGoal(),goalDef=goal&&E.quests.find(q=>q.id===goal.id);
  for(let row=1;row<=5;row++)for(const col of 'ABCDE'){
-  const pos=col+row,enemy=state.enemies.find(e=>e.pos===pos&&e.hp>0),occupants=state.heroes.filter(hero=>hero.pos===pos);
-  const tile=document.createElement('button');tile.className=`tile ${pos==='C5'?'village':pos==='D1'?'lair':pos==='A2'?'forest':pos==='E3'?'mine':pos==='B1'?'keep':''} ${pos===h.pos?'current':''} ${can&&E.dist(h.pos,pos)===1?'reachable':''}`;
-  tile.disabled=!can||E.dist(h.pos,pos)!==1;
-  tile.setAttribute('aria-label',`${pos} ${names[pos]||'황야'}${enemy?' '+enemy.name+' 체력 '+enemy.hp:''}${occupants.length?' '+occupants.map(x=>E.classes[x.classId].name).join(', '):''}`);
-  const coord=document.createElement('span');coord.className='coord';coord.textContent=pos;
-  const label=document.createElement('strong');label.className='tile-name';label.textContent=names[pos]||'';
-  const info=document.createElement('span');info.className='enemy-hp';info.textContent=enemy?`${enemy.name} ${enemy.hp}/${enemy.max}`:'';
-  const tokens=document.createElement('span');tokens.className='tokens';occupants.forEach(x=>{const token=document.createElement('span');token.className=`board-token portrait portrait-${portraits[x.classId]}${x.hp===0?' fallen':''}`;token.setAttribute('aria-label',E.classes[x.classId].name+(x.hp===0?' 쓰러짐':''));token.title=E.classes[x.classId].name;tokens.append(token);});
-  if(pos===pinnedQuest&&!state.outcome)tile.classList.add('quest-destination');
-  if(can&&pos===nextStep(h.pos,pinnedQuest))tile.classList.add('suggested');
-  if(occupants.length)tile.classList.add('occupied');
-  tile.append(coord,label,info,tokens);tile.addEventListener('click',()=>execute('move',{pos}));$('#board').append(tile);
+  const pos=col+row,loc=E.locations[pos],e=state.enemies.find(e=>e.pos===pos&&e.hp>0),cost=loc?.kind==='mountain'?2:1,reachable=can&&E.dist(h.pos,pos)===1&&state.actions>=cost,tile=document.createElement('button');tile.className=`tile ${pos===h.pos?'current':''} ${reachable?'reachable':''} ${pos===inspected?'inspecting':''}`;
+  tile.setAttribute('aria-label',`${pos} ${locationName(pos)}${e?' '+e.name+' 체력 '+e.hp:''}${reachable?' 이동 행동 '+cost:' 지역 정보'}`);tile.title=locationName(pos);
+  tile.innerHTML=`<span class="coord">${pos}${cost===2?' ▲':''}</span>${goalDef?.pos===pos&&!goal.ready?'<span class="quest-marker">!</span>':''}<span class="tokens">${state.heroes.filter(x=>x.pos===pos).map(x=>`<span class="token portrait portrait-${portraits[x.classId]} ${x.hp===0?'fallen':''}" title="${E.classes[x.classId].name}"></span>`).join('')}</span>${e?`<span class="enemy-marker">Lv.${e.tier} ${e.id==='dragon'?'용':e.name}</span>`:''}<strong class="tile-name">${loc?.name||''}</strong>`;
+  tile.addEventListener('click',()=>{if(reachable)act('move',{pos});else{inspected=pos;renderLocation();}});$('#board').append(tile);
  }
- $('#party').replaceChildren();state.heroes.forEach((hero,i)=>{const cl=E.classes[hero.classId],card=document.createElement('article');card.setAttribute('role','button');card.tabIndex=0;card.setAttribute('aria-label',cl.name+' 영웅 카드 보기');card.addEventListener('click',()=>showHero(i));card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();showHero(i);}});card.className='hero-panel'+(i===state.active?' active':'');card.innerHTML=`<div class="hero-identity"><span class="portrait portrait-${portraits[hero.classId]}" aria-hidden="true"></span><div><h3>${cl.name}${i===state.active?' · 현재':''}</h3><p>${hero.pos} · 레벨 ${hero.xp>=3?3:hero.xp>=1?2:1}</p></div></div><div class="health-line"><span>체력 ${hero.hp}/${cl.hp}</span><meter min="0" max="${cl.hp}" value="${hero.hp}" aria-label="${cl.name} 체력"></meter></div>`;$('#party').append(card);});
- $('#active-info').textContent=`${h.pos} · 체력 ${h.hp}/${c.hp} · 행동 ${state.actions}개`;
- const oldEnemy=$('#enemy-target').value,oldHero=$('#hero-target').value,oldBoot=$('#boot-target').value;
- $('#enemy-target').replaceChildren();state.enemies.filter(e=>e.hp>0).forEach(e=>option($('#enemy-target'),e.pos,`${e.name} · ${e.pos} · 체력 ${e.hp}`));
- const nearby=state.enemies.find(e=>e.hp>0&&E.dist(h.pos,e.pos)===0)||state.enemies.find(e=>e.hp>0&&h.classId===2&&E.dist(h.pos,e.pos)===1);
- if(nearby)$('#enemy-target').value=nearby.pos;
- else if([...$('#enemy-target').options].some(o=>o.value===oldEnemy))$('#enemy-target').value=oldEnemy;
- $('#hero-target').replaceChildren();state.heroes.forEach((hero,i)=>option($('#hero-target'),i,`${E.classes[hero.classId].name} · ${hero.pos} · 체력 ${hero.hp}`));$('#hero-target').value=[...$('#hero-target').options].some(o=>o.value===oldHero)?oldHero:state.active;
- const oldTrade=$('#trade-target').value;$('#trade-target').replaceChildren();state.heroes.forEach((hero,i)=>option($('#trade-target'),i,`${E.classes[hero.classId].name} · ${hero.pos} · 체력 ${hero.hp}`));if([...$('#trade-target').options].some(o=>o.value===oldTrade))$('#trade-target').value=oldTrade;
- $('#boot-target').replaceChildren();for(let row=1;row<=5;row++)for(const col of 'ABCDE'){const pos=col+row;if(E.dist(h.pos,pos)>0&&E.dist(h.pos,pos)<=2)option($('#boot-target'),pos,`${pos} ${names[pos]||'황야'}`);}if([...$('#boot-target').options].some(o=>o.value===oldBoot))$('#boot-target').value=oldBoot;
- $('#skill-label').textContent=c.skill;$('#skill-info').textContent=`${c.desc} · 행동 1개 · 차례당 1회`;
- for(const id of ['attack','rest','skill','summon'])$('#'+id).disabled=!can;
- $('#skill').disabled=!can||h.used;
- $('#summon').disabled=!can||state.seals!==3||h.pos!=='D1'||state.enemies.some(e=>e.boss);
- $('#end-turn').disabled=!!state.outcome||state.pending.length>0;
- $('#inventory').replaceChildren();if(!h.items.length){const p=document.createElement('p');p.className='muted';p.textContent='아직 전리품이 없습니다.';$('#inventory').append(p);}
- h.items.forEach((id,index)=>{const item=E.items[id],div=document.createElement('div');div.className='item-row';const title=document.createElement('p');title.textContent=`${item.name} · ${item.desc}`;const use=document.createElement('button');use.textContent=id===3?'자동 방어':'사용';use.disabled=!can||id===3;use.addEventListener('click',()=>execute('item',{index,pos:id===2?$('#boot-target').value:$('#enemy-target').value}));const trade=document.createElement('button');trade.textContent='전달';trade.disabled=!can;trade.addEventListener('click',()=>execute('trade',{index,hero:Number($('#trade-target').value)}));const medallion=document.createElement('span');medallion.className='loot-medallion';medallion.textContent=itemSymbols[id];div.append(medallion,title,use,trade);$('#inventory').append(div);});
- $('#reward').hidden=!state.pending.length;$('#reward').replaceChildren();if(state.pending.length){const title=document.createElement('h3');title.textContent='퀘스트 완료 · 전리품 획득';const desc=document.createElement('p');desc.textContent=E.items[state.pending[0]].desc;const reveal=document.createElement('div');reveal.className='loot-reveal';const symbol=document.createElement('span');symbol.className='loot-medallion';symbol.textContent=itemSymbols[state.pending[0]];const name=document.createElement('strong');name.textContent=E.items[state.pending[0]].name;reveal.append(symbol,name,desc);$('#reward').append(title,reveal);state.heroes.forEach((hero,i)=>{const b=document.createElement('button');b.textContent=`${E.classes[hero.classId].name}에게`;b.addEventListener('click',()=>execute('award',{hero:i}));$('#reward').append(b);});}
- if(state.pending.length&&!$('#reward').open){closePanels();$('#reward').showModal();}else if(!state.pending.length&&$('#reward').open)$('#reward').close();
- if(state.outcome&&!$('#result-modal').open&&!resultDismissed){closePanels();$('#result-modal').showModal();}
- updateControls();
- $('#next-goal').textContent=nextHint();
- $('#game-log').replaceChildren();state.log.slice(0,12).forEach(text=>{const li=document.createElement('li');li.textContent=text;$('#game-log').append(li);});
+ renderLocation();$('#event-name').textContent=state.event===null?'모험의 첫날':E.events[state.event].name;$('#event-text').textContent=state.event===null?'3라운드마다 세계 사건 발생 · 거점과 보급을 활용하세요.':E.events[state.event].desc;
+ $('#party').style.setProperty('--party-size',state.heroes.length);$('#party').innerHTML=state.heroes.map((x,i)=>{const cs=E.classes[x.classId],xs=E.stats(x);return `<button class="party-card ${i===state.active?'active':''}" data-inspect="${i}" aria-label="${cs.name} 영웅 카드"><span class="portrait portrait-${portraits[x.classId]}" aria-hidden="true"></span><div><h3>${cs.name} · Lv.${E.level(x)} ${x.points?'<span class="new-point">특성 +'+x.points+'</span>':''}</h3><p>${x.pos} · HP ${x.hp}/${xs.hp} · 에너지 ${x.energy}</p><meter min="0" max="${xs.hp}" value="${x.hp}" aria-label="${cs.name} 체력"></meter><p>공격 ${xs.red} · 마법 ${xs.blue} · 방어 ${xs.green}</p></div></button>`;}).join('');
+ $('#action-budget').innerHTML=`<span>${state.battle?'교전':'행동'}</span><div>${Array.from({length:state.heroes.length===1?4:3},(_,i)=>`<i class="${i<state.actions?'on':''}"></i>`).join('')}</div>`;
+ $('#world-scene').hidden=!!state.battle;$('#combat-scene').hidden=!state.battle;$('#world-actions').hidden=!!state.battle;$('#battle-actions').hidden=!state.battle;
+ const gather=h.quests.find(q=>!q.ready&&E.quests.find(x=>x.id===q.id)?.pos===h.pos&&E.quests.find(x=>x.id===q.id)?.type==='gather');$('#explore').disabled=!can||!gather||gather.id==='relic'&&h.energy<2||gather.id==='stars'&&h.supply<1;$('#engage').disabled=!can||!E.canEngage(state);$('#rest').disabled=!can||!E.town(h.pos)&&h.supply<1||h.hp===st.hp&&h.energy===4;$('#end-turn').disabled=!!state.outcome||!!state.battle;
+ $('#rest small').textContent=E.town(h.pos)?'여관 +6 HP · +2 에너지':'야영 +3 HP · 보급 1';
+ if(state.battle)renderBattle();if(folio&&$('#sheet').open)renderFolio();
+ if(state.outcome&&!resultDismissed&&!$('#result').open){$('#sheet').close();folio=null;$('#result-title').textContent=state.outcome==='win'?'잿빛 용을 물리쳤습니다':'왕국의 마지막 날';$('#result-text').textContent=`${state.round}라운드 · 봉인 ${state.seals}개 · 완료 퀘스트 ${state.heroes.reduce((n,x)=>n+x.completed.length,0)}개 · ${state.heroes.map(x=>E.classes[x.classId].name+' Lv.'+E.level(x)).join(' / ')}`;$('#result').showModal();}
 }
-function renderQuests(){
- $('#quests').replaceChildren();
- const remaining=quests.filter(q=>state.enemies.some(e=>e.pos===q.pos&&e.hp>0));
- if(state.seals===3)pinnedQuest='D1';
- else if(!remaining.some(q=>q.pos===pinnedQuest))pinnedQuest=remaining[0]?.pos||'A2';
- for(const q of quests){
-  const complete=!state.enemies.some(e=>e.pos===q.pos&&e.hp>0);
-  const button=document.createElement('button');button.className='quest-card'+(complete?' completed':'')+(pinnedQuest===q.pos?' pinned':'');button.disabled=complete||!!state.outcome;
-  const title=document.createElement('strong');title.textContent=(complete?'✓ ':'')+q.title;
-  const place=document.createElement('span');place.textContent=complete?'완료 · 봉인 회수':`${q.place} ${q.pos} · ${q.enemy} 처치`;
-  const description=document.createElement('small');description.textContent=q.text;
-  const reward=document.createElement('small');reward.className='quest-reward';reward.textContent='보상: 봉인 1개 · 전원 경험치 1 · 전리품 2장';
-  button.append(title,place,description,reward);button.addEventListener('click',()=>{$('#quest-modal').close();pinnedQuest=q.pos;try{localStorage.setItem('elderfall-waypoint',pinnedQuest);}catch{}render();});$('#quests').append(button);
- }
+function renderLocation(){const h=E.hero(state),pos=inspected||h.pos,loc=E.locations[pos],enemy=state.enemies.find(e=>e.pos===pos),e=enemy?.hp>0?enemy:null;$('#location-card').innerHTML=`<p class="eyebrow">${pos===h.pos?'CURRENT REGION':'REGION PREVIEW'} · ${pos}</p><h3>${locationName(pos)}</h3><p>${e?e.desc:enemy?'지역의 위협을 해결했습니다.':loc?.desc||'이웃 지역으로 이어지는 길 · 이동 행동 1'}</p>${e?`<div class="region-stats"><span>체력<b>${e.hp}</b></span><span>갑옷<b>${e.armor}</b></span><span>마법 저항<b>${e.ward}</b></span></div>`:''}${pos===h.pos&&E.town(pos)?'<button data-sheet="shop">상점 · 보급 구입</button>':''}${e?.id==='dragon'?'<p>봉인 2개 + Lv.3 필요 · 봉인 3개면 체력 −6</p>':''}`;}
+function renderBattle(){const b=state.battle,e=state.enemies.find(x=>x.id===b.enemy),h=E.hero(state),st=E.stats(h),it=E.intent(state),p=E.preview(state);$('#combat-title').textContent=`${e.name} · 교전 ${b.round}/8`;$('#retreat').disabled=b.phase!=='plan';$('#battle-hero-card').innerHTML=`<div class="portrait portrait-${portraits[h.classId]}"></div><div class="card-copy"><p class="eyebrow">${b.participants.length} HERO${b.participants.length>1?'ES':''} IN BATTLE</p><h3>${E.classes[h.classId].name}</h3><p>Lv.${E.level(h)} · HP ${h.hp}/${st.hp} · 에너지 ${h.energy}/4</p><div class="health-bar"><i style="width:${100*h.hp/st.hp}%"></i></div><p>공격 ${st.red} · 마법 ${st.blue} · 방어 ${st.green}</p><p>갑옷 ${st.armor} · 치명타 +${st.crit}</p></div>`;
+ $('#battle-enemy-card').innerHTML=`<div class="enemy-portrait enemy-${e.art}"></div><div class="card-copy"><p class="eyebrow">Lv.${e.tier} · ${e.id==='dragon'&&e.hp<=e.max/2?'ENRAGED':'ENEMY'}</p><h3>${e.name}</h3><p>HP ${e.hp}/${e.max} · 갑옷 ${e.armor} · 저항 ${e.ward}</p><div class="health-bar"><i style="width:${100*e.hp/e.max}%"></i></div><p class="enemy-trait">${e.desc}</p><div class="intent"><p>다음 행동</p><b>${it.name} · 피해 ${it.damage}${it.all?' / 전원':''}</b><p>${it.desc}</p></div></div>`;
+ $('#tactics').classList.toggle('many',b.participants.length>2);$('#tactics').innerHTML=b.participants.map(i=>{const x=state.heroes[i],s=E.stats(x);return `<label class="tactic-row"><span><strong>${E.classes[x.classId].name} ${x.hp===0?'· 쓰러짐':b.participants.length>2?'· E '+x.energy:''}</strong><small>HP ${x.hp}/${s.hp} · 에너지 ${x.energy} · 회복 ${2+s.heal}</small></span><select data-stance="${i}" aria-label="${E.classes[x.classId].name} 전투 태세" ${b.phase!=='plan'||x.hp===0?'disabled':''}>${Object.entries(stanceNames).map(([id,name])=>`<option value="${id}" ${b.stances[i]===id?'selected':''} ${['focus','recover'].includes(id)&&x.energy<1?'disabled':''}>${name}</option>`).join('')}</select></label>`;}).join('');
+ if(b.phase==='plan'){const total=b.participants.filter(i=>state.heroes[i].hp>0).reduce((a,i)=>E.pool(state,i,b.stances[i]).map((v,j)=>v+a[j]),[0,0,0]);$('#dice-tray').innerHTML=`<div class="pool-preview"><span style="color:#ecaa7b">${total[0]}</span> / <span style="color:#8dc7db">${total[1]}</span> / <span style="color:#bad189">${total[2]}</span><small>공격 / 마법 / 방어 주사위<br>영웅별 태세에 따라 구성이 달라집니다.</small></div>`;}else $('#dice-tray').innerHTML=b.dice.map((d,i)=>{const x=state.heroes[d.hero],used=b.dice.filter(y=>y.hero===d.hero&&y.rerolled).length;return `<button class="die ${['red','blue','green'][d.color]} ${d.value>=(d.color===1?3:4)?'success':''} ${d.rerolled?'spent':''}" data-action="reroll" data-arg="${esc(JSON.stringify({index:i}))}" aria-label="${E.classes[x.classId].name} ${colorNames[d.color]} 주사위 ${d.value}${d.rerolled?' 재굴림 완료':' 재굴림'}" ${x.energy<1||d.rerolled||used>=E.stats(x).rerolls?'disabled':''}>${d.value}</button>`;}).join('');
+ $('#dice-help').textContent=b.phase==='plan'?'공격 4+ → 2 피해 / 마법 3+ → 1 피해 (6은 2) / 방어 4+ → 2 방어':'주사위 터치 → 소유 영웅 에너지 1로 재굴림 · 별 표시 = 성공';
+ $('#combat-summary').innerHTML=b.phase==='rolled'?`<b>예상 피해 ${p.damage}</b>물리 ${p.physical} − 갑옷 ${e.armor} · 마법 ${p.magic} − 저항 ${e.ward}`:state.lastResult?`<b>${esc(state.lastResult.title)}</b>${esc(state.lastResult.text)}`:'<b>태세를 선택하세요</b>갑옷 + 방어 성공이 가장 높은 영웅이 전열에서 공격을 받습니다.';
+ $('#roll').disabled=b.phase!=='plan';$('#resolve').disabled=b.phase!=='rolled';$('#battle-action-note').textContent=b.phase==='plan'?'교전은 최대 8회. 후퇴하면 체력 2와 남은 행동을 잃습니다.':'갑옷은 물리, 마법 저항은 마법 피해를 줄입니다. 적을 먼저 처치하면 반격이 없습니다.';
 }
-function nextStep(pos,goal){
- if(pos[0]!==goal[0])return String.fromCharCode(pos.charCodeAt(0)+(goal.charCodeAt(0)>pos.charCodeAt(0)?1:-1))+pos[1];
- if(pos[1]!==goal[1])return pos[0]+(Number(pos[1])+(Number(goal[1])>Number(pos[1])?1:-1));
- return pos;
+function openFolio(kind,index=state?.active||0){folio={kind,index,tab:kind==='hero'?'equipment':'active'};renderFolio();if(!$('#sheet').open)$('#sheet').showModal();}
+function renderFolio(){const scroll=$('#sheet').scrollTop,focusId=document.activeElement?.dataset?.focus;$('#sheet-eyebrow').textContent=({quests:'QUEST JOURNAL',hero:'HERO FOLIO',shop:'TRADING POST',rules:'CAMPAIGN RULES',log:'CHRONICLE'})[folio.kind];$('#sheet-title').textContent=({quests:'퀘스트 일지',hero:'장비와 직업 특성',shop:'거점의 상점',rules:'잿빛 왕국의 영웅들',log:'모험 기록'})[folio.kind];$('#sheet-content').innerHTML=folio.kind==='quests'?questFolio():folio.kind==='hero'?heroFolio():folio.kind==='shop'?shopFolio():folio.kind==='log'?`<ol class="log-list">${state.log.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>`:rulesFolio();$('#sheet').scrollTop=scroll;if(focusId)document.querySelector(`[data-focus="${focusId}"]`)?.focus({preventScroll:true});}
+function questFolio(){const h=E.hero(state),can=!state.battle&&!state.outcome,inTown=E.town(h.pos),qstatus=q=>h.completed.includes(q.id)?'completed':h.quests.some(x=>x.id===q.id)?'active':'available';const list=E.quests.filter(q=>qstatus(q)===folio.tab);
+ return `<p class="sheet-note">${E.classes[h.classId].name} · 수락 ${h.quests.length}/3 · 보고는 어느 거점에서든 행동 1개.<br>퀘스트 수락은 거점에서 무료. 수집·호위·사냥 중 경로와 보상을 골라 성장하세요.</p><div class="folio-tabs">${[['active','진행 중'],['available','새 퀘스트'],['completed','완료']].map(([id,label])=>`<button data-tab="${id}" class="${folio.tab===id?'active':''}">${label}</button>`).join('')}</div>${list.length?list.map(q=>{const own=h.quests.find(x=>x.id===q.id),complete=qstatus(q)==='completed';return `<article class="quest-card"><h3>${q.name}<span class="badge">Lv.${q.level} · ${{gather:'탐사',escort:'호위',hunt:'사냥'}[q.type]}</span></h3><p>${q.desc}</p><p>목적지 ${locationName(q.pos)} ${q.pos}${own?.ready?' · ✓ 목표 달성':''}</p><p class="rewards">경험치 +${q.xp} · 골드 +${q.gold} · 장비 1개 선택</p>${complete?'<p>✓ 보상 수령 완료</p>':own?`${own.ready?`<select id="reward-${q.id}" data-focus="reward-${q.id}" aria-label="${q.name} 장비 보상">${q.choices.map(id=>`<option value="${id}">${E.gear[id].name} · ${E.gear[id].desc}</option>`).join('')}</select><button data-claim="${q.id}" ${!can||!inTown||state.actions<1?'disabled':''}>거점에서 보고 · 보상 받기</button>`:`<button data-pin="${q.id}">지도에 목표 표시</button>`}${button('포기','abandon',{id:q.id},!can)}`:button(levelText(h,q),'accept',{id:q.id},!can||!inTown||E.level(h)<q.level||h.quests.length>=3||q.id==='caravan'&&(h.pos!=='C5'||h.supply<1)||q.type==='hunt'&&state.enemies.find(e=>e.pos===q.pos).hp===0&&!h.kills.includes(state.enemies.find(e=>e.pos===q.pos).id))}</article>`;}).join(''):'<p class="sheet-note">이 목록에 퀘스트가 없습니다. 새 퀘스트를 살펴보세요.</p>'}`;
 }
-function nextHint(){
- const h=E.hero(state);
- if(state.outcome)return '모험이 끝났습니다. 새 모험으로 다시 시작할 수 있습니다.';
- if(state.pending.length)return '퀘스트 완료! 획득한 전리품을 받을 영웅을 선택하세요.';
- if(state.actions===0)return '행동을 모두 사용했습니다. 오른쪽의 「차례 마치기」를 눌러주세요.';
- const enemy=state.enemies.find(e=>e.pos===h.pos&&e.hp>0);
- if(enemy)return `${enemy.name}와 마주쳤습니다! 「공격」을 누르면 주사위를 굴려 싸웁니다. 체력이 낮다면 적이 없는 칸으로 물러나 회복하세요.`;
- if(state.seals===3&&h.pos==='D1'&&!state.enemies.some(e=>e.boss))return '세 봉인을 모았습니다. 「용 소환」을 눌러 마지막 레이드를 시작하세요.';
- const q=quests.find(q=>q.pos===pinnedQuest),goal=state.seals===3?'D1':pinnedQuest;
- const step=nextStep(h.pos,goal);
- return `다음 목표: ${state.seals===3?'드래곤의 둥지':q?.title||'지역 퀘스트'} · ${goal}. 지도에서 ${step} 칸을 터치해 이동해 보세요.${state.seals<3?' 남은 지역 '+(3-state.seals)+'곳.':''}`;
-}
-function updateControls(){
- if(!state)return;
- const h=E.hero(state),can=state.actions>0&&!state.outcome&&!state.pending.length&&h.hp>0;
- const enemy=state.enemies.find(e=>e.hp>0&&e.pos===$('#enemy-target').value);
- const range=enemy?E.dist(h.pos,enemy.pos):Infinity;
- document.body.classList.toggle('in-battle',!!enemy&&range===0);
- const showBattle=!!enemy&&!state.outcome&&scenePreference!=='board'&&(range===0||h.classId===2&&range===1&&scenePreference==='battle');
- $('#combat-scene').hidden=!showBattle;document.body.classList.toggle('combat-mode',showBattle);
- const side=document.querySelector('.side-board');if(showBattle){$('#combat-stage').append(side);$('#combat-title').textContent=enemy.name+'와의 전투';}else returnSideBoard();
- $('#enter-battle').hidden=!(enemy&&range===0&&!showBattle&&!state.outcome);
- $('#enemy-portrait').hidden=!enemy;$('#enemy-portrait').className='enemy-portrait '+({A2:'enemy-wolf',E3:'enemy-troll',B1:'enemy-knight',D1:'enemy-dragon'}[enemy?.pos]||'enemy-wolf');
- $('#enemy-detail').innerHTML=enemy?`<strong>${enemy.name}</strong><span>체력 ${enemy.hp}/${enemy.max} · 방어 ${enemy.def}</span><div class="enemy-health"><i style="width:${100*enemy.hp/enemy.max}%"></i></div><span class="enemy-range">${range===0?'⚔ 전투 중':range+'칸 거리'}</span>`:'지역을 모두 공략했습니다.';
- $('#attack').disabled=!can||range>0;
- $('#rest').disabled=!can||state.enemies.some(e=>e.hp>0&&e.pos===h.pos);
- const ally=state.heroes[Number($('#hero-target').value)];
- const skillValid=h.classId===0||h.classId===1&&range===0||h.classId===2&&range<=1||h.classId===3&&ally&&ally.hp>0&&E.dist(h.pos,ally.pos)<=1;
- $('#skill').disabled=!can||h.used||!skillValid;
-}
-$('#enemy-target').addEventListener('change',updateControls);
-$('#hero-target').addEventListener('change',updateControls);
-$('#start').addEventListener('click',()=>{try{resultDismissed=false;pinnedQuest='A2';state=E.create([...classPicker.querySelectorAll('input:checked')].map(x=>Number(x.value)));persist();render();}catch(error){$('#setup-error').textContent=error.message;}});
-function restart(){if(confirm('현재 모험을 지우고 새로운 파티를 만들까요?')){closePanels();$('#result-modal').close();resultDismissed=false;state=null;try{localStorage.removeItem(SAVE);}catch{}message('');render();}}
-$('#new-game').addEventListener('click',restart);$('#result-new').addEventListener('click',restart);
-$('#attack').addEventListener('click',()=>execute('attack',{pos:$('#enemy-target').value}));
-$('#skill').addEventListener('click',()=>execute('skill',{pos:$('#enemy-target').value,hero:Number($('#hero-target').value)}));
-$('#rest').addEventListener('click',()=>execute('rest'));
-$('#summon').addEventListener('click',()=>execute('summon'));
-$('#end-turn').addEventListener('click',()=>execute('end'));
-function returnSideBoard(){const side=document.querySelector('.side-board');if(side&&side.parentElement!==document.querySelector('.arena'))document.querySelector('.arena').append(side);}
-$('#back-board').addEventListener('click',()=>{scenePreference='board';updateControls();});
-$('#enter-battle').addEventListener('click',()=>{scenePreference='battle';updateControls();});
-function showHero(index){const h=state.heroes[index],c=E.classes[h.classId];$('#detail-hero-name').textContent=c.name;$('#hero-detail').innerHTML=`<div class="detail-portrait portrait portrait-${portraits[h.classId]}"></div><div class="detail-statline"><span>체력 <b>${h.hp}/${c.hp}</b></span><span>공격 <b>${c.atk+(h.xp>=1?1:0)}</b></span><span>피해 <b>${c.dmg+(h.xp>=3?1:0)}</b></span></div><h3>${c.skill}</h3><p>${c.desc}. 행동 1개 · 차례당 1회.</p><p>위치 ${h.pos} · 경험치 ${h.xp} · 레벨 ${h.xp>=3?3:h.xp>=1?2:1}</p><p>보유 전리품: ${h.items.map(id=>E.items[id].name).join(', ')||'없음'}</p>`;closePanels();$('#hero-modal').showModal();}
-function closePanels(){for(const id of ['quest-modal','bag-modal','log-modal','rules-modal','hero-modal'])if($('#'+id).open)$('#'+id).close();}
-document.querySelectorAll('[data-open]').forEach(button=>button.addEventListener('click',()=>{closePanels();$('#'+button.dataset.open).showModal();}));
-document.querySelectorAll('[data-close]').forEach(button=>button.addEventListener('click',()=>{if(button.dataset.close==='result-modal')resultDismissed=true;$('#'+button.dataset.close).close();}));
-$('#result-modal').addEventListener('cancel',()=>{resultDismissed=true;});
-$('#reward').addEventListener('cancel',event=>event.preventDefault());
-try{const saved=JSON.parse(localStorage.getItem(SAVE));if(saved){if(saved.version!==1||!Array.isArray(saved.heroes)||saved.heroes.length<1||saved.heroes.length>4||saved.heroes.some(h=>!E.classes[h.classId])||!saved.heroes[saved.active]||!Array.isArray(saved.enemies)||!Array.isArray(saved.pending)||!Array.isArray(saved.log))throw Error('invalid save');state=saved;render();}}catch{state=null;$('#setup-error').textContent='저장 기록을 읽을 수 없어 새 모험을 준비했습니다.';}
+function levelText(h,q){if(q.type==='hunt'){const e=state.enemies.find(e=>e.pos===q.pos);if(e.hp===0&&!h.kills.includes(e.id))return '다른 영웅이 해결한 지역';}return E.level(h)<q.level?'레벨 '+q.level+'부터 수락':q.id==='caravan'?'마을에서 보급 1로 수락':'거점에서 수락';}
+function heroFolio(){const h=state.heroes[folio.index],c=E.classes[h.classId],st=E.stats(h),own=folio.index===state.active,can=own&&!state.battle&&!state.outcome&&h.hp>0;return `<div class="hero-folio-head"><span class="portrait portrait-${portraits[h.classId]}"></span><div><h3>${c.name} · Lv.${E.level(h)}</h3><p>${c.role}<br>HP ${h.hp}/${st.hp} · 에너지 ${h.energy}/4 · XP ${h.xp}${E.level(h)<4?' / 다음 레벨 '+[0,2,6,12][E.level(h)]:''}<br>골드 ${h.gold} · 보급 ${h.supply} · 치유 물약 ${h.potions}</p></div></div><div class="build-stats"><span>공격 <b>${st.red}</b></span><span>마법 <b>${st.blue}</b></span><span>방어 <b>${st.green}</b></span><span>갑옷 <b>${st.armor}</b></span><span>치명타 <b>+${st.crit}</b></span></div><div class="folio-tabs"><button data-tab="equipment" class="${folio.tab==='equipment'?'active':''}">장비 · 가방</button><button data-tab="talents" class="${folio.tab==='talents'?'active':''}">직업 특성 ${h.points?'('+h.points+')':''}</button><button data-sheet="log">모험 기록</button></div>${folio.tab==='talents'?`<p class="sheet-note">${c.paths.join(' / ')} · 남은 특성 포인트 ${h.points}<br>레벨 2·3·4마다 두 특성 중 하나 선택. 선택은 캠페인 동안 유지됩니다.</p><div class="talent-grid">${E.talents[h.classId].map((t,i)=>{const learned=h.talents.includes(i),locked=h.talents.some(id=>E.talents[h.classId][id].tier===t.tier);return `<article class="talent-card ${learned?'learned':''}"><p>Lv.${t.tier} · ${t.path}</p><h3>${t.name}</h3><p>${t.desc}</p>${button(learned?'✓ 배운 특성':locked?'다른 특성 선택됨':'특성 선택','talent',{index:i},!can||h.points<1||E.level(h)<t.tier||locked)}</article>`;}).join('')}</div>`:`<div class="equipment-slots">${Object.entries(slotNames).map(([slot,name])=>`<div><small>${name}</small>${h.equipment[slot]===null?'비어 있음':E.gear[h.equipment[slot]].name}</div>`).join('')}</div><p class="sheet-note">장비는 소모되지 않습니다. 같은 슬롯은 하나만 착용하며 교체는 전투 밖에서 무료입니다.${!own?' 현재 차례의 영웅만 변경할 수 있습니다.':''}</p>${button('치유 물약 사용 · HP +6 / 행동 1','potion',{},!can||h.potions<1||h.hp===st.hp||state.actions<1)}<div class="gear-grid" style="margin-top:15px">${[...new Set(h.bag)].map(id=>gearCard(id,h,can)).join('')||'<p class="sheet-note">가방이 비어 있습니다. 퀘스트 보상이나 상점에서 장비를 구하세요.</p>'}</div>`}`;}
+function gearCard(id,h,can){const g=E.gear[id],equipped=h.equipment[g.slot]===id;return `<article class="gear-card ${equipped?'equipped':''}"><span class="gear-icon">${{weapon:'⚔',armor:'◇',trinket:'✦'}[g.slot]}</span><p>${slotNames[g.slot]} · ${['','일반','희귀','영웅'][g.tier]}</p><h3>${g.name}</h3><p>${g.desc}</p>${button(equipped?'✓ 착용 중':'장착','equip',{id},!can||equipped)}${state.heroes.map((x,i)=>x!==h&&x.pos===h.pos&&x.hp>0?button(E.classes[x.classId].name+'에게 전달 · 행동 1','trade',{id,hero:i},!can||state.actions<1):'').join('')}</article>`;}
+function shopFolio(){const h=E.hero(state),can=E.town(h.pos)&&!state.battle&&!state.outcome&&state.actions>0;return `<p class="sheet-note">${locationName(h.pos)} · 보유 골드 ${h.gold} · Lv.${E.level(h)}<br>${E.town(h.pos)?'구매마다 행동 1개. 구매한 장비는 「영웅」에서 장착하세요.':'마을·야영지·항구에 도착하면 구매할 수 있습니다.'}</p><div class="gear-grid"><article class="gear-card"><h3>여행 보급 ×2</h3><p>야영·호위·유적 탐사에 사용</p>${button('1 골드 · 구매','buy',{id:'supply'},!can||h.gold<1)}</article><article class="gear-card"><h3>치유 물약</h3><p>전투 밖에서 행동 1로 체력 +6</p>${button('2 골드 · 구매','buy',{id:'potion'},!can||h.gold<2)}</article>${E.gear.map((g,id)=>`<article class="gear-card"><p>${slotNames[g.slot]} · Lv.${g.tier}</p><h3>${g.name}</h3><p>${g.desc}</p>${button(`${g.cost} 골드 · 구매`,'buy',{id},!can||h.gold<g.cost||E.level(h)<g.tier)}</article>`).join('')}</div>`;}
+function rulesFolio(){return `<p class="sheet-note">2005년 월드 오브 워크래프트 보드게임의 여행·퀘스트·장비·직업 성장에서 영감을 받은 자체 협동 캠페인입니다. 엘더폴의 독자 규칙이며, 여기서는 진영 간 경쟁 대신 공동 레이드를 진행합니다.</p>${[
+ ['1 · 캠페인의 목표','20라운드 안에 D1 잿빛 용을 처치하세요. 가시늑대·트롤·망령 기사 중 2종을 처치해 봉인 2개를 모으고 현재 영웅 레벨 3이 되면 용에 도전할 수 있습니다. 세 번째 봉인도 모으면 용의 체력이 6 감소합니다. 모든 영웅이 쓰러지거나 20라운드가 끝나면 패배합니다.'],
+ ['2 · 여행과 차례','상하좌우 인접 지역을 터치하면 이동합니다. 이동은 행동 1, C3 바위 고개에 진입할 때는 행동 2. 혼자면 차례당 행동 4개, 2~4명이면 영웅별 3개. 남은 행동이 없어도 장비·특성을 관리할 수 있습니다. 전체 차례가 끝나면 라운드가 증가하고 시작 영웅이 순환합니다.'],
+ ['3 · 퀘스트와 보상','거점(마을 C5, 야영지 A4, 항구 E5)에서 무료로 최대 3개까지 수락합니다. 수집은 목적지에서 지역 조사, 호위는 보급 1을 내고 목적지에 도달, 사냥은 해당 전투에 참여해 승리해야 합니다. 이미 잡은 적의 퀘스트도 보고할 수 있습니다. 목표 달성 후 어느 거점에서든 행동 1로 보고하고 영웅 개인이 경험치·골드·선택 장비를 받습니다.'],
+ ['4 · 장비와 특성','경험치 2/6/12에 레벨 2/3/4. 레벨마다 체력 +2와 특성 포인트 1. 각 레벨의 직업 특성 두 개 중 하나를 선택합니다. 장비는 무기·갑옷·장신구 각 하나. 교체는 전투 밖에서 무료이며 사용해도 사라지지 않습니다. 공격/마법/방어 주사위, 갑옷, 치명타, 재굴림, 회복을 조합하세요.'],
+ ['5 · 주사위 전투','전투 시작은 행동 1. 같은 지역의 살아 있는 영웅이 모두 참여합니다. 참여 인원에 따라 적의 체력이 늘어나며, 이 체력은 후퇴해도 유지됩니다. 영웅별로 강습(공격 +1), 집중(에너지 1로 마법 +2), 방어(방어 +2), 회복(에너지 1로 방어 +1과 참여 영웅 전원 치유)을 선택하세요. 준비 후 함께 굴립니다.'],
+ ['6 · 결과와 반격','공격 주사위 4·5·6은 피해 2. 마법 주사위 3·4·5는 피해 1, 6은 피해 2. 치명타 수치는 공격/마법 6에 추가됩니다. 방어 주사위 4·5·6은 해당 영웅 방어 2. 실패한 주사위를 에너지 1로 재굴림할 수 있으며 기본 한도는 영웅당 교전마다 1개입니다. 물리 총합에서 갑옷, 마법 총합에서 마법 저항을 각각 뺍니다. 피해→회복→적 반격 순서. 적을 처치하면 반격이 없습니다.'],
+ ['7 · 전열과 적의 의도','받는 피해 감소(갑옷+방어 성공)가 가장 높은 살아 있는 영웅이 단일 공격을 받습니다. 동률은 참여 순서. 용의 화염 숨결은 전원을 공격합니다. 출혈은 방어 주사위를 무시하지만 갑옷은 적용됩니다. 트롤은 특정 공격 후 체력 2 재생, 망령의 저주는 에너지 1 감소. 용은 체력 절반 이하에서 공격 +2.'],
+ ['8 · 회복·후퇴·세계 사건','에너지는 최대 4, 자신의 차례가 시작되면 +1. 거점 휴식은 체력 +6·에너지 +2, 야영은 보급 1로 체력 +3·에너지 +2. 물약은 전투 밖에서 체력 +6. 준비 단계에 후퇴하면 참여 영웅이 체력 2(최소 1 남음)를 잃고 마을로 귀환하며 남은 행동을 포기합니다. 교전 8회 후에도 승리하지 못하면 마을로 철수합니다. 3라운드마다 세계 사건이 발생합니다.'],
+ ['9 · 쓰러짐과 저장','다른 영웅이 살아 있으면 쓰러진 영웅은 다음 차례에 마을에서 체력 4로 부활하고 그 차례를 쉽니다. 전투 파티 전원이 쓰러졌지만 다른 영웅이 살아 있다면 해당 파티는 마을로 귀환합니다. 이 브라우저에 자동 저장하며 이전 v0.4 기록은 별도로 보존합니다. 온라인·기기 간 동기화는 제공하지 않습니다.']
+ ].map(([title,text])=>`<article class="rule-block"><h3>${title}</h3><p>${text}</p></article>`).join('')}`;}
+document.addEventListener('click',event=>{const b=event.target.closest('button');if(!b||b.disabled)return;if(b.dataset.action)act(b.dataset.action,JSON.parse(b.dataset.arg||'{}'));else if(b.dataset.sheet){if(state||b.dataset.sheet==='rules')openFolio(b.dataset.sheet);}else if(b.dataset.inspect!==undefined)openFolio('hero',Number(b.dataset.inspect));else if(b.dataset.tab){folio.tab=b.dataset.tab;renderFolio();}else if(b.dataset.pin){pinned=b.dataset.pin;$('#sheet').close();folio=null;render();}else if(b.dataset.claim)act('claim',{id:b.dataset.claim,gear:Number($('#reward-'+b.dataset.claim).value)});});
+$('#tactics').addEventListener('change',event=>{if(event.target.dataset.stance!==undefined)act('stance',{hero:Number(event.target.dataset.stance),stance:event.target.value});});
+$('#start').addEventListener('click',()=>{try{state=E.create([...$('#class-picker').querySelectorAll('input:checked')].map(x=>Number(x.value)));pinned=null;inspected=null;resultDismissed=false;persist();render();}catch(e){$('#setup-error').textContent=e.message;}});
+for(const id of ['explore','engage','rest','roll','resolve'])$('#'+id).addEventListener('click',()=>act(id));$('#end-turn').addEventListener('click',()=>act('end'));$('#retreat').addEventListener('click',()=>act('retreat'));
+function restart(){if(confirm('이 캠페인을 종료하고 새 영웅을 선택할까요?')){$('#sheet').close();$('#result').close();folio=null;state=null;try{localStorage.removeItem(SAVE);}catch{}resultDismissed=false;render();}}
+$('#new-game').addEventListener('click',restart);$('#result-new').addEventListener('click',restart);$('#close-sheet').addEventListener('click',()=>{$('#sheet').close();folio=null;});$('#sheet').addEventListener('close',()=>{folio=null;});$('#result-close').addEventListener('click',()=>{resultDismissed=true;$('#result').close();});$('#result').addEventListener('cancel',()=>{resultDismissed=true;});
+try{const value=localStorage.getItem(SAVE);if(value){const saved=JSON.parse(value);if(!E.validate(saved))throw Error('invalid');state=saved;}}catch{state=null;$('#setup-error').textContent='캠페인 기록을 읽지 못했습니다. 새 캠페인을 시작할 수 있습니다.';}
 render();
