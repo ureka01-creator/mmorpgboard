@@ -28,13 +28,18 @@ with sync_playwright() as pw:
     def close(): click('#close-sheet')
     def next_if_needed(cost=1):
         if read('state.actions')<cost: click('#end-turn')
+    campaign_routes={
+        ('C5','C4'):['C4'],('C4','C5'):['C5'],('C5','A4'):['C4','B4','A4'],
+        ('A4','A2'):['A3','A2'],('A2','A4'):['A3','A4'],
+        ('A4','E5'):['B4','C4','D4','E5'],('E5','E3'):['E3'],
+        ('E3','E5'):['E5'],('E5','D1'):['E3','E2','D2','D1']}
+    def move(pos):
+        cost=read(f"E.travelInfo(state,'{pos}',E.hero(state).pos,true).cost")
+        next_if_needed(cost)
+        click(f'#board button[data-region="{pos}"]')
+        click('#explore')
     def walk(pos):
-        while read('E.hero(state).pos')!=pos:
-            current=read('E.hero(state).pos')
-            if current[0]!=pos[0]: next_pos=chr(ord(current[0])+(1 if current[0]<pos[0] else -1))+current[1]
-            else: next_pos=current[0]+str(int(current[1])+(1 if current[1]<pos[1] else -1))
-            next_if_needed(2 if next_pos=='C3' else 1)
-            click(f'#board button[aria-label^="{next_pos} "]')
+        for next_pos in campaign_routes[(read('E.hero(state).pos'),pos)]: move(next_pos)
     def claim(q,g):
         next_if_needed();sheet('quests');page.locator(f'#reward-{q}').select_option(str(g));click(f'[data-claim="{q}"]');close()
     def equip(g):
@@ -65,7 +70,7 @@ with sync_playwright() as pw:
     sheet('hero');click('[data-tab="talents"]');check(page.locator('[data-action="talent"][data-arg=\'{"index":1}\']').is_disabled(),'Alternative talent at same tier is locked');close()
     accept('caravan');accept('wolves');check(read('E.hero(state).quests.length')==2,'Different quest types can be selected')
     sheet('quests');click('[data-pin="wolves"]');check(not page.locator('#sheet').is_visible(),'Pinning quest returns to world')
-    check(page.locator('#board button[aria-label^="A2 "] .quest-marker').is_visible(),'Pinned quest has map marker')
+    check(page.locator('#board button[data-region="A2"] .quest-marker').is_visible(),'Pinned quest has map marker')
     walk('A4');claim('caravan',4);equip(4);check(read('E.hero(state).completed.includes("caravan")'),'Escort completes through travel and town report')
     walk('A2');fight();check(read('state.seals')==1,'Hunt victory yields shared seal')
     check(page.locator('#world-scene').is_visible(),'Victory returns to world table')
@@ -99,6 +104,36 @@ with sync_playwright() as pw:
     click('#engage');check(page.locator('[data-stance]').count()==2,'Co-located heroes choose separate stances')
     page.locator('[data-stance="1"]').select_option('focus');click('#roll');check(read('state.heroes[1].energy')==3 and read('state.heroes[0].energy')==4,'Focus energy belongs to selected hero')
     click('#resolve');check(read('state.heroes[1].xp')==1,'Cooperative participants each gain battle XP')
+    # Travel must follow the declared roads with cost preview and confirmation.
+    read("state=E.create([0]);render();")
+    check(page.locator('.region-node').count()==16,'Map has sixteen actual regions')
+    check(page.locator('.map-routes .route').count()==20,'All twenty routes are drawn from the rules graph')
+    check(page.locator('.route-selected').count()==0,'Unselected roads are not all highlighted')
+    click('#board [data-region="E5"]');check(read('E.hero(state).pos')=='C5','Touching distant region never teleports')
+    check(page.locator('.route-plan').count()>0,'Distant destination opens route comparison');close()
+    click('#board [data-region="C4"]');check(read('state.actions')==4,'Previewing a connected region spends no action')
+    check(page.locator('.route-selected').count()==1,'Only the selected route is highlighted')
+    click('#explore');check(read('E.hero(state).pos')=='C4' and read('state.actions')==3,'Confirmed road movement spends its cost')
+    check(not page.locator('#sheet').is_visible(),'Normal movement stays on world table without a popup')
+    read("state=E.create([0]);E.hero(state).xp=6;E.hero(state).pos='D4';render();")
+    click('#board [data-region="E3"]');check('보급 −1' in page.locator('#next-goal').inner_text() and '체력 −2' in page.locator('#next-goal').inner_text(),'Ford costs are shown before committing')
+    click('#world-actions [data-sheet="travel"]');click('[data-tab="plan"]');check('안전 우선' in page.locator('#sheet-content').inner_text() and '행동 절약' in page.locator('#sheet-content').inner_text(),'Planner compares safer coast and faster ford');close()
+    move('E3');check(read('E.hero(state).hp')==10 and read('E.hero(state).supply')==1,'Confirmed shortcut consumes HP and supply')
+    click('#board [data-region="E2"]');check(page.locator('#explore').is_disabled(),'Guardian blocks onward travel before troll defeat')
+    check('광산 트롤' in page.locator('#next-goal').inner_text(),'Locked route explains guardian requirement')
+    read("state=E.create([0]);E.hero(state).pos='C4';render();")
+    click('#board [data-region="C3"]');check(page.locator('#explore').is_disabled(),'Low-level hero cannot climb pass')
+    read("state=E.create([0]);E.hero(state).xp=2;E.hero(state).pos='C3';render();")
+    move('C2');check(read('state.actions')==2 and read('E.hero(state).supply')==1,'Mountain route consumes two actions and supply')
+    read("state=E.create([0]);E.hero(state).xp=6;E.hero(state).pos='D4';E.hero(state).supply=0;render();")
+    click('#board [data-region="E3"]');check(page.locator('#explore').is_disabled(),'No supplies disables ford without spending resources')
+    read("state=E.create([0]);E.hero(state).pos='D2';render();")
+    click('#board [data-region="D1"]');check(page.locator('#explore').is_disabled(),'Raid gate requires seals and level before entry')
+    # A legacy grid save is upgraded without discarding its build.
+    read("state=E.create([0]);delete state.mapVersion;E.hero(state).pos='B5';E.hero(state).xp=2;E.hero(state).bag=[0];E.hero(state).equipment.weapon=0;persist();")
+    page.reload(wait_until='networkidle');check(read('state.mapVersion')==1 and read('E.hero(state).pos')=='C5','Legacy off-road save moves to nearest safe hub')
+    check(read('E.hero(state).xp')==2 and read('E.hero(state).equipment.weapon')==0,'Map migration keeps progression and equipment')
+    check(read("!!localStorage.getItem('elderfall-campaign-v2-before-routes')"),'Original save is backed up before migration')
     # Town economy and equipment sharing use the actual folio buttons.
     read("state=E.create([0,1]);render();")
     sheet('shop');click('[data-action="buy"][data-arg=\'{"id":0}\']');check(read('E.hero(state).gold')==0 and read('state.actions')==2,'Shop spends gold and world action');close()
@@ -117,6 +152,8 @@ with sync_playwright() as pw:
         read('state=E.create([0,1,2,3]);render();')
         check(no_scroll(),f'{w}x{h} world has no page scrolling')
         check(bounds('#board'),f'{w}x{h} complete map fits')
+        check(read('Array.from(document.querySelectorAll(".region-node")).every(el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.top>=0&&r.right<=innerWidth&&r.bottom<=innerHeight;})'),f'{w}x{h} all region touch targets fit')
+        click('#board [data-region="C4"]');click('#world-actions [data-sheet="travel"]');check(bounds('#sheet'),f'{w}x{h} travel folio fits');close()
         check(bounds('#action-dock'),f'{w}x{h} world controls fit')
         check(bounds('#party'),f'{w}x{h} party cards fit')
         if w>650 and page.locator('#event-card').is_visible():
