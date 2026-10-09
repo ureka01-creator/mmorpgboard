@@ -1,6 +1,6 @@
 # GitHub Pages 배포
 
-정적 웹게임의 배포 파일은 `index.html`, `styles.css`, `game-engine.js`, `app.js`, `.nojekyll` 및 `assets/world-map.png`, `assets/heroes.png`, `assets/enemies.png`입니다. 앱 서버나 데이터베이스가 필요하지 않습니다.
+정적 웹게임의 배포 파일은 `index.html`, `styles.css`, `game-engine.js`, `app.js`, `.nojekyll` 및 `assets/world-map.png`, `assets/realm-map.png`, `assets/cards.png`, `assets/gear.png`, `assets/heroes.png`, `assets/enemies.png`입니다. 앱 서버나 데이터베이스가 필요하지 않습니다.
 
 배포 브랜치: `gh-pages`. GitHub 저장소 Settings → Pages → Build and deployment에서 Source를 **Deploy from a branch**, Branch를 **gh-pages**, 폴더를 **/ (root)**로 설정하고 저장합니다.
 

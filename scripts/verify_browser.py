@@ -23,7 +23,10 @@ with sync_playwright() as pw:
     page.goto(URL,wait_until='networkidle')
     page.screenshot(path='/tmp/elderfall-campaign-home.png')
     def read(js): return page.evaluate(js)
-    def click(selector): page.locator(selector).click()
+    def click(selector):
+        page.locator(selector).click()
+        page.wait_for_function('!busy')
+        if selector=='#resolve' and page.locator('#loot').is_visible(): page.locator('#loot-close').click()
     def sheet(kind): page.locator(f'header [data-sheet="{kind}"]').click()
     def close(): click('#close-sheet')
     def next_if_needed(cost=1):
@@ -41,7 +44,7 @@ with sync_playwright() as pw:
     def walk(pos):
         for next_pos in campaign_routes[(read('E.hero(state).pos'),pos)]: move(next_pos)
     def claim(q,g):
-        next_if_needed();sheet('quests');page.locator(f'#reward-{q}').select_option(str(g));click(f'[data-claim="{q}"]');close()
+        next_if_needed();sheet('quests');click(f'[data-claim="{q}"]');click(f'[data-reward="{g}"]');click('#loot-confirm')
     def equip(g):
         sheet('hero');click(f'[data-action="equip"][data-arg=\'{{"id":{g}}}\']');close()
     def talent(i):
@@ -87,7 +90,7 @@ with sync_playwright() as pw:
     # Separate fixture exercises dice choices, energy accounting, reload mid-roll, retreat.
     read("state=E.create([0]);E.hero(state).pos='E3';E.hero(state).bag=[4];E.apply(state,'equip',{id:4});render();")
     click('#engage');page.evaluate('Math.random=()=>0');click('#roll');check(page.locator('.die').count()==4,'Actual colored dice appear')
-    page.evaluate('Math.random=()=>.999999');click('.die >> nth=0');check(read('E.hero(state).energy')==3,'Touching die spends correct owner energy')
+    page.evaluate('Math.random=()=>.999999');click('#reroll-mode');click('.die >> nth=0');check(read('E.hero(state).energy')==3,'Touching die spends correct owner energy')
     check(read('state.battle.dice[0].rerolled'),'Die is marked rerolled');check(page.locator('.die').nth(0).is_disabled(),'Same die cannot reroll twice')
     page.reload(wait_until='networkidle');check(read('state.battle.phase')=='rolled','Mid-roll battle resumes without another energy charge')
     check(page.locator('#retreat').is_disabled(),'Cannot escape unresolved dice')
@@ -101,8 +104,8 @@ with sync_playwright() as pw:
     click('[data-inspect="3"]');check('사제' in page.locator('#sheet-content').inner_text(),'Any party card can be inspected')
     check(page.locator('[data-action="potion"]').is_disabled(),'Inactive hero management cannot use active resources');close()
     read("state=E.create([0,1]);state.heroes.forEach(h=>h.pos='A2');render();")
-    click('#engage');check(page.locator('[data-stance]').count()==2,'Co-located heroes choose separate stances')
-    page.locator('[data-stance="1"]').select_option('focus');click('#roll');check(read('state.heroes[1].energy')==3 and read('state.heroes[0].energy')==4,'Focus energy belongs to selected hero')
+    click('#engage');check(page.locator('[data-battle-hero]').count()==2,'Co-located heroes have individual preparation controls')
+    click('[data-battle-hero="1"]');click('#tactics [data-action="stance"] >> nth=1');click('#roll');check(read('state.heroes[1].energy')==3 and read('state.heroes[0].energy')==4,'Focus energy belongs to selected hero')
     click('#resolve');check(read('state.heroes[1].xp')==1,'Cooperative participants each gain battle XP')
     # Travel must follow the declared roads with cost preview and confirmation.
     read("state=E.create([0]);render();")
