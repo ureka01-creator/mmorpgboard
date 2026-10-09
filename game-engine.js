@@ -30,17 +30,71 @@ const talentEffects=[
 const talentNames=[['무기 숙련','방패 숙련','피의 칼날','불굴','검의 폭풍','철벽'],['불씨','비전 집중','작열','마나 방벽','지옥불','차원 보호'],['급소 조준','야생의 보호','연속 사격','바람의 눈','일제 사격','생존 본능'],['성스러운 분노','치유의 손길','심판','보호의 기도','빛의 창','구원의 빛']];
 const effectLabels={red:'공격 주사위',blue:'마법 주사위',green:'방어 주사위',crit:'6의 추가 피해',armor:'받는 피해 감소',rerolls:'재굴림 한도',heal:'회복 태세 치유'};
 const talents=classes.map((c,ci)=>talentNames[ci].map((name,i)=>({name,tier:Math.floor(i/2)+2,path:c.paths[i%2],[talentEffects[ci][i][0]]:talentEffects[ci][i][1],desc:effectLabels[talentEffects[ci][i][0]]+' +'+talentEffects[ci][i][1]})));
+
+// One die is committed to each technique. Its ordinary contribution is consumed.
+const techniques=[
+ [
+  {id:'strike',name:'강타',icon:'⚔',art:0,color:0,min:4,energy:1,physical:4,pierce:1,cooldown:0,desc:'물리 피해 4 · 갑옷 1 관통'},
+  {id:'protect',name:'동료 보호',icon:'◇',art:1,max:3,energy:0,block:3,target:true,cooldown:1,desc:'선택한 영웅 방어 3 · 낮은 눈 활용'},
+  {id:'counter',name:'방패 반격',icon:'↗',art:2,color:2,min:4,energy:0,physical:2,block:3,cooldown:1,desc:'물리 피해 2 · 자신의 방어 3'},
+  {id:'whirlwind',name:'검의 폭풍',icon:'✦',art:0,color:0,min:5,energy:2,physical:7,pierce:2,cooldown:2,level:3,desc:'물리 피해 7 · 갑옷 2 관통'}
+ ],
+ [
+  {id:'fire',name:'화염탄',icon:'✦',art:0,color:1,min:3,energy:1,magic:3,cooldown:0,desc:'마법 피해 3 · 적 갑옷 무시'},
+  {id:'frost',name:'서리 속박',icon:'❄',art:1,color:1,min:1,energy:0,magic:1,weaken:2,cooldown:1,desc:'마법 피해 1 · 이번 적 공격 −2'},
+  {id:'channel',name:'마력 전환',icon:'↻',art:2,max:3,energy:0,restore:1,cooldown:1,desc:'낮은 눈을 소모해 에너지 +1'},
+  {id:'inferno',name:'작열 폭발',icon:'✦',art:0,color:1,min:5,energy:2,magic:7,cooldown:2,level:3,desc:'마법 피해 7 · 저항은 적용'}
+ ],
+ [
+  {id:'aim',name:'정밀 사격',icon:'➶',art:0,color:0,min:4,energy:1,physical:4,pierce:1,cooldown:0,desc:'물리 피해 4 · 갑옷 1 관통'},
+  {id:'trap',name:'덫 설치',icon:'⌁',art:1,max:3,energy:0,weaken:2,block:1,cooldown:1,desc:'적 공격 −2 · 자신의 방어 1'},
+  {id:'cover',name:'엄호',icon:'◇',art:2,min:1,energy:0,block:3,target:true,cooldown:1,desc:'선택한 영웅 방어 3'},
+  {id:'volley',name:'일제 사격',icon:'➶',art:0,color:0,min:5,energy:2,physical:7,pierce:2,cooldown:2,level:3,desc:'물리 피해 7 · 갑옷 2 관통'}
+ ],
+ [
+  {id:'heal',name:'치유의 빛',icon:'✚',art:0,color:1,min:1,energy:1,heal:3,target:true,cooldown:0,desc:'선택한 영웅 HP 3 + 치유 수치'},
+  {id:'ward',name:'보호의 기도',icon:'◇',art:1,color:2,min:1,energy:0,block:4,target:true,cooldown:1,desc:'선택한 영웅 방어 4'},
+  {id:'smite',name:'심판',icon:'✦',art:2,color:1,min:3,energy:0,magic:3,cooldown:1,desc:'마법 피해 3'},
+  {id:'salvation',name:'구원의 빛',icon:'✚',art:0,min:5,energy:2,heal:4,all:true,cooldown:2,level:3,desc:'살아 있는 참여 영웅 전원 HP 4 + 치유'}
+ ]
+];
+function technique(s,owner,id){return techniques[s.heroes[owner]?.classId]?.find(t=>t.id===id);}
+function skillReason(s,owner,id,index,target=owner){
+ const b=s.battle,t=technique(s,owner,id),h=s.heroes[owner],d=b?.dice[index];
+ if(!Number.isInteger(owner)||!Number.isInteger(index)||!Number.isInteger(target)||!b||b.phase!=='rolled'||!b.participants.includes(owner)||!t||h.hp<=0)return '주사위를 굴린 뒤 살아 있는 영웅의 기술을 선택하세요.';
+ if(level(h)<(t.level||1))return '레벨 '+t.level+'에 해금됩니다.';
+ if((b.cooldowns?.[owner+':'+id]||0)>b.round)return '재사용 대기가 끝나면 사용할 수 있습니다.';
+ if(!d||d.hero!==owner)return '이 영웅의 주사위를 선택하세요.';
+ if(t.color!==undefined&&d.color!==t.color||d.value<(t.min||1)||d.value>(t.max||6))return '기술의 색과 눈 조건에 맞는 주사위가 필요합니다.';
+ if(!b.participants.includes(target)||s.heroes[target].hp<=0||!t.target&&target!==owner)return '살아 있는 참여 영웅을 대상으로 선택하세요.';
+ if((b.assignments||[]).some(a=>a.index===index&&!(a.owner===owner&&a.id===id)))return '이미 다른 기술에 배치한 주사위입니다.';
+ const cost=(b.assignments||[]).filter(a=>a.owner===owner&&a.id!==id).reduce((n,a)=>n+technique(s,owner,a.id).energy,0)+t.energy;
+ if(h.energy<cost)return '배치한 기술의 에너지 합계가 부족합니다.';
+ return '';
+}
+function tacticalPreview(s){
+ const b=s.battle,e=s.enemies.find(e=>e.id===b.enemy),base=preview(s),assignments=b.assignments||[],heals={},costs={},restores={};let physical=base.physical,magic=base.magic,pierce=0,weaken=0;const blocks={...base.blocks};
+ for(const a of assignments){const t=technique(s,a.owner,a.id);physical+=t.physical||0;magic+=t.magic||0;pierce+=t.pierce||0;weaken+=t.weaken||0;blocks[a.target]=(blocks[a.target]||0)+(t.block||0);costs[a.owner]=(costs[a.owner]||0)+t.energy;restores[a.owner]=(restores[a.owner]||0)+(t.restore||0);
+  if(t.heal)for(const j of t.all?b.participants.filter(i=>s.heroes[i].hp>0):[a.target])heals[j]=(heals[j]||0)+t.heal+stats(s.heroes[a.owner]).heal;
+ }
+ for(const i of b.participants.filter(i=>s.heroes[i].hp>0))if(b.stances[i]==='recover')for(const j of b.participants.filter(j=>s.heroes[j].hp>0))heals[j]=(heals[j]||0)+2+stats(s.heroes[i]).heal;
+ for(const i of b.participants)if(heals[i])heals[i]=Math.min(heals[i],Math.max(0,stats(s.heroes[i]).hp-s.heroes[i].hp));
+ const damage=Math.max(0,physical-Math.max(0,e.armor-pierce))+Math.max(0,magic-e.ward),attack=intent(s),living=b.participants.filter(i=>s.heroes[i].hp>0),front=living.reduce((a,i)=>a===null||stats(s.heroes[i]).armor+(blocks[i]||0)>stats(s.heroes[a]).armor+(blocks[a]||0)?i:a,null),incoming={},after={};
+ for(const i of living){const h=s.heroes[i],recovered=Math.min(stats(h).hp,h.hp+(heals[i]||0));incoming[i]=e.hp<=damage||!attack.all&&front!==i?0:Math.max(0,attack.damage-weaken-stats(h).armor-(attack.pierce?0:blocks[i]||0));after[i]=Math.max(0,recovered-incoming[i]);}
+ return {physical,magic,damage,blocks,heals,costs,restores,weaken,front,incoming,after};
+}
+
 const locations={
  C5:{name:'황금들 마을',short:'황금들 마을',kind:'town',tier:1,x:51,y:87,desc:'여관 · 퀘스트 보고 · 상점'},
  A4:{name:'숲의 야영지',short:'숲의 야영지',kind:'town',tier:1,x:14,y:71,desc:'북쪽 사냥터의 회복·보급 거점'},
  E5:{name:'항구 도시',short:'항구 도시',kind:'town',tier:1,x:86,y:87,desc:'해안길과 광산 탐험의 보급 거점'},
  C4:{name:'햇살 초원',short:'햇살 초원',kind:'gather',tier:1,x:51,y:70,desc:'약초 수집 · 서쪽 다리와 동쪽 가도의 갈림길'},
- A2:{name:'가시숲',short:'가시숲',kind:'enemy',tier:1,x:14,y:29,desc:'Lv.1 · 늑대를 처치하면 북쪽 숲길 개방'},
+ A2:{name:'가시숲',short:'가시숲',kind:'enemy',tier:1,x:11,y:17,desc:'Lv.1 · 늑대를 처치하면 북쪽 숲길 개방'},
  E3:{name:'철광산',short:'철광산',kind:'enemy',tier:2,x:86,y:53,desc:'Lv.2 · 트롤을 처치하면 유적 계단 개방'},
- B1:{name:'망령 성채',short:'망령 성채',kind:'enemy',tier:3,x:32,y:12,desc:'Lv.3 · 망령을 처치하면 용의 둥지로 가는 회랑 개방'},
- C2:{name:'잊힌 제단',short:'잊힌 제단',kind:'gather',tier:2,x:51,y:29,desc:'유물 조사 · 서쪽 숲길과 북쪽 능선의 교차점'},
+ B1:{name:'망령 성채',short:'망령 성채',kind:'enemy',tier:3,x:31,y:18,desc:'Lv.3 · 망령을 처치하면 용의 둥지로 가는 회랑 개방'},
+ C2:{name:'잊힌 제단',short:'잊힌 제단',kind:'gather',tier:2,x:53,y:20,desc:'유물 조사 · 서쪽 숲길과 북쪽 능선의 교차점'},
  E2:{name:'별빛 유적',short:'별빛 유적',kind:'gather',tier:2,x:86,y:30,desc:'보급을 소비하는 탐사 · 광산 위쪽 산지'},
- D1:{name:'잿빛 용의 둥지',short:'용의 둥지',kind:'boss',tier:4,x:72,y:12,desc:'봉인 2개 · 현재 영웅 Lv.3부터 진입'},
+ D1:{name:'잿빛 용의 둥지',short:'용의 둥지',kind:'boss',tier:4,x:73,y:12,desc:'봉인 2개 · 현재 영웅 Lv.3부터 진입'},
  C3:{name:'바위 고개',short:'바위 고개',kind:'mountain',tier:2,x:51,y:50,desc:'Lv.2부터 이용 · 제단 방면은 행동 2·보급 1'},
  B4:{name:'버들 돌다리',short:'버들 돌다리',kind:'bridge',tier:1,x:32,y:70,desc:'강을 안전하게 건너는 유일한 서쪽 다리'},
  A3:{name:'순찰자의 길',short:'순찰자의 길',kind:'road',tier:1,x:14,y:51,desc:'야영지와 가시숲을 잇는 안전한 숲길'},
@@ -115,7 +169,7 @@ function canEngage(s){const h=hero(s),e=s.enemies.find(e=>e.pos===h.pos&&e.hp>0)
 function engage(s){world(s);const h=hero(s),e=s.enemies.find(e=>e.pos===h.pos&&e.hp>0);if(!e)throw Error('이 지역에는 살아 있는 적이 없습니다.');if(!canEngage(s))throw Error('용의 봉인 2개와 현재 영웅 레벨 3이 필요합니다.');
  const participants=s.heroes.map((x,i)=>x.pos===h.pos&&x.hp>0?i:-1).filter(i=>i>=0);
  if(!e.scaled){e.max=e.hp=Math.max(1,e.max+(participants.length-1)*(e.id==='dragon'?14:5)-(e.id==='dragon'&&s.seals===3?6:0));e.scaled=true;}
- s.actions--;s.battle={enemy:e.id,participants,round:1,phase:'plan',dice:[],stances:Object.fromEntries(participants.map(i=>[i,'assault'])),rerolls:0};s.lastResult=null;log(s,`${e.name} 전투 시작 · 참여 ${participants.map(i=>classes[s.heroes[i].classId].name).join(', ')}`);
+ s.actions--;s.battle={enemy:e.id,participants,round:1,phase:'plan',dice:[],stances:Object.fromEntries(participants.map(i=>[i,'assault'])),rerolls:0,assignments:[],cooldowns:{}};s.lastResult=null;log(s,`${e.name} 전투 시작 · 참여 ${participants.map(i=>classes[s.heroes[i].classId].name).join(', ')}`);
 }
 function intent(s){const b=s.battle;if(!b)return null;const e=s.enemies.find(e=>e.id===b.enemy),r=b.round,angry=e.id==='dragon'&&e.hp<=e.max/2,bonus=(s.rageUntil>=s.round?1:0)+(angry?2:0);
  if(e.id==='wolf')return r%2===0?{name:'출혈의 송곳니',damage:3+bonus,pierce:true,all:false,desc:'방어 주사위 무시'}:{name:'사냥의 도약',damage:3+bonus,all:false,desc:'전열 영웅 공격'};
@@ -124,8 +178,15 @@ function intent(s){const b=s.battle;if(!b)return null;const e=s.enemies.find(e=>
  return r%3===0?{name:'용의 화염 숨결',damage:5+bonus,all:true,desc:'참여한 모든 영웅 공격'}:{name:angry?'격노의 발톱':'거대한 발톱',damage:6+bonus,all:false,desc:angry?'격노 · 피해 +2':'전열 영웅 공격'};
 }
 function pool(s,index,stance){const st=stats(s.heroes[index]);return [st.red+(stance==='assault'?1:0),st.blue+(stance==='focus'?2:0),st.green+(stance==='guard'?2:stance==='recover'?1:0)];}
-function preview(s){if(!s.battle)return null;const b=s.battle,e=s.enemies.find(e=>e.id===b.enemy);let physical=0,magic=0,blocks={};for(const d of b.dice){const st=stats(s.heroes[d.hero]);if(d.color===0&&d.value>=4)physical+=2+(d.value===6?st.crit:0);if(d.color===1&&d.value>=3)magic+=1+(d.value===6?1+st.crit:0);if(d.color===2&&d.value>=4)blocks[d.hero]=(blocks[d.hero]||0)+2;}return {physical,magic,damage:Math.max(0,physical-e.armor)+Math.max(0,magic-e.ward),blocks};}
+function preview(s){if(!s.battle)return null;const b=s.battle,e=s.enemies.find(e=>e.id===b.enemy);let physical=0,magic=0,blocks={};for(const [index,d] of b.dice.entries()){if((b.assignments||[]).some(a=>a.index===index))continue;const st=stats(s.heroes[d.hero]);if(d.color===0&&d.value>=4)physical+=2+(d.value===6?st.crit:0);if(d.color===1&&d.value>=3)magic+=1+(d.value===6?1+st.crit:0);if(d.color===2&&d.value>=4)blocks[d.hero]=(blocks[d.hero]||0)+2;}return {physical,magic,damage:Math.max(0,physical-e.armor)+Math.max(0,magic-e.ward),blocks};}
 function battleAction(s,type,arg,random){const b=s.battle;if(!b||s.outcome)throw Error('진행 중인 전투가 없습니다.');const e=s.enemies.find(x=>x.id===b.enemy);
+ if(type==='assign'){
+  const target=arg.target??arg.owner,reason=skillReason(s,arg.owner,arg.id,arg.index,target);if(reason)throw Error(reason);
+  b.assignments=(b.assignments||[]).filter(a=>!(a.owner===arg.owner&&a.id===arg.id));b.assignments.push({owner:arg.owner,id:arg.id,index:arg.index,target});return;
+ }
+ if(type==='unassign'){
+  if(b.phase!=='rolled')throw Error('배치는 실행 전에만 바꿀 수 있습니다.');b.assignments=(b.assignments||[]).filter(a=>!(a.owner===arg.owner&&a.id===arg.id));return;
+ }
  if(type==='stance'){
   if(b.phase!=='plan'||!b.participants.includes(arg.hero)||!['assault','focus','guard','recover'].includes(arg.stance)||s.heroes[arg.hero].hp<=0)throw Error('전투 준비 중인 영웅과 태세를 선택하세요.');
   if(['focus','recover'].includes(arg.stance)&&s.heroes[arg.hero].energy<1)throw Error('이 태세에는 에너지 1이 필요합니다.');b.stances[arg.hero]=arg.stance;return;
@@ -133,12 +194,12 @@ function battleAction(s,type,arg,random){const b=s.battle;if(!b||s.outcome)throw
  if(type==='roll'){
   if(b.phase!=='plan')throw Error('이미 주사위를 굴렸습니다.');
   for(const i of b.participants.filter(i=>s.heroes[i].hp>0)){const h=s.heroes[i],stance=b.stances[i];if(['focus','recover'].includes(stance)&&h.energy<1)throw Error('태세를 변경하세요. 에너지가 부족합니다.');}
-  b.dice=[];b.rerolls=0;
+  b.dice=[];b.assignments=[];b.rerolls=0;
   for(const i of b.participants.filter(i=>s.heroes[i].hp>0)){const h=s.heroes[i],stance=b.stances[i];if(['focus','recover'].includes(stance))h.energy--;pool(s,i,stance).forEach((n,color)=>{for(let j=0;j<n;j++)b.dice.push({hero:i,color,value:1+Math.floor(random()*6),rerolled:false});});}
   b.phase='rolled';log(s,`전투 ${b.round}: 주사위 ${b.dice.length}개 · 실패한 주사위를 선택해 재굴림할 수 있습니다.`);return;
  }
  if(type==='reroll'){
-  const d=b.dice[arg.index];if(b.phase!=='rolled'||!d||d.rerolled)throw Error('아직 재굴림하지 않은 주사위를 선택하세요.');const h=s.heroes[d.hero];const used=b.dice.filter(x=>x.hero===d.hero&&x.rerolled).length;if(h.energy<1||used>=stats(h).rerolls)throw Error('에너지 또는 해당 영웅의 재굴림 한도가 부족합니다.');h.energy--;d.value=1+Math.floor(random()*6);d.rerolled=true;b.rerolls++;return;
+  const d=b.dice[arg.index];if((b.assignments||[]).some(a=>a.index===arg.index))throw Error('기술 배치를 취소한 뒤 재굴림하세요.');if(b.phase!=='rolled'||!d||d.rerolled)throw Error('아직 재굴림하지 않은 주사위를 선택하세요.');const h=s.heroes[d.hero];const used=b.dice.filter(x=>x.hero===d.hero&&x.rerolled).length;if(h.energy<1+(b.assignments||[]).filter(a=>a.owner===d.hero).reduce((n,a)=>n+technique(s,a.owner,a.id).energy,0)||used>=stats(h).rerolls)throw Error('에너지 또는 해당 영웅의 재굴림 한도가 부족합니다.');h.energy--;d.value=1+Math.floor(random()*6);d.rerolled=true;b.rerolls++;return;
  }
  if(type==='retreat'){
   if(b.phase!=='plan')throw Error('주사위를 굴린 후에는 전투 라운드를 먼저 해결하세요.');
@@ -147,11 +208,10 @@ function battleAction(s,type,arg,random){const b=s.battle;if(!b||s.outcome)throw
   s.battle=null;s.actions=0;s.lastResult={title:'후퇴',text:'참여 영웅이 체력 2를 잃고 마을로 귀환했습니다. 남은 행동을 포기합니다.'};log(s,s.lastResult.text);return;
  }
  if(type!=='resolve'||b.phase!=='rolled')throw Error('주사위를 굴린 뒤 결과를 해결하세요.');
- const p=preview(s),attack=intent(s);e.hp=Math.max(0,e.hp-p.damage);let healing=0,received=0;
- for(const i of b.participants.filter(i=>s.heroes[i].hp>0))if(b.stances[i]==='recover'){
-  const amount=2+stats(s.heroes[i]).heal;
-  for(const j of b.participants.filter(j=>s.heroes[j].hp>0)){const h=s.heroes[j],before=h.hp;h.hp=Math.min(stats(h).hp,h.hp+amount);healing+=h.hp-before;}
- }
+ for(const a of b.assignments||[]){const reason=skillReason(s,a.owner,a.id,a.index,a.target);if(reason)throw Error(reason);}
+ const p=tacticalPreview(s),attack=intent(s);e.hp=Math.max(0,e.hp-p.damage);let healing=0,received=0;
+ for(const i of b.participants){const h=s.heroes[i];h.energy=Math.min(4,h.energy-(p.costs[i]||0)+(p.restores[i]||0));if(h.hp>0){const before=h.hp;h.hp=Math.min(stats(h).hp,h.hp+(p.heals[i]||0));healing+=h.hp-before;}}
+ for(const a of b.assignments||[]){const t=technique(s,a.owner,a.id);b.cooldowns??={};b.cooldowns[a.owner+':'+a.id]=b.round+t.cooldown+1;log(s,classes[s.heroes[a.owner].classId].name+' · '+t.name);}
  log(s,`${e.name}에게 피해 ${p.damage} (물리 ${p.physical} / 마법 ${p.magic})`);
  if(e.hp===0){
   for(const i of b.participants){const h=s.heroes[i];gainXP(s,h,e.tier);h.gold+=e.tier;h.kills.push(e.id);h.quests.filter(q=>quests.find(x=>x.id===q.id)?.pos===e.pos).forEach(q=>ready(s,h,q));}
@@ -160,14 +220,14 @@ function battleAction(s,type,arg,random){const b=s.battle;if(!b||s.outcome)throw
  }
  const living=b.participants.filter(i=>s.heroes[i].hp>0);
  const front=living.reduce((a,i)=>a===null||stats(s.heroes[i]).armor+(p.blocks[i]||0)>stats(s.heroes[a]).armor+(p.blocks[a]||0)?i:a,null);
- for(const i of attack.all?living:[front])if(i!==null){const h=s.heroes[i],amount=Math.max(0,attack.damage-stats(h).armor-(attack.pierce?0:p.blocks[i]||0));const lost=Math.min(h.hp,amount);h.hp-=lost;h.energy=Math.max(0,h.energy-(attack.drain||0));received+=lost;}
+ for(const i of attack.all?living:[front])if(i!==null){const h=s.heroes[i],amount=Math.max(0,attack.damage-p.weaken-stats(h).armor-(attack.pierce?0:p.blocks[i]||0));const lost=Math.min(h.hp,amount);h.hp-=lost;h.energy=Math.max(0,h.energy-(attack.drain||0));received+=lost;}
  if(attack.regen)e.hp=Math.min(e.max,e.hp+attack.regen);
  s.lastResult={title:`공격 ${p.damage} · 받은 피해 ${received}`,text:`${attack.name}${healing?' · 파티 치유 '+healing:''}`,damage:p.damage,received};log(s,s.lastResult.title+' · '+s.lastResult.text);
  if(b.participants.every(i=>s.heroes[i].hp===0)){
   if(s.heroes.every(h=>h.hp===0)){s.outcome='lose';log(s,'모든 영웅이 쓰러졌습니다.');}
   else{for(const i of b.participants){s.heroes[i].pos='C5';s.heroes[i].hp=4;}s.actions=0;log(s,'전투 파티 패배 · 마을에서 회복하세요.');}s.battle=null;return;
  }
- b.round++;b.phase='plan';b.dice=[];
+ b.round++;b.phase='plan';b.dice=[];b.assignments=[];
  if(b.round>8){s.battle=null;s.actions=0;for(const i of b.participants)if(s.heroes[i].hp>0)s.heroes[i].pos='C5';log(s,'8회 교전으로 적의 지원군 도착 · 마을로 철수');s.lastResult={title:'지원군 도착',text:'8회 안에 적을 처치하지 못해 마을로 철수했습니다. 장비와 특성을 보강하세요.'};}
 }
 function end(s){if(s.outcome)throw Error('캠페인이 끝났습니다.');if(s.battle)throw Error('전투를 먼저 해결하세요.');s.turn++;s.lastResult=null;
@@ -177,7 +237,7 @@ function end(s){if(s.outcome)throw Error('캠페인이 끝났습니다.');if(s.b
  s.active=s.order[s.turn];const h=hero(s);s.actions=s.heroes.length===1?4:3;h.energy=Math.min(4,h.energy+1);if(h.hp===0){h.pos='C5';h.hp=4;s.actions=0;log(s,'마을에서 부활 · 이번 차례는 회복');}log(s,`${classes[h.classId].name}의 차례 · 라운드 ${s.round}`);
 }
 function apply(s,type,arg={},random=Math.random){
- if(['stance','roll','reroll','resolve','retreat'].includes(type))return battleAction(s,type,arg,random);
+ if(['stance','roll','reroll','resolve','retreat','assign','unassign'].includes(type))return battleAction(s,type,arg,random);
  if(type==='engage')return engage(s);if(type==='end')return end(s);
  const free=['accept','abandon','equip','talent'].includes(type);world(s,free?0:1);const h=hero(s);
  if(type==='move'){
@@ -277,8 +337,14 @@ function validate(s){
   if(!Array.isArray(s.enemies)||s.enemies.length!==4||new Set(s.enemies.map(e=>e.id)).size!==4||s.enemies.some(e=>!enemyDefs.some(d=>d.id===e.id&&d.pos===e.pos)||!integer(e.hp)||!integer(e.max,1)||e.hp>e.max||!integer(e.armor)||!integer(e.ward)))return false;
   if(!Array.isArray(s.log)||s.log.some(t=>typeof t!=='string')||!Array.isArray(s.eventDeck)||s.eventDeck.length!==6||new Set(s.eventDeck).size!==6||s.eventDeck.some(id=>!integer(id,0,5))||s.event!==null&&!integer(s.event,0,5)||!integer(s.rageUntil))return false;
   if(s.battle){const b=s.battle;if(!['plan','rolled'].includes(b.phase)||!integer(b.round,1,8)||!Array.isArray(b.participants)||!b.participants.length||new Set(b.participants).size!==b.participants.length||b.participants.some(i=>!integer(i,0,s.heroes.length-1))||!s.enemies.some(e=>e.id===b.enemy&&e.hp>0)||!b.stances||b.participants.some(i=>!['assault','focus','guard','recover'].includes(b.stances[i]))||!Array.isArray(b.dice)||b.dice.some(d=>!b.participants.includes(d.hero)||!integer(d.color,0,2)||!integer(d.value,1,6)||typeof d.rerolled!=='boolean'))return false;}
+  if(s.battle){const b=s.battle;
+   if(b.cooldowns!==undefined&&(typeof b.cooldowns!=='object'||b.cooldowns===null||Array.isArray(b.cooldowns)||Object.entries(b.cooldowns).some(([key,v])=>{const [owner,id]=key.split(':');return !b.participants.includes(Number(owner))||!technique(s,Number(owner),id)||!integer(v,1,12);})))return false;
+   if(b.assignments!==undefined){if(!Array.isArray(b.assignments)||b.assignments.length>16||new Set(b.assignments.map(a=>a.index)).size!==b.assignments.length||new Set(b.assignments.map(a=>a.owner+':'+a.id)).size!==b.assignments.length)return false;
+    for(const a of b.assignments)if(!integer(a.owner,0,s.heroes.length-1)||!integer(a.index,0,b.dice.length-1)||!integer(a.target,0,s.heroes.length-1)||typeof a.id!=='string'||skillReason(s,a.owner,a.id,a.index,a.target))return false;
+   }
+  }
   return true;
  }catch{return false;}
 }
-const api={classes,gear,talents,locations,routes,quests,enemyDefs,events,dist,valid,town,hero,level,stats,create,apply,intent,pool,preview,canEngage,travelInfo,paths,upgradeMap,validate};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Elderfall=api;
+const api={classes,gear,talents,techniques,technique,skillReason,tacticalPreview,locations,routes,quests,enemyDefs,events,dist,valid,town,hero,level,stats,create,apply,intent,pool,preview,canEngage,travelInfo,paths,upgradeMap,validate};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Elderfall=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
