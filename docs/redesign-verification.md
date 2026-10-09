@@ -38,3 +38,9 @@
 ## 화면 자료
 
 [승인된 예시 시안](screenshots/approved-concept.png) · [탐험 구현](screenshots/exploration-v07.png) · [전투 구현](screenshots/combat-v07.png) · [보상 구현](screenshots/rewards-v07.png)
+
+## 공개 배포 확인
+
+GitHub Pages 실행 `37885807727`이 성공했다. 배포 커밋은 `bd1e0fb4b335d969223610a6d7242b069dddf3af`이다. `scripts/verify_public.py`로 공개 HTTPS 파일 10개의 SHA256이 검증한 로컬 파일과 일치함을 확인했다. 그 배포 파일로 전투 체험의 배치·실행·예상 체력, 실제 캠페인 시작과 보상 선택도 확인했다.
+
+클라우드 Chromium의 프록시 인증서 신뢰 저장소 제약으로, Python의 시스템 인증서 검증을 통과한 공개 파일을 Chromium에 그대로 제공해 검사했다. TLS 검증을 끄지 않았다. 실제 iPad Safari의 직접 접속 검사는 여전히 별도다.
