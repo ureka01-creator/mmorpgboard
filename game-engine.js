@@ -31,10 +31,46 @@ const talentNames=[['무기 숙련','방패 숙련','피의 칼날','불굴','�
 const effectLabels={red:'공격 주사위',blue:'마법 주사위',green:'방어 주사위',crit:'6의 추가 피해',armor:'받는 피해 감소',rerolls:'재굴림 한도',heal:'회복 태세 치유'};
 const talents=classes.map((c,ci)=>talentNames[ci].map((name,i)=>({name,tier:Math.floor(i/2)+2,path:c.paths[i%2],[talentEffects[ci][i][0]]:talentEffects[ci][i][1],desc:effectLabels[talentEffects[ci][i][0]]+' +'+talentEffects[ci][i][1]})));
 const locations={
- C5:{name:'황금들 마을',kind:'town',desc:'여관 · 퀘스트 보고 · 상점'},A4:{name:'숲의 야영지',kind:'town',desc:'북쪽 모험의 보급 거점'},E5:{name:'항구 도시',kind:'town',desc:'동쪽 광산으로 향하는 교역소'},
- C4:{name:'햇살 초원',kind:'gather',desc:'약초 수집 · 입문 퀘스트'},A2:{name:'가시숲',kind:'enemy',desc:'Lv.1 · 늑대는 방어를 무너뜨립니다'},E3:{name:'철광산',kind:'enemy',desc:'Lv.2 · 트롤의 갑옷과 재생'},B1:{name:'망령 성채',kind:'enemy',desc:'Lv.3 · 마법을 막는 망령 기사'},
- C2:{name:'잊힌 제단',kind:'gather',desc:'유물 조사 · 에너지 소모'},E2:{name:'별빛 유적',kind:'gather',desc:'보급을 소비하는 탐사'},D1:{name:'잿빛 용의 둥지',kind:'boss',desc:'봉인 2개 · 레벨 3부터 레이드'},C3:{name:'바위 고개',kind:'mountain',desc:'험한 길 · 이동에 행동 2개'}
+ C5:{name:'황금들 마을',short:'황금들 마을',kind:'town',tier:1,x:51,y:87,desc:'여관 · 퀘스트 보고 · 상점'},
+ A4:{name:'숲의 야영지',short:'숲의 야영지',kind:'town',tier:1,x:14,y:71,desc:'북쪽 사냥터의 회복·보급 거점'},
+ E5:{name:'항구 도시',short:'항구 도시',kind:'town',tier:1,x:86,y:87,desc:'해안길과 광산 탐험의 보급 거점'},
+ C4:{name:'햇살 초원',short:'햇살 초원',kind:'gather',tier:1,x:51,y:70,desc:'약초 수집 · 서쪽 다리와 동쪽 가도의 갈림길'},
+ A2:{name:'가시숲',short:'가시숲',kind:'enemy',tier:1,x:14,y:29,desc:'Lv.1 · 늑대를 처치하면 북쪽 숲길 개방'},
+ E3:{name:'철광산',short:'철광산',kind:'enemy',tier:2,x:86,y:53,desc:'Lv.2 · 트롤을 처치하면 유적 계단 개방'},
+ B1:{name:'망령 성채',short:'망령 성채',kind:'enemy',tier:3,x:32,y:12,desc:'Lv.3 · 망령을 처치하면 용의 둥지로 가는 회랑 개방'},
+ C2:{name:'잊힌 제단',short:'잊힌 제단',kind:'gather',tier:2,x:51,y:29,desc:'유물 조사 · 서쪽 숲길과 북쪽 능선의 교차점'},
+ E2:{name:'별빛 유적',short:'별빛 유적',kind:'gather',tier:2,x:86,y:30,desc:'보급을 소비하는 탐사 · 광산 위쪽 산지'},
+ D1:{name:'잿빛 용의 둥지',short:'용의 둥지',kind:'boss',tier:4,x:72,y:12,desc:'봉인 2개 · 현재 영웅 Lv.3부터 진입'},
+ C3:{name:'바위 고개',short:'바위 고개',kind:'mountain',tier:2,x:51,y:50,desc:'Lv.2부터 이용 · 제단 방면은 행동 2·보급 1'},
+ B4:{name:'버들 돌다리',short:'버들 돌다리',kind:'bridge',tier:1,x:32,y:70,desc:'강을 안전하게 건너는 유일한 서쪽 다리'},
+ A3:{name:'순찰자의 길',short:'순찰자의 길',kind:'road',tier:1,x:14,y:51,desc:'야영지와 가시숲을 잇는 안전한 숲길'},
+ B2:{name:'안개 분지',short:'안개 분지',kind:'wild',tier:2,x:32,y:30,desc:'북쪽 사냥터와 제단의 연결 지역'},
+ D4:{name:'동부 가도',short:'동부 가도',kind:'road',tier:1,x:70,y:70,desc:'항구의 안전한 우회로 · 광산의 여울 지름길'},
+ D2:{name:'화산 관문',short:'화산 관문',kind:'wild',tier:3,x:70,y:30,desc:'용의 둥지로 향하는 마지막 야영 지점'}
 };
+// This graph is the authoritative map. Coordinates are IDs, never grid adjacency.
+const routes=[
+ {a:'C5',b:'C4',name:'마을길',kind:'road',cost:1},
+ {a:'C4',b:'B4',name:'버들 다리',kind:'bridge',cost:1},
+ {a:'B4',b:'A4',name:'야영지 가도',kind:'road',cost:1},
+ {a:'A4',b:'A3',name:'순찰로',kind:'road',cost:1},
+ {a:'A3',b:'A2',name:'남쪽 숲길',kind:'road',cost:1},
+ {a:'A2',b:'B2',name:'늑대의 통로',kind:'guarded',cost:1,guard:'wolf'},
+ {a:'B2',b:'C2',name:'제단길',kind:'road',cost:1},
+ {a:'B2',b:'B1',name:'폐허 계단',kind:'danger',cost:1,damage:1},
+ {a:'C4',b:'C3',name:'고개 진입로',kind:'mountain',cost:1,minLevel:2},
+ {a:'C3',b:'C2',name:'바위 고개',kind:'mountain',cost:2,supply:1,minLevel:2},
+ {a:'C4',b:'D4',name:'동부 가도',kind:'road',cost:1},
+ {a:'D4',b:'E5',name:'항구 가도',kind:'road',cost:1},
+ {a:'E5',b:'E3',name:'해안 우회로',kind:'road',cost:2},
+ {a:'D4',b:'E3',name:'급류 여울',kind:'ford',cost:1,supply:1,damage:2},
+ {a:'E3',b:'E2',name:'광산 위 계단',kind:'guarded',cost:1,guard:'troll'},
+ {a:'E2',b:'D2',name:'유적 능선',kind:'road',cost:1},
+ {a:'C2',b:'D2',name:'북쪽 고갯길',kind:'mountain',cost:2,supply:1,minLevel:2},
+ {a:'D2',b:'D1',name:'잿빛 화산길',kind:'danger',cost:1,damage:2},
+ {a:'B1',b:'D1',name:'옛 왕의 회랑',kind:'guarded',cost:1,guard:'knight'},
+ {a:'C3',b:'D4',name:'사냥꾼의 비탈',kind:'danger',cost:1,damage:2,minLevel:2}
+];
 const quests=[
  {id:'herbs',name:'마을의 약초사',type:'gather',pos:'C4',level:1,xp:2,gold:3,choices:[0,1,2,3],desc:'햇살 초원에서 약초를 채집한 뒤 거점에 보고하세요.'},
  {id:'caravan',name:'북쪽으로 가는 상단',type:'escort',pos:'A4',level:1,xp:2,gold:4,choices:[4,5],desc:'보급 1개를 챙겨 숲의 야영지까지 상단을 호위하세요. 출발은 황금들 마을에서만 가능합니다.'},
@@ -59,7 +95,7 @@ const events=[
  {name:'길 위의 순례자',desc:'모든 영웅 체력 +2',kind:'heal'}
 ];
 const dist=(a,b)=>Math.abs(a.charCodeAt(0)-b.charCodeAt(0))+Math.abs(Number(a[1])-Number(b[1]));
-const valid=pos=>typeof pos==='string'&&/^[A-E][1-5]$/.test(pos);
+const valid=pos=>typeof pos==='string'&&Object.hasOwn(locations,pos);
 const town=pos=>locations[pos]?.kind==='town';
 const hero=s=>s.heroes[s.active];
 const level=h=>h.xp>=12?4:h.xp>=6?3:h.xp>=2?2:1;
@@ -68,7 +104,7 @@ function log(s,text){s.log.unshift(text);s.log=s.log.slice(0,60);}
 function gainXP(s,h,n){const old=level(h);h.xp+=n;const diff=level(h)-old;if(diff){h.points+=diff;if(h.hp>0)h.hp+=diff*2;log(s,`${classes[h.classId].name} 레벨 ${level(h)}! 특성 ${diff}개를 선택하세요.`);}}
 function create(ids,random=Math.random){
  if(!Array.isArray(ids)||ids.length<1||ids.length>4||new Set(ids).size!==ids.length||ids.some(i=>!Number.isInteger(i)||!classes[i]))throw Error('서로 다른 직업 1~4개를 선택하세요.');
- const s={version:2,heroes:ids.map(classId=>({classId,pos:'C5',hp:classes[classId].hp,energy:4,gold:4,supply:2,potions:1,xp:0,points:0,talents:[],equipment:{weapon:null,armor:null,trinket:null},bag:[],quests:[{id:'herbs',ready:false}],completed:[],kills:[]})),enemies:enemyDefs.map(e=>({...e,hp:e.hp,max:e.hp})),round:1,turn:0,active:0,order:ids.map((_,i)=>i),actions:ids.length===1?4:3,seals:0,battle:null,outcome:null,log:[],event:null,eventDeck:[0,1,2,3,4,5],rageUntil:0,lastResult:null};
+ const s={version:2,mapVersion:1,heroes:ids.map(classId=>({classId,pos:'C5',hp:classes[classId].hp,energy:4,gold:4,supply:2,potions:1,xp:0,points:0,talents:[],equipment:{weapon:null,armor:null,trinket:null},bag:[],quests:[{id:'herbs',ready:false}],completed:[],kills:[]})),enemies:enemyDefs.map(e=>({...e,hp:e.hp,max:e.hp})),round:1,turn:0,active:0,order:ids.map((_,i)=>i),actions:ids.length===1?4:3,seals:0,battle:null,outcome:null,log:[],event:null,eventDeck:[0,1,2,3,4,5],rageUntil:0,lastResult:null};
  for(let i=s.eventDeck.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[s.eventDeck[i],s.eventDeck[j]]=[s.eventDeck[j],s.eventDeck[i]];}
  log(s,'캠페인 시작 · 약초 퀘스트 수락 · 20라운드 안에 잿빛 용을 처치하세요.');return s;
 }
@@ -145,7 +181,9 @@ function apply(s,type,arg={},random=Math.random){
  if(type==='engage')return engage(s);if(type==='end')return end(s);
  const free=['accept','abandon','equip','talent'].includes(type);world(s,free?0:1);const h=hero(s);
  if(type==='move'){
-  const cost=locations[arg.pos]?.kind==='mountain'?2:1;if(!valid(arg.pos)||dist(h.pos,arg.pos)!==1)throw Error('상하좌우 인접 지역을 선택하세요.');world(s,cost);h.pos=arg.pos;s.actions-=cost;log(s,`${classes[h.classId].name} → ${locations[h.pos]?.name||h.pos} · 행동 ${cost}`);
+  const trip=travelInfo(s,arg.pos);if(!trip.ok)throw Error(trip.reason);world(s,trip.cost);
+  h.pos=arg.pos;h.supply-=trip.supply;h.hp-=trip.damage;s.actions-=trip.cost;
+  log(s,`${classes[h.classId].name} → ${locations[h.pos].name} · ${trip.edge.name} · 행동 ${trip.cost}${trip.supply?' · 보급 −'+trip.supply:''}${trip.damage?' · 체력 −'+trip.damage:''}`);
   const escort=questOf(h,'caravan');if(escort&&!escort.ready&&h.pos==='A4')ready(s,h,escort);return;
  }
  if(type==='accept'){
@@ -180,10 +218,53 @@ function apply(s,type,arg={},random=Math.random){
  }
  else throw Error('알 수 없는 행동');s.actions--;
 }
+function travelInfo(s,to,from=hero(s).pos,planning=false){
+ const h=hero(s),edge=routes.find(r=>r.a===from&&r.b===to||r.b===from&&r.a===to);
+ if(!valid(to)||!edge)return {ok:false,reason:'도로·다리·고개로 연결된 지역만 이동할 수 있습니다.',cost:0,supply:0,damage:0};
+ const cost=edge.cost,supply=edge.supply||0;
+ // Underlevel regions are reachable, but impose a visible frontier hazard.
+ const frontier=locations[to].kind==='boss'||locations[to].tier<=locations[from].tier?0:Math.max(0,locations[to].tier-level(h))*2;
+ const damage=(edge.damage||0)+frontier;
+ let reason='';
+ if(s.outcome)reason='캠페인이 끝났습니다.';else if(s.battle)reason='전투를 먼저 해결하거나 후퇴하세요.';
+ else if(h.hp<=0)reason='쓰러진 영웅은 이동할 수 없습니다.';
+ else if(edge.guard&&from===s.enemies.find(e=>e.id===edge.guard)?.pos&&s.enemies.find(e=>e.id===edge.guard)?.hp>0)reason=s.enemies.find(e=>e.id===edge.guard).name+'를 처치해야 통로가 열립니다.';
+ else if(edge.minLevel&&level(h)<edge.minLevel&&locations[to].tier>=locations[from].tier)reason='이 고갯길은 레벨 '+edge.minLevel+'부터 이용할 수 있습니다.';
+ else if(to==='D1'&&(s.seals<2||level(h)<3))reason='용의 둥지 진입에는 봉인 2개와 현재 영웅 레벨 3이 필요합니다.';
+ else if(h.supply<supply)reason='이 경로에는 보급 '+supply+'개가 필요합니다.';
+ else if(h.hp<=damage)reason='이동 피해 '+damage+'를 견딜 체력이 부족합니다. 회복하거나 우회하세요.';
+ else if(!planning&&s.actions<cost)reason='행동 '+cost+'개가 필요합니다. 차례를 마치거나 다른 길을 고르세요.';
+ return {edge,cost,supply,damage,frontier,ok:!reason,reason};
+}
+function paths(s,to){
+ if(!valid(to)||to===hero(s).pos)return [];
+ const found=[],h=hero(s);
+ function visit(pos,nodes,steps,cost,supply,damage){
+  if(found.length>=4000)return;
+  if(pos===to){found.push({nodes,steps,cost,supply,damage});return;}
+  for(const edge of routes.filter(r=>r.a===pos||r.b===pos)){
+   const next=edge.a===pos?edge.b:edge.a;if(nodes.includes(next))continue;
+   const trip=travelInfo(s,next,pos,true);if(!trip.ok||supply+trip.supply>h.supply||damage+trip.damage>=h.hp)continue;
+   visit(next,[...nodes,next],[...steps,trip],cost+trip.cost,supply+trip.supply,damage+trip.damage);
+  }
+ }
+ visit(h.pos,[h.pos],[],0,0,0);
+ const safe=[...found].sort((a,b)=>a.damage-b.damage||a.supply-b.supply||a.cost-b.cost)[0];
+ const fast=[...found].sort((a,b)=>a.cost-b.cost||a.damage-b.damage||a.supply-b.supply)[0];
+ return [safe&&{...safe,label:'안전 우선'},fast&&{...fast,label:'행동 절약'}].filter((x,i,a)=>x&&(i===0||x.nodes.join()!==a[0]?.nodes.join()));
+}
+function upgradeMap(saved){
+ if(saved?.version!==2||saved.mapVersion!==undefined)return saved;
+ const s=JSON.parse(JSON.stringify(saved));if(!Array.isArray(s.heroes))return saved;
+ for(const h of s.heroes){if(typeof h.pos!=='string'||!/^[A-E][1-5]$/.test(h.pos))return saved;
+  if(!valid(h.pos)){const old=h.pos;h.pos=['C5','A4','E5'].sort((a,b)=>dist(old,a)-dist(old,b))[0];log(s,`지도 개편: ${classes[h.classId]?.name||'영웅'} ${old} → ${locations[h.pos].name}. 성장과 장비는 유지했습니다.`);}
+ }
+ s.mapVersion=1;return s;
+}
 function validate(s){
  try{
   const integer=(v,min=0,max=Number.MAX_SAFE_INTEGER)=>Number.isInteger(v)&&v>=min&&v<=max;
-  if(!s||s.version!==2||!Array.isArray(s.heroes)||s.heroes.length<1||s.heroes.length>4||new Set(s.heroes.map(h=>h.classId)).size!==s.heroes.length)return false;
+  if(!s||s.version!==2||s.mapVersion!==1||!Array.isArray(s.heroes)||s.heroes.length<1||s.heroes.length>4||new Set(s.heroes.map(h=>h.classId)).size!==s.heroes.length)return false;
   for(const h of s.heroes){
    if(!integer(h.classId,0,3)||!valid(h.pos)||!integer(h.hp)||!integer(h.xp)||!integer(h.energy,0,4)||!integer(h.gold)||!integer(h.supply)||!integer(h.potions)||!integer(h.points,0,3))return false;
    if(!Array.isArray(h.quests)||h.quests.length>3||h.quests.some(q=>!quests.some(x=>x.id===q.id)||typeof q.ready!=='boolean')||new Set(h.quests.map(q=>q.id)).size!==h.quests.length)return false;
@@ -199,5 +280,5 @@ function validate(s){
   return true;
  }catch{return false;}
 }
-const api={classes,gear,talents,locations,quests,enemyDefs,events,dist,valid,town,hero,level,stats,create,apply,intent,pool,preview,canEngage,validate};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Elderfall=api;
+const api={classes,gear,talents,locations,routes,quests,enemyDefs,events,dist,valid,town,hero,level,stats,create,apply,intent,pool,preview,canEngage,travelInfo,paths,upgradeMap,validate};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.Elderfall=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
