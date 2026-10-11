@@ -7,7 +7,7 @@ BASE='https://ureka01-creator.github.io/mmorpgboard/'
 FILES=['index.html','styles.css','game-engine.js','app.js','assets/world-map.png','assets/realm-map.png','assets/cards.png','assets/gear.png','assets/heroes.png','assets/enemies.png']
 verified={}
 for name in FILES:
- url=BASE+('' if name=='index.html' else name)+'?release=0.7'
+ url=BASE+('' if name=='index.html' else name)+'?release=0.8'
  for attempt in range(4):
   try:
    with urllib.request.urlopen(url,timeout=30) as response:body=response.read()
@@ -29,8 +29,8 @@ with sync_playwright() as pw:
   if name in verified:req.fulfill(status=200,content_type=mimetypes.guess_type(name)[0] or 'application/octet-stream',body=verified[name])
   else:req.fulfill(status=404,body='')
  page.route('https://ureka01-creator.github.io/**',route)
- page.goto(BASE+'?release=0.7',wait_until='networkidle')
- assert page.locator('meta[name="application-version"]').get_attribute('content')=='0.7'
+ page.goto(BASE+'?release=0.8',wait_until='networkidle')
+ assert page.locator('meta[name="application-version"]').get_attribute('content')=='0.8'
  page.click('#demo');page.click('#roll');page.wait_for_function('!busy')
  assert page.evaluate('state.battle.dice.map(d=>d.value).join()')=='5,2,4,4'
  page.click('[data-skill="strike"]');page.click('[data-die="0"]');page.click('[data-skill="protect"]');page.click('[data-die="1"]')
@@ -43,10 +43,15 @@ with sync_playwright() as pw:
  page.click('#demo-exit');page.click('#start')
  assert page.locator('#world-scene').is_visible()
  assert page.locator('.region-node').count()==16
- page.evaluate('E.hero(state).quests[0].ready=true;')
- page.click('header [data-sheet="quests"]');page.click('[data-claim="herbs"]');page.click('[data-reward="1"]');page.click('#loot-confirm')
+ assert page.evaluate('!worldMenuOpen&&document.querySelector("#board").getBoundingClientRect().width===innerWidth&&document.querySelector("#board").getBoundingClientRect().height===innerHeight')
+ page.click('#board [data-region="C4"]');page.click('#explore')
+ assert page.evaluate('!worldMenuOpen&&E.hero(state).pos==="C4"')
+ page.click('#menu-toggle');page.click('#explore')
+ page.click('#board [data-region="C5"]');page.click('#explore')
+ assert page.evaluate('!worldMenuOpen&&E.hero(state).quests[0].ready')
+ page.click('#menu-toggle');page.click('header [data-sheet="quests"]');page.click('[data-claim="herbs"]');page.click('[data-reward="1"]');page.click('#loot-confirm')
  assert page.evaluate('E.hero(state).bag.includes(1)&&E.hero(state).xp===2')
  assert not errors,errors
- page.screenshot(path='/tmp/elderfall-v07-public.png')
+ page.screenshot(path='/tmp/elderfall-v08-public.png')
  browser.close()
-print('PASS public release 0.7: deployment bytes, rehearsal allocation/execution, campaign and reward',flush=True)
+print('PASS public release 0.8: deployment bytes, rehearsal allocation/execution, fullscreen map, sliding menu, travel and reward',flush=True)

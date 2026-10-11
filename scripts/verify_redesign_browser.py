@@ -15,7 +15,10 @@ with sync_playwright() as pw:
  page.goto(URL,wait_until='networkidle')
  def read(js):return page.evaluate(js)
  def click(s):
-  page.locator(s).click();page.wait_for_function('!busy')
+  target=page.locator(s)
+  if read('!!state&&!state.battle') and target.count() and target.first.evaluate('el=>!!el.closest("#drawer-body")') and not read('worldMenuOpen'):
+   page.locator('#menu-toggle').click();page.wait_for_function('document.querySelector("#drawer-body").getBoundingClientRect().bottom<=innerHeight+1')
+  target.click();page.wait_for_function('!busy')
  def fixture(js="state=E.create([0]);E.hero(state).pos='E3';"):
   read("demoMode=false;chosenSkill=null;rerollMode=false;battleHero=0;skillTarget=0;"+js+"render();")
  def inside(s):

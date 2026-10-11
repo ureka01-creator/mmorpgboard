@@ -24,10 +24,16 @@ with sync_playwright() as pw:
     page.screenshot(path='/tmp/elderfall-campaign-home.png')
     def read(js): return page.evaluate(js)
     def click(selector):
-        page.locator(selector).click()
+        target=page.locator(selector)
+        if read('!!state&&!state.battle'):
+            if selector.startswith('#board') and read('worldMenuOpen'): page.locator('#menu-toggle').click()
+            elif target.count() and target.first.evaluate('el=>!!el.closest("#drawer-body")') and not read('worldMenuOpen'):
+                page.locator('#menu-toggle').click()
+                page.wait_for_function('document.querySelector("#drawer-body").getBoundingClientRect().bottom<=innerHeight+1')
+        target.click()
         page.wait_for_function('!busy')
         if selector=='#resolve' and page.locator('#loot').is_visible(): page.locator('#loot-close').click()
-    def sheet(kind): page.locator(f'header [data-sheet="{kind}"]').click()
+    def sheet(kind): click(f'header [data-sheet="{kind}"]')
     def close(): click('#close-sheet')
     def next_if_needed(cost=1):
         if read('state.actions')<cost: click('#end-turn')

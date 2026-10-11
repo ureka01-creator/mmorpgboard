@@ -3,6 +3,7 @@ const E=window.Elderfall,$=s=>document.querySelector(s),SAVE='elderfall-campaign
 const portraits=['knight','mage','ranger','priest'],slotNames={weapon:'무기',armor:'갑옷',trinket:'장신구'},colorNames=['공격','마법','방어'],stanceNames={assault:'강습 · 공격 +1',focus:'집중 · 마법 +2 / 에너지 1',guard:'방어 · 방어 +2',recover:'회복 · 파티 치유 / 에너지 1'};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let state=null,storageAvailable=true,folio=null,inspected=null,pinned=null,resultDismissed=false;
+let worldMenuOpen=false;
 let battleHero=0,chosenSkill=null,skillTarget=null,rerollMode=false,busy=false,fastMotion=false,demoMode=false,campaignBeforeDemo=null,lootQuest=null,lootChoice=null;
 E.classes.forEach((c,i)=>{const label=document.createElement('label');label.className='class-choice';label.innerHTML=`<span class="portrait portrait-${portraits[i]}" aria-hidden="true"></span><input type="checkbox" value="${i}" ${i===0?'checked':''}><strong>${c.name}</strong><small>${c.role}</small>`;$('#class-picker').append(label);});
 function message(text){$('#feedback').textContent=text;clearTimeout(message.timer);message.timer=setTimeout(()=>$('#feedback').textContent='',4200);}
@@ -22,7 +23,7 @@ async function act(type,arg={}){
    if(snapshot.enemy.hp>0){$('#battle-cue').textContent='적 반격 · 영웅 체력 변화';$('#battle-hero-card').classList.add('taking-hit');await pause(450);}
    $('#combat-scene').classList.remove('attack-flash');$('#battle-enemy-card').classList.remove('taking-hit');$('#battle-hero-card').classList.remove('taking-hit');chosenSkill=null;rerollMode=false;
   }
-  render();
+  render();if(['move','explore','rest','end','retreat'].includes(type))setWorldMenu(false);
   if(type==='roll'||type==='reroll'){
    const dice=type==='roll'?[...document.querySelectorAll('.die')]:[document.querySelector(`.die[data-die="${arg.index}"]`)];dice.filter(Boolean).forEach(el=>el.classList.add('rolling'));$('#battle-cue').textContent='주사위를 굴립니다…';await pause(780);dice.filter(Boolean).forEach(el=>el.classList.remove('rolling'));$('#battle-cue').textContent='';
   }
@@ -32,12 +33,36 @@ async function act(type,arg={}){
   return true;
  }catch(e){busy=false;document.body.classList.remove('animating');message(e.message);return false;}
 }
+// Move the existing controls into a bottom drawer; gameplay and saves keep one source of truth.
+function setWorldMenu(open,returnFocus=false){
+ worldMenuOpen=!!open&&!!state&&!state.battle;
+ $('#world-drawer').classList.toggle('open',worldMenuOpen);
+ $('#menu-toggle').setAttribute('aria-expanded',String(worldMenuOpen));
+ $('#drawer-body').inert=!worldMenuOpen;$('#drawer-body').setAttribute('aria-hidden',String(!worldMenuOpen));
+ if(state){$('#menu-toggle').innerHTML=`${worldMenuOpen?'지도 보기':'메뉴 · 행동 '+state.actions} <span aria-hidden="true">${worldMenuOpen?'▾':'▴'}</span>`;}
+ if(returnFocus)$('#menu-toggle').focus({preventScroll:true});
+}
+function syncWorldLayout(){
+ const world=!!state&&!state.battle,drawer=$('#drawer-body'),game=$('#game'),head=$('#app-header');
+ document.body.classList.toggle('in-world',world);$('#world-drawer').hidden=!world;$('#world-hud').hidden=!world;
+ if(world){
+  if(head.parentElement!==drawer){drawer.append(head,$('.campaign-bar'),$('#next-goal'),$('#world-panel'),$('#party'),$('#action-dock'));worldMenuOpen=false;}
+ }else if(head.parentElement===drawer){
+  document.body.prepend(head);game.prepend($('.campaign-bar'),$('#next-goal'));$('#world-scene').append($('#world-panel'));game.append($('#party'),$('#action-dock'));worldMenuOpen=false;
+ }
+ setWorldMenu(worldMenuOpen);
+}
+$('#menu-toggle').addEventListener('click',()=>setWorldMenu(!worldMenuOpen));
+$('#world-hud').addEventListener('click',()=>setWorldMenu(true));
+$('#board').addEventListener('click',event=>{if(!event.target.closest('[data-region]'))setWorldMenu(false);});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&worldMenuOpen&&!document.querySelector('dialog[open]')){event.preventDefault();setWorldMenu(false,true);}});
 function locationName(pos){return E.locations[pos]?.name||'황야 '+pos;}
 function currentGoal(){const h=E.hero(state);return h.quests.find(q=>q.id===pinned)||h.quests.find(q=>q.ready)||h.quests[0];}
 function hint(){const h=E.hero(state),q=currentGoal(),def=q&&E.quests.find(x=>x.id===q.id);if(state.outcome)return state.outcome==='win'?'잿빛 왕국에 평화가 찾아왔습니다. 영웅의 성장 기록을 살펴보세요.':'모험 종료 · 새 캠페인에서 다른 경로와 빌드를 시도해 보세요.';if(state.battle)return state.battle.phase==='plan'?'적의 다음 공격을 확인하세요. 준비 태세를 고른 뒤 주사위를 함께 굴립니다.':'기술 선택 → 주사위 터치로 배치. 재굴림은 별도 버튼에서 선택합니다. 배치한 주사위는 기본 공격에서 빠집니다.';if(!state.actions)return '행동을 모두 사용했습니다. 「차례 마치기」로 다음 영웅에게 넘기세요.';if(h.points)return `레벨 ${E.level(h)} 달성! 「영웅」에서 특성을 선택하면 전투 주사위와 능력이 강화됩니다.`;if(q?.ready)return `${def.name} 목표 달성 · 가까운 거점으로 돌아가 「퀘스트」에서 장비 보상을 골라 보고하세요.`;if(q)return `${def.name} → ${locationName(def.pos)} ${def.pos} · ${def.type==='hunt'?'전투 승리':def.type==='escort'?'상단 호위':'지역 조사'} 후 거점에 보고.`;if(state.seals>=2&&E.level(h)>=3)return '레이드 준비 완료 · D1 잿빛 용의 둥지로 이동하세요. 세 번째 봉인을 모으면 용 체력이 6 감소합니다.';return '거점에서 새 퀘스트를 수락하세요. 봉인 2개와 레벨 3이 되면 잿빛 용에 도전할 수 있습니다.';}
 function render(){
- $('#setup').hidden=!!state;$('#game').hidden=!state;document.querySelectorAll('.play-menu').forEach(b=>b.hidden=!state);document.body.classList.toggle('in-battle',!!state?.battle);if(!state)return;
+ $('#setup').hidden=!!state;$('#game').hidden=!state;document.querySelectorAll('.play-menu').forEach(b=>b.hidden=!state);document.body.classList.toggle('in-battle',!!state?.battle);syncWorldLayout();if(!state)return;
  const h=E.hero(state),c=E.classes[h.classId],st=E.stats(h),can=!state.outcome&&!state.battle&&state.actions>0&&h.hp>0;
+ $('#world-hud').innerHTML=`<strong>${c.name} · Lv.${E.level(h)}</strong><span>♥ ${h.hp}/${st.hp} · 라운드 ${state.round}/20</span>`;
  $('#turn-title').textContent=`${c.name} · Lv.${E.level(h)}`;$('#round-label').textContent=`라운드 ${state.round} / 20`;$('#round-track').innerHTML=Array.from({length:20},(_,i)=>`<i class="${i+1===state.round?'now':i+1<state.round?'past':''}"></i>`).join('');$('#seal-track').innerHTML=Array.from({length:3},(_,i)=>i<state.seals?'<b>◆</b>':'◆').join('');$('#save-notice').textContent=demoMode?'연습 · 기록 유지':storageAvailable?'✓ 저장됨':'저장 불가';$('#next-goal').textContent=hint();
  $('#active-portrait').className=`portrait portrait-${portraits[h.classId]}`;$('#hero-name').textContent=c.name;$('#hero-summary').textContent=`${h.pos} · 체력 ${h.hp}/${st.hp} · 경험치 ${h.xp}`;$('#resources').innerHTML=[['에너지',h.energy+'/4'],['골드',h.gold],['보급',h.supply],['물약',h.potions]].map(([name,value])=>`<span>${name}<b>${value}</b></span>`).join('');
  renderMap(can);
@@ -65,7 +90,7 @@ function renderMap(can){
   const e=state.enemies.find(e=>e.pos===pos&&e.hp>0),trip=E.travelInfo(state,pos),reachable=can&&trip.ok,tile=document.createElement('button');tile.className=`region-node ${pos===h.pos?'current':''} ${reachable?'reachable':''} ${pos===inspected?'inspecting':''} ${loc.kind==='town'?'town-node':''} ${e?'enemy-node':''}`;tile.style.left=loc.x+'%';tile.style.top=loc.y+'%';
   tile.setAttribute('aria-label',`${pos} ${loc.name}${e?' '+e.name+' 체력 '+e.hp:''}${reachable?' 이동 가능 '+routeText(trip):' 지역 정보'}`);tile.dataset.region=pos;
   tile.innerHTML=`${goalDef?.pos===pos&&!goal.ready?'<span class="quest-marker">!</span>':''}<span class="region-medallion ${e?'enemy-portrait enemy-'+e.art:''}">${e?'':loc.kind==='town'?'⌂':loc.kind==='bridge'?'═':loc.kind==='mountain'?'▲':loc.kind==='gather'?'✦':'◆'}</span><span class="region-name">${loc.short}</span><span class="region-tier">${pos} · ${loc.kind==='town'?'거점':'Lv.'+loc.tier}</span><span class="tokens">${state.heroes.filter(x=>x.pos===pos).map(x=>`<span class="token portrait portrait-${portraits[x.classId]} ${x.hp===0?'fallen':''}"></span>`).join('')}</span>`;
-  tile.addEventListener('click',()=>{inspected=pos;renderMap(can);renderLocation();updateTravelSelection();if(trip.edge&&!trip.ok)message(trip.reason);if(pos!==h.pos&&!trip.edge)openFolio('travel');});$('#board').append(tile);
+  tile.addEventListener('click',()=>{inspected=pos;renderMap(can);renderLocation();updateTravelSelection();setWorldMenu(true);if(trip.edge&&!trip.ok)message(trip.reason);if(pos!==h.pos&&!trip.edge)openFolio('travel');});$('#board').append(tile);
  }
 }
 function updateTravelSelection(){
