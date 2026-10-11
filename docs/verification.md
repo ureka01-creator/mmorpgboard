@@ -35,7 +35,9 @@
 
 `python scripts/verify_public.py`는 실제 공개 HTTPS 파일의 SHA256을 소스와 비교한 뒤 그 파일 그대로 WebGL/스키닝, 터치 이동, 접근, 검격·반격과 사망을 실행한다. 클라우드 Chromium의 프록시 CA 저장소를 우회해 TLS 검증을 끄는 대신, 시스템 신뢰 저장소로 HTTPS를 검증한 응답을 전달한다.
 
-공개 1.2 배포 결과는 아래 실행 기록에 남긴다. 이전 1.1 배포 검증은 [과거 기록](verification-v1.1.md)에 보관했다.
+2026-10-11 공개 1.2 검증 통과: 정적 파일 25개의 SHA256과 ES 모듈 MIME 형식이 정상이며 공개 응답으로 실제 WebGL/스키닝, 터치 이동, 접근, 네 번의 공격·반격·사망을 완료했다. 게임 소스 커밋은 `cfacd08`, 배포 커밋은 `a188be1e1ab1a9de4326e4ddcac78316bea8bf55`다. GitHub Pages 실행 `38119904452`가 성공했다. 주소: https://ureka01-creator.github.io/mmorpgboard/?release=1.2
+
+이전 1.1 배포 검증은 [과거 기록](verification-v1.1.md)에 보관했다.
 
 ## 확인하지 않은 것과 품질 범위
 
