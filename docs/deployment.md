@@ -1,11 +1,23 @@
-# GitHub Pages 배포
+# 배포
 
-정적 웹게임의 배포 파일은 `index.html`, `styles.css`, `game-engine.js`, `app.js`, `.nojekyll` 및 `assets/world-map.png`, `assets/realm-map.png`, `assets/cards.png`, `assets/gear.png`, `assets/heroes.png`, `assets/enemies.png`입니다. 앱 서버나 데이터베이스가 필요하지 않습니다.
+현재 앱은 정적 HTML/CSS/JavaScript 파티 RPG다. 서버와 데이터베이스가 필요하지 않다.
 
-배포 브랜치: `gh-pages`. GitHub 저장소 Settings → Pages → Build and deployment에서 Source를 **Deploy from a branch**, Branch를 **gh-pages**, 폴더를 **/ (root)**로 설정하고 저장합니다.
+공개 주소: https://ureka01-creator.github.io/mmorpgboard/?release=1.0
 
-표준 Pages 주소: `https://ureka01-creator.github.io/mmorpgboard/`. Pages 활성화 및 실제 응답 확인 전에는 배포 완료로 간주하지 않습니다. 비공개 저장소는 GitHub 요금제에 따라 Pages 사용에 제약이 있을 수 있습니다.
+소스는 `main`, GitHub Pages의 공개 파일은 `gh-pages`에 있다. `main`에 올리는 것만으로 사이트가 교체되지는 않는다. 검증한 소스를 커밋한 뒤 아래 명령으로 배포한다.
 
-새 버전은 검증 후 웹 파일, `assets/` 폴더와 `.nojekyll`을 gh-pages에 반영해야 합니다. main에 push하는 것만으로 gh-pages가 자동 갱신되지는 않습니다.
+```sh
+python scripts/deploy_pages.py
+```
 
-관리 API가 허용되고 적절한 권한이 있으면 저장소 Pages 설정을 조회하여 기존 설정을 보존한 뒤 배포 소스를 지정할 수 있습니다. API 응답과 실제 사이트에서 버전·실행 기능을 확인하세요.
+이 스크립트는 깨끗한 작업 상태를 확인하고 최신 `gh-pages`를 가져온다. 임시 Git index에 공개 파일만 담아 이전 배포의 자식 커밋을 만든 뒤 강제 푸시 없이 올린다. 현재 체크아웃과 소스 브랜치를 교체하지 않는다.
+
+공개 파일: `index.html`, `styles.css`, `rpg-engine.js`, `app.js`, `.nojekyll`, `assets/rpg-world.png`, `assets/rpg-characters.png`, `assets/heroes.png`.
+
+GitHub의 Pages build and deployment 작업이 성공한 뒤 다음 검증을 실행한다.
+
+```sh
+python scripts/verify_public.py
+```
+
+검증은 실제 공개 HTTPS 응답의 SHA256 일치와 공개 파일로 실행한 전체 모험·저장 재개를 확인한다. 앱을 수정하면 버전 메타데이터, 공개 주소의 release 값과 검증 스크립트도 함께 갱신한다. 이전 보드게임은 `main`의 과거 Git 커밋에서 확인할 수 있다. 브라우저에 남아 있는 이전 저장도 새로운 RPG 저장과 다른 키를 사용한다.
