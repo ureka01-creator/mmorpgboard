@@ -1,10 +1,10 @@
 # ELDERFALL · 잊힌 성역
 
-**플레이:** https://ureka01-creator.github.io/mmorpgboard/?release=2.1
+**플레이:** https://ureka01-creator.github.io/mmorpgboard/?release=2.2
 
 녹스의 높은 시점과 직접 조작하는 액션 감각을 참고한 **실제 3D 실시간 던전 전투**입니다. 원작의 그림·캐릭터·UI를 복제하지 않습니다. 첫 범위는 성역 한 구역, 방과 연결 통로, 기사 한 명과 수호병 한 명의 이동·검격·회피입니다.
 
-2.1에서는 월드 좌표의 발 디딤, 두 관절 다리 IK, 부드러운 방향 전환과 정지, 상하체 분리, 두 방향 연속 베기와 낮은 중심의 구르기를 적용했습니다. 원작 애니메이션을 가져온 버전은 아닙니다.
+2.2에서는 Quaternius의 CC0 완성 애니메이션 7개를 기존 기사/수호병 관절에 맞춰 적용했습니다. 속도에 따른 걷기·달리기·정지, 이동 중 상체 검격, 서 있을 때 전신 검격, 준비·타격·회복 전환과 구르기·피격·사망을 사용합니다. 원작 녹스의 그래픽이나 애니메이션 파일을 사용하지 않습니다.
 
 ## 조작
 
@@ -42,7 +42,8 @@ python scripts/verify_arena_browser.py
 - `arena-engine.mjs`: 연속 좌표, 충돌, 경로, 실시간 공격/회피와 적 행동.
 - `arena.js`: 고정 카메라, 터치/키보드 조작, 정지/재시작, 시뮬레이션과 연출 연결.
 - `arena-actors.mjs`: 원본 3D 관절 모델과 동작·검 궤적.
-- `arena-motion.mjs`: 발 궤적, 다리 IK와 프레임 간격에 독립적인 방향 전환.
+- `arena-motion.mjs`: 프레임 간격에 독립적인 혼합과 방향 전환.
+- `arena-clips.mjs`, `assets/animations`: CC0 동작 로딩·보간·타격 시간 매핑과 출처/라이선스.
 - `arena-art.mjs`: 던전 구조, 생성 표면 맵, 재질·조명·초상 렌더.
 - `arena.css`, `index.html`: 화면을 가리지 않는 조작 UI.
 

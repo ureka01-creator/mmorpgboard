@@ -1,8 +1,31 @@
-# 2.0 원본 던전 아트
+# 2.2 캐릭터와 완성 애니메이션
 
-현재 장면은 `arena-actors.mjs`의 원본 관절 모델을 사용한다. 성인 비례의 기사와 수호병, 흉갑·관절 갑옷·투구·검·방패·망토·뼈·두개골·관절 동작을 코드로 구성했다. `arena-art.mjs`의 던전, 생성 표면 맵과 소품도 같은 원본 코드다. 외부 캐릭터 파일을 새로 다운로드하거나 이미지 시안을 게임 배경으로 사용하지 않았다. 사실적인 시안의 아트를 완성했다고 주장하지 않는다.
+기사·수호병 외형과 갑옷·검·방패·망토는 `arena-actors.mjs`의 자체 관절 모델이다. 던전과 소품도 자체 코드다. 2.2부터 동작은 Quaternius Universal Animation Library Standard의 CC0 클립을 사용한다. 원작 녹스 리소스나 OpenNox GPL 코드를 게임에 포함하지 않는다.
 
-Three.js 버전·라이선스·검증된 vendor 파일은 유지한다. 이전 KayKit GLB는 소스 이력/기존 자산 폴더에 보관되어 있지만 현재 앱에서 불러오거나 2.0 공개 런타임에 배포하지 않는다.
+원 제작자: [Quaternius](https://quaternius.itch.io/universal-animation-library). 다운로드한 glTF 공개 미러: [J-Ponzo](https://github.com/J-Ponzo/gltf-universal-animation-library), 고정 커밋 `e24c23cf2a1323488a3faa226ea7ea21f644b73e`. 원문 CC0 라이선스는 `assets/animations/LICENSE.txt`, 원본 3개 파일과 변환 결과 SHA256은 `assets/animations/sources.json`에 보관한다.
+
+| 게임 동작 | 원본 클립 | 원본 길이 |
+|---|---|---|
+| 대기 | Sword_Idle | 1.667초 |
+| 걷기 | Walk_Loop | 1.333초 |
+| 달리기 | Jog_Fwd_Loop | 0.917초 |
+| 검격 | Sword_Attack | 1.500초 |
+| 구르기 | Roll | 1.458초 |
+| 피격 | Hit_Chest | 0.333초 |
+| 사망 | Death01 | 2.375초 |
+
+`scripts/build_animation_pack.py`는 고정 원본의 체크섬을 검증하고 glTF의 LINEAR/STEP 채널과 계층을 평가한다. T 자세의 월드 회전을 기준으로 좌우·관절 축을 기존 골격에 맞춰 15개 관절의 60Hz 회전 키와 골반 위치를 만든다. 수평 루트 이동은 제외해 기존 충돌·이동 판정이 실제 위치를 결정한다. 게임용 JSON은 약 336KiB이며 glTF 모델·마네킹·전체 라이브러리를 런타임에 추가하지 않는다.
+
+검격은 원본의 첫 베기를 사용하고 회복 구간을 대기/이동 자세로 섞는다. 플레이어 0.26초, 적 0.18초의 기존 명중 시점을 원본 0.45초의 앞쪽 검 궤적에 맞춘다. 적의 준비 동작은 원본 0→0.33초를 사용하고 검격이 그 자세에서 이어진다. 구르기는 원본 0.28→0.98초를 기존 0.34초 회피에 맞춘다. 이동 중 공격은 하체 보행과 상체 검격을 혼합한다. 원본 클립의 보간과 전환 외에 방향 회전·망토·신발 바닥 높이를 보정한다.
+
+재변환에는 Python의 numpy/scipy가 필요하며, 게임 실행에는 필요하지 않다. 위 고정 커밋의 `glTF/AnimationLibrary_Godot_Standard.gltf`, `.bin`, 루트 `LICENSE`를 같은 폴더에 준비한 뒤 실행한다.
+
+```sh
+python scripts/build_animation_pack.py --source /path/to/source
+node scripts/verify_motion.mjs
+```
+
+Three.js와 기존 자산은 유지한다. KayKit GLB는 현재 장면에서 사용하거나 공개 런타임에 배포하지 않는다. 녹스의 정확한 프레임이나 사실적인 상용 RPG 아트를 재현한 버전이라고 설명하지 않는다.
 
 ---
 

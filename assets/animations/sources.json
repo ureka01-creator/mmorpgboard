@@ -1,0 +1,14 @@
+{
+  "author": "Quaternius",
+  "license": "CC0-1.0",
+  "original": "https://quaternius.itch.io/universal-animation-library",
+  "mirror": "https://github.com/J-Ponzo/gltf-universal-animation-library",
+  "commit": "e24c23cf2a1323488a3faa226ea7ea21f644b73e",
+  "sourceSha256": {
+    "AnimationLibrary_Godot_Standard.gltf": "0ff075c7ad6855c5c2c37a171592ee8f0d6ab2f58259e2be77a9b63dd8027765",
+    "AnimationLibrary_Godot_Standard.bin": "6e65377d81558333c4093dbb144a48fd19019343d82b1a3a7992a98ec0e0543c",
+    "LICENSE": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+  },
+  "generatedSha256": "9f1f1a826cf7a8ee32aa2c9c12b71a3fd7318a0ca56e5da6fe5f3ec710f0b24e",
+  "conversion": "scripts/build_animation_pack.py; mirrored X, T-pose world-space retarget to original armour joints, 60Hz sampling; horizontal root travel excluded"
+}

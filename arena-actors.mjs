@@ -1,17 +1,19 @@
 import * as THREE from 'three';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
-import {damp,turn,footCycle,legIK,TAU} from './arena-motion.mjs?v=2.1';
+import {damp,turn} from './arena-motion.mjs?v=2.2';
+import {bindMotion,sampleClip,actionTime} from './arena-clips.mjs?v=2.2';
 const PI=Math.PI;
 const material=(color,metalness=0,roughness=.65)=>new THREE.MeshStandardMaterial({color,metalness,roughness});
 function mesh(parent,g,m,x=0,y=0,z=0,scale){const o=new THREE.Mesh(g,m);o.position.set(x,y,z);if(scale)o.scale.set(...scale);o.castShadow=o.receiveShadow=true;parent.add(o);return o;}
 function joint(parent,x,y,z){const b=new THREE.Bone();b.position.set(x,y,z);parent.add(b);return b;}
 function limb(parent,length,radius,m){const points=[[radius*.5,0],[radius*.82,.025],[radius,length*.25],[radius*.75,length*.73],[radius*.52,length]].map(([x,y])=>new THREE.Vector2(x,y));const o=mesh(parent,new THREE.LatheGeometry(points,12),m,0,-length,0);return o;}
 function ribbon(parent,cloth){const shape=new THREE.Shape();shape.moveTo(-.22,0);shape.lineTo(.22,0);shape.lineTo(.33,-1.13);shape.lineTo(.16,-1.05);shape.lineTo(0,-1.20);shape.lineTo(-.32,-1.12);shape.closePath();const g=new THREE.ShapeGeometry(shape,10);const p=g.attributes.position;for(let i=0;i<p.count;i++){p.setZ(i,Math.sin(p.getX(i)*28)*.026-Math.abs(p.getY(i))*.12);}g.computeVertexNormals();const cape=mesh(parent,g,cloth,0,1.68,-.24);cape.material.side=THREE.DoubleSide;return cape;}
-export function createActor(scene,isHero=true){
+export function createActor(scene,isHero=true,motionPack){
  const group=new THREE.Group(),model=new THREE.Group();group.add(model);scene.add(group);
  const steel=material(isHero?0x8999a5:0x5a646a,.72,.32),trim=material(0xa18a58,.72,.37),dark=material(0x151c20,.3,.75),leather=material(0x322d2a,0,.95),bone=material(0xb3ac8d,.04,.85),cloth=material(isHero?0x692c2e:0x303b3d,0,.96);
  const pelvis=joint(model,0,.96,0),chest=joint(pelvis,0,.40,0),head=joint(chest,0,.58,0),arms=[],legs=[];
  mesh(pelvis,new THREE.CapsuleGeometry(.20,.13,4,12),isHero?leather:dark,0,.025,0,[1,.65,.75]);mesh(pelvis,new THREE.TorusGeometry(.218,.023,6,24),trim,0,.05,0,[1,1,.75]).rotation.x=PI/2;
+ mesh(chest,new THREE.CylinderGeometry(.08,.09,.22,12),dark,0,.42,0);
  if(isHero){mesh(chest,new THREE.SphereGeometry(.29,20,14),steel,0,-.015,0,[.9,1.24,.64]);mesh(chest,new THREE.SphereGeometry(.25,16,10),dark,0,-.18,-.025,[.88,.8,.60]);for(let n=0;n<3;n++)mesh(pelvis,new THREE.CylinderGeometry(.235-n*.008,.25-n*.008,.09,16,1,true),steel,0,.14+n*.07,0,[1,1,.72]);
   // Raised breastplate crest and engraved brass rib at the sternum.
   mesh(chest,new THREE.BoxGeometry(.034,.32,.014),trim,0,.01,.184);mesh(chest,new THREE.BoxGeometry(.15,.022,.014),trim,0,.09,.182);
@@ -41,75 +43,55 @@ export function createActor(scene,isHero=true){
  const shape=new THREE.Shape();shape.moveTo(-.047,.16);shape.lineTo(.047,.16);shape.lineTo(.030,.91);shape.lineTo(0,1.09);shape.lineTo(-.030,.91);shape.closePath();const blade=mesh(weapon,new THREE.ExtrudeGeometry(shape,{depth:.018,bevelEnabled:true,bevelSize:.008,bevelThickness:.004,bevelSegments:1,steps:1}),steel);mesh(weapon,new THREE.BoxGeometry(.01,.76,.025),trim,0,.54,.011);
  const shield=new THREE.Group();arms[0].elbow.add(shield);shield.position.set(-.035,-.21,.11);shield.rotation.y=-.22;
  const shieldShape=new THREE.Shape();shieldShape.moveTo(-.19,.19);shieldShape.lineTo(.19,.19);shieldShape.lineTo(.18,-.05);shieldShape.lineTo(0,-.30);shieldShape.lineTo(-.18,-.05);shieldShape.closePath();mesh(shield,new THREE.ExtrudeGeometry(shieldShape,{depth:.026,bevelEnabled:true,bevelSize:.018,bevelThickness:.016,bevelSegments:2,steps:1}),steel);mesh(shield,new THREE.BoxGeometry(.017,.39,.015),trim,0,-.015,.055);mesh(shield,new THREE.BoxGeometry(.29,.017,.015),trim,0,.045,.055);
- const cape=ribbon(model,cloth);
+ const cape=ribbon(model,cloth);chest.add(cape);cape.position.set(0,.32,-.24);
  const trailG=new THREE.BufferGeometry(),trailPositions=new Float32Array(7*18);trailG.setAttribute('position',new THREE.BufferAttribute(trailPositions,3));const trail=new THREE.Mesh(trailG,new THREE.MeshBasicMaterial({color:isHero?0xffd6a4:0xc59d81,transparent:true,opacity:.25,side:THREE.DoubleSide,blending:THREE.AdditiveBlending,depthWrite:false}));trail.frustumCulled=false;trail.visible=false;scene.add(trail);
  batchJoints(model);
- return {group,model,pelvis,chest,head,arms,legs,cape,weapon,blade,trail,trailPositions,samples:[],isHero,height:2.13,headDiameter:.32,pose:'idle'};
+ const actor={group,model,pelvis,chest,head,arms,legs,cape,weapon,blade,trail,trailPositions,samples:[],isHero,height:2.13,headDiameter:.32,pose:'idle'};
+ bindMotion(actor,motionPack);return actor;
 }
 export function animateActor(actor,body,time,reduced=false){
- const {group,model,pelvis,chest,head,arms,legs,cape}=actor;
+ const {group,model,pelvis,legs,cape}=actor,{pack,joints,base,action,position,actionPosition}=actor.clipRig,clips=pack.clips;
  const fresh=actor.motion?.body!==body||time<actor.motion.time;
- if(fresh)actor.motion={body,time,x:body.x,z:body.z,travel:body.travel,yaw:body.yaw,speed:0,phase:0,blend:0,feet:[],previous:[]};
- const m=actor.motion,dt=Math.max(0,Math.min(.25,time-m.time)),dx=body.x-m.x,dz=body.z-m.z,travel=Math.max(0,body.travel-m.travel);
- if(!fresh&&dt===0)return; // Pausing freezes the complete pose, including cloth and trails.
- m.speed=damp(m.speed,dt?Math.hypot(dx,dz)/dt:0,16,dt);
- m.blend=damp(m.blend,body.mode==='dodge'||body.mode==='dead'?0:Math.min(1,m.speed/1.2),18,dt);
- m.phase+=body.mode==='dodge'?0:travel/1.4;
+ if(fresh)actor.motion={body,time,x:body.x,z:body.z,travel:body.travel,yaw:body.yaw,speed:0,phase:0,walkPhase:0,blend:0,clip:'idle',deathStarted:null};
+ const m=actor.motion,dt=Math.max(0,Math.min(.25,time-m.time)),travel=Math.max(0,body.travel-m.travel);
+ if(!fresh&&dt===0)return;
+ const locomotion=!['dodge','dead'].includes(body.mode);
+ m.speed=damp(m.speed,dt?Math.hypot(body.x-m.x,body.z-m.z)/dt:0,14,dt);
+ m.blend=damp(m.blend,locomotion?Math.min(1,m.speed/1.2):0,18,dt);
+ if(locomotion){m.phase+=travel/2.1;m.walkPhase+=travel/1.25;}
  m.yaw=turn(m.yaw,body.yaw,dt);group.position.set(body.x,0,body.z);group.rotation.y=m.yaw;actor.pose=body.mode;
- const joints=[pelvis,chest,head,...arms.flatMap(a=>[a.shoulder,a.elbow,a.hand]),cape];
- const old=joints.map(j=>j.quaternion.clone());
- model.rotation.set(0,0,0);model.position.set(0,0,0);pelvis.rotation.set(0,0,0);chest.rotation.set(0,0,0);head.rotation.set(0,0,0);
- const gait=Math.sin(m.phase*TAU),moving=m.blend;
- pelvis.position.y=.948-.065*moving+Math.cos(m.phase*TAU*2)*.008*moving+Math.sin(time*2)*.004*(1-moving);
- pelvis.rotation.y=-gait*.055*moving;pelvis.rotation.z=gait*.027*moving;
- chest.rotation.x=Math.min(.10,m.speed*.022);chest.rotation.y=gait*.075*moving;
- head.rotation.y=Math.atan2(Math.sin(body.yaw-m.yaw),Math.cos(body.yaw-m.yaw))*.25;
- for(const arm of arms){arm.shoulder.rotation.set(gait*.28*arm.side*moving-.12,0,arm.side*.10);arm.elbow.rotation.set(-.30-Math.abs(gait)*.10*moving,0,0);arm.hand.rotation.set(0,0,0);}
- // Stance feet remain in world space. The swing foot follows an eased arc;
- // two-bone inverse kinematics bends the knee while the sole stays level.
- const c=Math.cos(m.yaw),s=Math.sin(m.yaw);
- legs.forEach((leg,i)=>{
-  const cycle=footCycle(m.phase+i*.5),side=leg.side*.137;
-  let f=m.feet[i];if(!f)f=m.feet[i]={stance:false,x:side,z:0,anchor:null};
-  const wx=body.x+c*side+s*cycle.z,wz=body.z-s*side+c*cycle.z;
-  if(cycle.stance&&(!f.stance||!f.anchor))f.anchor={x:wx,z:wz};
-  let tx=side,tz=cycle.z;
-  if(cycle.stance&&f.anchor){const ax=f.anchor.x-body.x,az=f.anchor.z-body.z;tx=c*ax-s*az;tz=s*ax+c*az;}
-  // Release planted feet smoothly when stopping or turning sharply.
-  tx=side+(tx-side)*moving;tz*=moving;
-  f.x=damp(f.x,tx,35,dt);f.z=damp(f.z,tz,35,dt);f.stance=cycle.stance;
-  if(moving<.03)f.anchor=null;
-  const lateral=Math.max(-.12,Math.min(.12,f.x-side));
-  const vertical=.136+cycle.lift*moving-(pelvis.position.y-.01);
-  const ik=legIK(vertical,f.z);leg.hip.rotation.set(ik.hip,0,Math.atan2(lateral,-vertical));leg.knee.rotation.set(ik.knee,0,0);leg.ankle.rotation.set(ik.ankle,0,-leg.hip.rotation.z);
- });
- cape.rotation.set(.035+Math.min(.22,m.speed*.04)+Math.sin(m.phase*TAU-.8)*.025*moving,0,-gait*.025*moving);
- if(body.mode==='attack'){
-  const duration=actor.isHero?.66:.60,t=Math.min(1,body.elapsed/duration);
-  // Anticipation, fast contact at the engine's hit frame, and a longer recovery.
-  const contact=actor.isHero?.26/.66:.18/.60;
-  const ease=x=>{x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);};
-  const wind=actor.isHero?ease(t/contact):1,cut=ease((t-(contact-.09))/.18),recover=ease((t-.58)/.42);
-  const alternate=actor.isHero&&(body.swings%2===0)?-1:1;
-  chest.rotation.y=(-.40*wind+.95*cut)*(1-recover)*alternate;
-  arms[1].shoulder.rotation.set(-.65-.70*wind+.90*cut,-.55*wind*alternate+1.5*cut*alternate,-.28-.27*wind+.48*cut);
-  arms[1].elbow.rotation.x=-.30-.65*wind+.65*cut;
-  arms[0].shoulder.rotation.x=-.48;arms[0].elbow.rotation.x=-.65;
-  arms[1].shoulder.rotation.x*=1-recover;arms[1].shoulder.rotation.y*=1-recover;arms[1].shoulder.rotation.z*=1-recover;arms[1].elbow.rotation.x=damp(arms[1].elbow.rotation.x,-.30,8,recover);
+ model.position.set(0,0,0);model.rotation.set(0,0,0);
+ const runWeight=Math.max(0,Math.min(1,(m.speed-.8)/2.0));
+ sampleClip(clips.walk,(m.walkPhase%1)*clips.walk.duration,base,position);
+ sampleClip(clips.run,(m.phase%1)*clips.run.duration,action,actionPosition);
+ base.forEach((q,i)=>q.slerp(action[i],runWeight));position.lerp(actionPosition,runWeight);
+ sampleClip(clips.idle,time%clips.idle.duration,action,actionPosition);
+ base.forEach((q,i)=>q.slerp(action[i],1-m.blend));position.lerp(actionPosition,1-m.blend);
+ m.clip=m.blend>.1?(runWeight>.5?'run':'walk'):'idle';
+ if(['attack','windup','dodge','hurt','dead'].includes(body.mode)){
+  const recovery=body.mode==='attack'?Math.max(0,Math.min(1,(body.elapsed-(actor.isHero?.42:.36))/.24)):0;
+  const key=body.mode==='windup'?'attack':body.mode==='dodge'?'roll':body.mode;
+  let t=actionTime(body.mode,body.elapsed,actor.isHero,clips);
+  if(body.mode==='dead'){m.deathStarted??=time;t=Math.min(clips.dead.duration,(time-m.deathStarted)*2.2);}
+  sampleClip(clips[key],t,action,actionPosition);
+  const layered=body.mode==='attack'||body.mode==='windup';
+  base.forEach((q,i)=>{
+   // Authored full-body strike at rest; moving strikes retain the locomotion legs.
+   const lower=i>=3&&(i-3)%6>=3;
+   const weight=layered&&lower?1-m.blend:layered&&i===0?1-m.blend*.75:1;
+   q.slerp(action[i],weight*(1-recovery));
+  });
+  position.lerp(actionPosition,(layered?1-m.blend:1)*(1-recovery));m.clip=key;
+ }else m.deathStarted=null;
+ const weight=fresh?1:1-Math.exp(-dt*(body.mode==='attack'?32:22));
+ joints.forEach((joint,i)=>joint.quaternion.slerp(base[i],weight));pelvis.position.lerp(position,fresh?1:1-Math.exp(-dt*26));
+ cape.rotation.set(damp(cape.rotation.x,.035+Math.min(.22,m.speed*.04),12,dt),0,damp(cape.rotation.z,-pelvis.rotation.z*.35,12,dt));
+ // Keep the original boot soles out of the floor after retargeting limb lengths.
+ group.updateMatrixWorld(true);
+ if(!['dodge','dead'].includes(body.mode)){
+  const min=Math.min(...legs.map(l=>l.ankle.getWorldPosition(new THREE.Vector3()).y));
+  if(min<.136)pelvis.position.y+=.136-min;
  }
- if(body.mode==='windup'){arms[1].shoulder.rotation.set(-1.65,-.55,-.42);arms[1].elbow.rotation.x=-.95;chest.rotation.y=-.38;arms[0].shoulder.rotation.x=-.40;}
- if(body.mode==='dodge'){
-  const t=Math.min(1,body.elapsed/.34),roll=t*t*(3-2*t);
-  // Rotate around a tucked body's centre rather than swinging it in a large orbit.
-  model.rotation.x=-roll*TAU;model.position.y=.64*(1-Math.cos(roll*TAU))+Math.sin(t*PI)*.06;model.position.z=.64*Math.sin(roll*TAU);
-  pelvis.rotation.x=-.60;chest.rotation.x=.34;head.rotation.x=.22;
-  for(const leg of legs){leg.hip.rotation.x=-1.05;leg.knee.rotation.x=1.65;leg.ankle.rotation.x=-.60;}
-  for(const arm of arms){arm.shoulder.rotation.x=-.85;arm.elbow.rotation.x=-1.2;}
- }
- if(body.mode==='hurt')chest.rotation.x=-Math.sin(Math.min(1,body.elapsed/.30)*PI)*.27;
- if(body.mode==='dead'){actor.deathStarted??=time;const t=Math.min(1,(time-actor.deathStarted)/.48),fall=t*t*(3-2*t);model.rotation.x=-PI/2*fall;model.position.y=.18*fall;arms[1].shoulder.rotation.z=-.7*fall;}else actor.deathStarted=null;
- const weight=fresh?1:1-Math.exp(-dt*(body.mode==='attack'?36:24));
- joints.forEach((j,i)=>{const target=j.quaternion.clone();j.quaternion.copy(old[i]).slerp(target,weight);});
  Object.assign(m,{time,x:body.x,z:body.z,travel:body.travel});
  group.updateMatrixWorld(true);
  if(body.mode==='attack'&&body.elapsed>.11&&body.elapsed<.50&&!reduced){actor.samples.push([actor.weapon.localToWorld(new THREE.Vector3(0,.56,0)),actor.weapon.localToWorld(new THREE.Vector3(0,1.08,0))]);if(actor.samples.length>8)actor.samples.shift();actor.trailPositions.fill(0);for(let n=1;n<actor.samples.length;n++){const [a,b]=actor.samples[n-1],[c,d]=actor.samples[n];let offset=(n-1)*18;for(const p of [a,b,c,b,d,c]){p.toArray(actor.trailPositions,offset);offset+=3;}}actor.trail.geometry.attributes.position.needsUpdate=true;actor.trail.geometry.setDrawRange(0,(actor.samples.length-1)*6);actor.trail.visible=actor.samples.length>1;
