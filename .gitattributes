@@ -1,0 +1,2 @@
+# Keep authenticated upstream vendor bytes unchanged, including their original whitespace.
+vendor/** -whitespace linguist-vendored=true
