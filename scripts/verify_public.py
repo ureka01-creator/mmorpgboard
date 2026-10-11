@@ -35,7 +35,7 @@ with sync_playwright() as pw:
  assert page.locator('meta[name="application-version"]').get_attribute('content')=='2.2'
  page.click('#enter');page.wait_for_function('document.getElementById("loading").hidden')
  assert page.evaluate('arena.hero.headDiameter/arena.hero.height<.17&&arena.hero.legs[0].hip.isBone&&arena.hero.clipRig.pack.clips.run.source==="Jog_Fwd_Loop"')
- travel=page.evaluate('arena.state.hero.travel');page.keyboard.down('a');page.wait_for_function('(v)=>arena.state.hero.travel>v+.3',arg=travel,timeout=30000);page.keyboard.up('a');assert page.evaluate('arena.hero.motion.clip==="run"')
+ travel=page.evaluate('arena.state.hero.travel');page.keyboard.down('d');page.wait_for_function('(v)=>arena.state.hero.travel>v+.3&&arena.hero.motion.clip==="run"',arg=travel,timeout=30000);page.keyboard.up('d')
  page.click('#dodge');page.wait_for_function('arena.state.hero.dodgeCooldown>0',timeout=30000)
  page.click('#reset');page.click('#reset-confirm');fight(page)
  assert not errors,errors
