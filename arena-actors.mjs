@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
+import {damp,turn,footCycle,legIK,TAU} from './arena-motion.mjs?v=2.1';
 const PI=Math.PI;
 const material=(color,metalness=0,roughness=.65)=>new THREE.MeshStandardMaterial({color,metalness,roughness});
 function mesh(parent,g,m,x=0,y=0,z=0,scale){const o=new THREE.Mesh(g,m);o.position.set(x,y,z);if(scale)o.scale.set(...scale);o.castShadow=o.receiveShadow=true;parent.add(o);return o;}
@@ -46,17 +47,70 @@ export function createActor(scene,isHero=true){
  return {group,model,pelvis,chest,head,arms,legs,cape,weapon,blade,trail,trailPositions,samples:[],isHero,height:2.13,headDiameter:.32,pose:'idle'};
 }
 export function animateActor(actor,body,time,reduced=false){
- const {group,model,pelvis,chest,head,arms,legs,cape}=actor;group.position.set(body.x,0,body.z);group.rotation.y=body.yaw;actor.pose=body.mode;
- model.rotation.set(0,0,0);model.position.set(0,0,0);pelvis.rotation.set(0,0,0);pelvis.position.y=.96;chest.rotation.set(0,0,0);head.rotation.set(0,0,0);
- const walking=body.mode==='walk'||body.mode==='attack'&&body.travel-(actor.lastTravel??body.travel)>.001;actor.lastTravel=body.travel;const stride=walking?Math.sin(body.travel*5.2):0;
- for(const arm of arms){arm.shoulder.rotation.set(stride*.36*arm.side,0,arm.side*.10);arm.elbow.rotation.set(-.22,0,0);}
- for(const leg of legs){leg.hip.rotation.set(stride*.53*leg.side,0,0);leg.knee.rotation.set(Math.max(0,-stride*leg.side)*.48,0,0);}pelvis.position.y+=walking?Math.abs(stride)*.018:Math.sin(time*2)*.008;
- cape.rotation.x=walking?.12+Math.sin(body.travel*5)*.045:.015+Math.sin(time*1.4)*.018;
- if(body.mode==='attack'){const t=Math.min(1,body.elapsed/.66),swing=Math.sin(Math.max(0,Math.min(1,(t-.1)/.72))*PI);chest.rotation.y=-.48+swing*.95;arms[1].shoulder.rotation.set(-1.2+swing*.42,-.35+swing*1.75,-.55+swing*.4);arms[1].elbow.rotation.x=-.8+swing*.6;arms[0].shoulder.rotation.x=-.55;}
- if(body.mode==='windup'){arms[1].shoulder.rotation.set(-1.8,-.5,-.2);arms[1].elbow.rotation.x=-1.1;chest.rotation.y=-.33;}
- if(body.mode==='dodge'){const t=Math.min(1,body.elapsed/.34);model.rotation.x=-t*PI*2;model.position.y=.96*(1-Math.cos(t*PI*2))+Math.sin(t*PI)*.12;model.position.z=.96*Math.sin(t*PI*2);pelvis.rotation.x=-.55;for(const leg of legs){leg.hip.rotation.x=-.7;leg.knee.rotation.x=.9;}}else model.position.y=0;
+ const {group,model,pelvis,chest,head,arms,legs,cape}=actor;
+ const fresh=actor.motion?.body!==body||time<actor.motion.time;
+ if(fresh)actor.motion={body,time,x:body.x,z:body.z,travel:body.travel,yaw:body.yaw,speed:0,phase:0,blend:0,feet:[],previous:[]};
+ const m=actor.motion,dt=Math.max(0,Math.min(.25,time-m.time)),dx=body.x-m.x,dz=body.z-m.z,travel=Math.max(0,body.travel-m.travel);
+ if(!fresh&&dt===0)return; // Pausing freezes the complete pose, including cloth and trails.
+ m.speed=damp(m.speed,dt?Math.hypot(dx,dz)/dt:0,16,dt);
+ m.blend=damp(m.blend,body.mode==='dodge'||body.mode==='dead'?0:Math.min(1,m.speed/1.2),18,dt);
+ m.phase+=body.mode==='dodge'?0:travel/1.4;
+ m.yaw=turn(m.yaw,body.yaw,dt);group.position.set(body.x,0,body.z);group.rotation.y=m.yaw;actor.pose=body.mode;
+ const joints=[pelvis,chest,head,...arms.flatMap(a=>[a.shoulder,a.elbow,a.hand]),cape];
+ const old=joints.map(j=>j.quaternion.clone());
+ model.rotation.set(0,0,0);model.position.set(0,0,0);pelvis.rotation.set(0,0,0);chest.rotation.set(0,0,0);head.rotation.set(0,0,0);
+ const gait=Math.sin(m.phase*TAU),moving=m.blend;
+ pelvis.position.y=.948-.065*moving+Math.cos(m.phase*TAU*2)*.008*moving+Math.sin(time*2)*.004*(1-moving);
+ pelvis.rotation.y=-gait*.055*moving;pelvis.rotation.z=gait*.027*moving;
+ chest.rotation.x=Math.min(.10,m.speed*.022);chest.rotation.y=gait*.075*moving;
+ head.rotation.y=Math.atan2(Math.sin(body.yaw-m.yaw),Math.cos(body.yaw-m.yaw))*.25;
+ for(const arm of arms){arm.shoulder.rotation.set(gait*.28*arm.side*moving-.12,0,arm.side*.10);arm.elbow.rotation.set(-.30-Math.abs(gait)*.10*moving,0,0);arm.hand.rotation.set(0,0,0);}
+ // Stance feet remain in world space. The swing foot follows an eased arc;
+ // two-bone inverse kinematics bends the knee while the sole stays level.
+ const c=Math.cos(m.yaw),s=Math.sin(m.yaw);
+ legs.forEach((leg,i)=>{
+  const cycle=footCycle(m.phase+i*.5),side=leg.side*.137;
+  let f=m.feet[i];if(!f)f=m.feet[i]={stance:false,x:side,z:0,anchor:null};
+  const wx=body.x+c*side+s*cycle.z,wz=body.z-s*side+c*cycle.z;
+  if(cycle.stance&&(!f.stance||!f.anchor))f.anchor={x:wx,z:wz};
+  let tx=side,tz=cycle.z;
+  if(cycle.stance&&f.anchor){const ax=f.anchor.x-body.x,az=f.anchor.z-body.z;tx=c*ax-s*az;tz=s*ax+c*az;}
+  // Release planted feet smoothly when stopping or turning sharply.
+  tx=side+(tx-side)*moving;tz*=moving;
+  f.x=damp(f.x,tx,35,dt);f.z=damp(f.z,tz,35,dt);f.stance=cycle.stance;
+  if(moving<.03)f.anchor=null;
+  const lateral=Math.max(-.12,Math.min(.12,f.x-side));
+  const vertical=.136+cycle.lift*moving-(pelvis.position.y-.01);
+  const ik=legIK(vertical,f.z);leg.hip.rotation.set(ik.hip,0,Math.atan2(lateral,-vertical));leg.knee.rotation.set(ik.knee,0,0);leg.ankle.rotation.set(ik.ankle,0,-leg.hip.rotation.z);
+ });
+ cape.rotation.set(.035+Math.min(.22,m.speed*.04)+Math.sin(m.phase*TAU-.8)*.025*moving,0,-gait*.025*moving);
+ if(body.mode==='attack'){
+  const duration=actor.isHero?.66:.60,t=Math.min(1,body.elapsed/duration);
+  // Anticipation, fast contact at the engine's hit frame, and a longer recovery.
+  const contact=actor.isHero?.26/.66:.18/.60;
+  const ease=x=>{x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);};
+  const wind=actor.isHero?ease(t/contact):1,cut=ease((t-(contact-.09))/.18),recover=ease((t-.58)/.42);
+  const alternate=actor.isHero&&(body.swings%2===0)?-1:1;
+  chest.rotation.y=(-.40*wind+.95*cut)*(1-recover)*alternate;
+  arms[1].shoulder.rotation.set(-.65-.70*wind+.90*cut,-.55*wind*alternate+1.5*cut*alternate,-.28-.27*wind+.48*cut);
+  arms[1].elbow.rotation.x=-.30-.65*wind+.65*cut;
+  arms[0].shoulder.rotation.x=-.48;arms[0].elbow.rotation.x=-.65;
+  arms[1].shoulder.rotation.x*=1-recover;arms[1].shoulder.rotation.y*=1-recover;arms[1].shoulder.rotation.z*=1-recover;arms[1].elbow.rotation.x=damp(arms[1].elbow.rotation.x,-.30,8,recover);
+ }
+ if(body.mode==='windup'){arms[1].shoulder.rotation.set(-1.65,-.55,-.42);arms[1].elbow.rotation.x=-.95;chest.rotation.y=-.38;arms[0].shoulder.rotation.x=-.40;}
+ if(body.mode==='dodge'){
+  const t=Math.min(1,body.elapsed/.34),roll=t*t*(3-2*t);
+  // Rotate around a tucked body's centre rather than swinging it in a large orbit.
+  model.rotation.x=-roll*TAU;model.position.y=.64*(1-Math.cos(roll*TAU))+Math.sin(t*PI)*.06;model.position.z=.64*Math.sin(roll*TAU);
+  pelvis.rotation.x=-.60;chest.rotation.x=.34;head.rotation.x=.22;
+  for(const leg of legs){leg.hip.rotation.x=-1.05;leg.knee.rotation.x=1.65;leg.ankle.rotation.x=-.60;}
+  for(const arm of arms){arm.shoulder.rotation.x=-.85;arm.elbow.rotation.x=-1.2;}
+ }
  if(body.mode==='hurt')chest.rotation.x=-Math.sin(Math.min(1,body.elapsed/.30)*PI)*.27;
  if(body.mode==='dead'){actor.deathStarted??=time;const t=Math.min(1,(time-actor.deathStarted)/.48),fall=t*t*(3-2*t);model.rotation.x=-PI/2*fall;model.position.y=.18*fall;arms[1].shoulder.rotation.z=-.7*fall;}else actor.deathStarted=null;
+ const weight=fresh?1:1-Math.exp(-dt*(body.mode==='attack'?36:24));
+ joints.forEach((j,i)=>{const target=j.quaternion.clone();j.quaternion.copy(old[i]).slerp(target,weight);});
+ Object.assign(m,{time,x:body.x,z:body.z,travel:body.travel});
  group.updateMatrixWorld(true);
  if(body.mode==='attack'&&body.elapsed>.11&&body.elapsed<.50&&!reduced){actor.samples.push([actor.weapon.localToWorld(new THREE.Vector3(0,.56,0)),actor.weapon.localToWorld(new THREE.Vector3(0,1.08,0))]);if(actor.samples.length>8)actor.samples.shift();actor.trailPositions.fill(0);for(let n=1;n<actor.samples.length;n++){const [a,b]=actor.samples[n-1],[c,d]=actor.samples[n];let offset=(n-1)*18;for(const p of [a,b,c,b,d,c]){p.toArray(actor.trailPositions,offset);offset+=3;}}actor.trail.geometry.attributes.position.needsUpdate=true;actor.trail.geometry.setDrawRange(0,(actor.samples.length-1)*6);actor.trail.visible=actor.samples.length>1;
  }else{actor.samples.length=0;actor.trail.visible=false;}
