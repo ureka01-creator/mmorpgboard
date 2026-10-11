@@ -5,10 +5,10 @@ from urllib.parse import urlparse,unquote
 from playwright.sync_api import sync_playwright
 from verify_arena_browser import ARGS,fight
 ROOT=Path(__file__).resolve().parents[1];BASE='https://ureka01-creator.github.io/mmorpgboard/'
-FILES=['index.html','arena.css','arena.js','arena-engine.mjs','arena-art.mjs','arena-actors.mjs','assets/3d/crest.svg',*[str(p.relative_to(ROOT)) for p in sorted((ROOT/'vendor/three').rglob('*')) if p.is_file()]]
+FILES=['index.html','arena.css','arena.js','arena-engine.mjs','arena-art.mjs','arena-actors.mjs','arena-motion.mjs','assets/3d/crest.svg',*[str(p.relative_to(ROOT)) for p in sorted((ROOT/'vendor/three').rglob('*')) if p.is_file()]]
 verified={};content_types={}
 for name in FILES:
- url=BASE+('' if name=='index.html' else name)+'?release=2.0'
+ url=BASE+('' if name=='index.html' else name)+'?release=2.1'
  for attempt in range(4):
   try:
    with urllib.request.urlopen(url,timeout=40) as response:
@@ -31,8 +31,8 @@ with sync_playwright() as pw:
   if name in verified:req.fulfill(status=200,content_type=content_types[name],body=verified[name])
   else:req.fulfill(status=404,body='')
  context.route('https://ureka01-creator.github.io/**',route);page=context.new_page();errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
- page.goto(BASE+'?release=2.0',wait_until='networkidle');page.wait_for_function('window.arena?.renderer&&document.getElementById("enter").offsetWidth>0',timeout=60000)
- assert page.locator('meta[name="application-version"]').get_attribute('content')=='2.0'
+ page.goto(BASE+'?release=2.1',wait_until='networkidle');page.wait_for_function('window.arena?.renderer&&document.getElementById("enter").offsetWidth>0',timeout=60000)
+ assert page.locator('meta[name="application-version"]').get_attribute('content')=='2.1'
  page.click('#enter');page.wait_for_function('document.getElementById("loading").hidden')
  assert page.evaluate('arena.hero.headDiameter/arena.hero.height<.17&&arena.hero.legs[0].hip.isBone')
  travel=page.evaluate('arena.state.hero.travel');page.keyboard.down('a');page.wait_for_function('(v)=>arena.state.hero.travel>v+.3',arg=travel,timeout=30000);page.keyboard.up('a')
@@ -40,4 +40,4 @@ with sync_playwright() as pw:
  page.click('#reset');page.click('#reset-confirm');fight(page)
  assert not errors,errors
  page.screenshot(path='/tmp/elderfall-nox-public.png');browser.close()
-print(f'PASS public release 2.0: {len(FILES)} exact publication files, real 3D, direct movement, dodge, real-time sword combat and victory',flush=True)
+print(f'PASS public release 2.1: {len(FILES)} exact publication files, real 3D, direct movement, dodge, real-time sword combat and victory',flush=True)

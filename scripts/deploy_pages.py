@@ -3,7 +3,7 @@ import os,subprocess,tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
-FILES=['index.html','arena.css','arena.js','arena-engine.mjs','arena-art.mjs','arena-actors.mjs','.nojekyll','assets/3d/crest.svg',*[str(p.relative_to(ROOT)) for p in sorted((ROOT/'vendor/three').rglob('*')) if p.is_file()]]
+FILES=['index.html','arena.css','arena.js','arena-engine.mjs','arena-art.mjs','arena-actors.mjs','arena-motion.mjs','.nojekyll','assets/3d/crest.svg',*[str(p.relative_to(ROOT)) for p in sorted((ROOT/'vendor/three').rglob('*')) if p.is_file()]]
 def git(*args,env=None):return subprocess.check_output(['git',*args],env=env,text=True).strip()
 if git('status','--porcelain'):
  raise SystemExit('Commit or resolve all source changes before publishing.')
@@ -15,7 +15,7 @@ with tempfile.TemporaryDirectory(prefix='elderfall-deploy-') as tmp:
  env=dict(os.environ,GIT_INDEX_FILE=tmp+'/index')
  git('read-tree','--empty',env=env);git('add','--',*FILES,env=env)
  tree=git('write-tree',env=env)
- commit=git('commit-tree',tree,'-p',parent,'-m','Deploy Elderfall real-time dungeon 2.0')
+ commit=git('commit-tree',tree,'-p',parent,'-m','Deploy Elderfall real-time dungeon 2.1')
 # Push the new child commit directly; no force push or local branch/checkout replacement.
 subprocess.run(['git','push','origin',commit+':refs/heads/gh-pages'],check=True)
 print('Published gh-pages commit '+commit,flush=True)
