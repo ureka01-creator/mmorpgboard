@@ -1,12 +1,14 @@
 import * as THREE from 'three';
-import * as R from './arena-engine.mjs?v=2.1';
-import {createArtWorld,portrait} from './arena-art.mjs?v=2.1';
-import {createActor,animateActor} from './arena-actors.mjs?v=2.1';
-function setup(){
+import * as R from './arena-engine.mjs?v=2.2';
+import {createArtWorld,portrait} from './arena-art.mjs?v=2.2';
+import {createActor,animateActor} from './arena-actors.mjs?v=2.2';
+import {loadMotionPack} from './arena-clips.mjs?v=2.2';
+async function setup(){
 const $=id=>document.getElementById(id),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const renderer=new THREE.WebGLRenderer({canvas:$('scene'),antialias:true,powerPreference:'high-performance'});
 let resolution=Math.min(devicePixelRatio,1.25);renderer.setPixelRatio(resolution);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
-const art=createArtWorld(renderer),scene=art.scene,hero=createActor(scene,true),enemy=createActor(scene,false),camera=new THREE.PerspectiveCamera(39,innerWidth/innerHeight,.1,80),clock=new THREE.Clock();
+const motionPack=await loadMotionPack();
+const art=createArtWorld(renderer),scene=art.scene,hero=createActor(scene,true,motionPack),enemy=createActor(scene,false,motionPack),camera=new THREE.PerspectiveCamera(39,innerWidth/innerHeight,.1,80),clock=new THREE.Clock();
 const offset=new THREE.Vector3(5.5,17,10),cameraTarget=new THREE.Vector3(),raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2(),groundPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0),sparks=[],floaters=[],keys=new Set(),yaw=Math.atan2(offset.x,offset.z);
 let state=R.create(),started=false,paused=false,accumulator=0,attackHeld=false,attackQueued=false,dodgeQueued=false,joystick={x:0,y:0,id:null},destination=null,route=[],lastEvent=0,muted=false,audioContext,noticeTimer,resetWasPaused=false,lastFootstep=0,slowAverage=.016,lastResolutionChange=0,visualTime=0;
 function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();}resize();window.addEventListener('resize',resize);
@@ -54,4 +56,4 @@ reset();frame();$('hero-portrait').src=portrait(renderer,scene,hero);$('enter').
 window.arena={get state(){return state;},get phase(){return !started?'loading':paused?'paused':state.status;},get hero(){return hero;},get enemy(){return enemy;},get renderer(){return renderer;},get camera(){return camera;},get started(){return started;},get paused(){return paused;},get destination(){return destination;},get input(){return {joystick:{...joystick},attackHeld};},projectFloor(p){return project(new THREE.Vector3(p.x,.01,p.z));},projectEnemy(){return project(enemy.group.position.clone().add(new THREE.Vector3(0,1,0)));}};
 
 }
-try{setup();}catch(error){console.error(error);const copy=document.getElementById('load-copy'),enter=document.getElementById('enter');copy.textContent='3D 성역을 불러오지 못했습니다. WebGL을 지원하는 최신 브라우저에서 다시 시도하세요.';enter.hidden=false;enter.textContent='다시 불러오기';enter.onclick=()=>location.reload();}
+try{await setup();}catch(error){console.error(error);const copy=document.getElementById('load-copy'),enter=document.getElementById('enter');copy.textContent='3D 성역을 불러오지 못했습니다. WebGL을 지원하는 최신 브라우저에서 다시 시도하세요.';enter.hidden=false;enter.textContent='다시 불러오기';enter.onclick=()=>location.reload();}
