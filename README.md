@@ -1,10 +1,12 @@
 # ELDERFALL · 3D 이동과 공격
 
-**플레이:** https://ureka01-creator.github.io/mmorpgboard/?release=1.1
+**플레이:** https://ureka01-creator.github.io/mmorpgboard/?release=1.2
 
 현재 제작 범위는 실제 3D 공간에서 **걷기 → 적에게 접근 → 검 공격 → 피격**을 연결하는 한 장면입니다. 기둥을 피하는 경로, 실제 뼈대 애니메이션, 타격 시점의 피해, 수호병 반격과 쓰러짐을 확인할 수 있습니다. 대화·파티·퀘스트·장비 같은 부가 기능은 이번 화면에 없습니다.
 
 현재 모델은 움직임을 검증하는 임시 KayKit 자산입니다. [목표 화면 시안](docs/screenshots/3d-target-concept.png)은 이미지 생성으로 만든 아트 디렉션 참고자료이며 **실제 플레이 화면이 아닙니다**. 목표로 하는 사실적인 캐릭터와 정교한 환경은 별도 모델·재질·애니메이션 제작/확보가 필요합니다. 현재 동작 검증판의 그래픽과 목표 시안을 같은 품질로 설명하지 않습니다.
+
+1.2에서는 이동·공격 규칙과 모델을 유지하고 돌의 색·범프 재질, 금속 반사, 유적 장식·문양·깃발, 조명과 UI를 다듬었습니다. 초상은 실제 캐릭터 모델을 렌더링하며 검 궤적도 애니메이션의 실제 무기 위치를 따라갑니다.
 
 ## 조작
 
@@ -35,7 +37,8 @@ python scripts/verify_arena_browser.py
 브라우저 검증은 Python Playwright와 `/usr/bin/chromium`을 사용합니다. 클라우드의 소프트웨어 WebGL로 실제 스키닝·이동·타격·피격·사망과 입력을 확인합니다. `ARENA_BASE`로 내부 점검 대상을 바꿀 수 있습니다. 실제 iPad Safari 및 기기 성능은 별도 확인이 필요합니다.
 
 - `arena-engine.mjs`: 좌표, 장애물, 경로, 접근, 공격과 반격 규칙.
-- `arena.js`: 실제 3D 장면, 카메라, 리깅 애니메이션, 순차 동작과 UI.
+- `arena.js`: 카메라, 리깅 애니메이션, 순차 동작과 UI.
+- `arena-art.mjs`: 생성 재질, 반사 환경, 유적 건축, 조명, 실제 모델 초상과 검 궤적.
 - `arena.css`, `index.html`: 최소 조작 화면.
 - `assets/3d`: CC0 캐릭터/무기, 원본 라이선스와 출처/해시 기록.
 - `vendor/three`: Three.js 모듈과 MIT 라이선스.

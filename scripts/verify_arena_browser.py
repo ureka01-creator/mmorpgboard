@@ -19,9 +19,10 @@ if __name__=='__main__':
   context=browser.new_context(viewport={'width':1024,'height':768},has_touch=True,is_mobile=True)
   page=context.new_page();errors=[];responses=[]
   page.on('pageerror',lambda e:errors.append(str(e)));page.on('response',lambda r:responses.append((r.url,r.status)))
-  load(page);assert page.locator('meta[name="application-version"]').get_attribute('content')=='1.1'
+  load(page);assert page.locator('meta[name="application-version"]').get_attribute('content')=='1.2'
   assert page.evaluate('arena.hero.model.getObjectByProperty("isSkinnedMesh",true)!==undefined&&arena.enemy.model.getObjectByProperty("isSkinnedMesh",true)!==undefined')
   assert page.evaluate('arena.hero.actions.has("Walking_A")&&arena.hero.actions.has("1H_Melee_Attack_Slice_Diagonal")&&arena.enemy.actions.has("Hit_A")&&arena.enemy.actions.has("Death_A")')
+  assert page.locator('#hero-portrait').evaluate('(img)=>img.complete&&img.naturalWidth===144'), 'portrait must come from a successful 3D render'
   page.screenshot(path=str(SHOTS/'3d-actual-initial.png'))
   initial_pose=bone_pose(page)
   point=page.evaluate('arena.projectCell({x:3,z:7})');page.touchscreen.tap(point['x'],point['y']);page.wait_for_function('arena.phase==="moving"')
@@ -36,7 +37,10 @@ if __name__=='__main__':
   point=page.evaluate('arena.projectEnemy()');page.touchscreen.tap(point['x'],point['y']);page.wait_for_function('arena.activeAction==="attack"')
   assert page.evaluate('arena.state.enemy.hp===24&&arena.state.attacks===0'),'damage must wait for the hit frame'
   page.evaluate('document.getElementById("attack").click();document.getElementById("attack").click()')
-  page.wait_for_function('arena.phase==="attacking"',timeout=60000);page.screenshot(path=str(SHOTS/'3d-actual-attack.png'));ready(page)
+  page.wait_for_function('arena.phase==="attacking"',timeout=60000)
+  page.wait_for_function('arena.hero.trail.mesh.visible',timeout=15000)
+  assert page.evaluate('Array.from(arena.hero.trail.vertices).every(Number.isFinite)'), 'weapon trail vertices must stay finite'
+  page.screenshot(path=str(SHOTS/'3d-actual-attack.png'));ready(page)
   assert page.evaluate('arena.state.attacks===1&&arena.state.enemy.hp===18&&arena.state.hero.hp===26')
   assert page.evaluate('Math.hypot(arena.state.hero.x-arena.state.enemy.x,arena.state.hero.z-arena.state.enemy.z)<=1.5')
   for attack in range(3):

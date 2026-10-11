@@ -1,6 +1,6 @@
 # 3D 장면 배포
 
-공개 주소: https://ureka01-creator.github.io/mmorpgboard/?release=1.1
+공개 주소: https://ureka01-creator.github.io/mmorpgboard/?release=1.2
 
 HTML/CSS, ES 모듈과 로컬 Three.js/GLB 자산으로 실행되는 정적 앱이다. 소스는 `main`, GitHub Pages 공개 파일은 `gh-pages`에 있다. `main` 푸시만으로 사이트가 교체되지는 않는다.
 
@@ -12,7 +12,7 @@ python scripts/deploy_pages.py
 
 이 스크립트는 깨끗한 작업 상태를 확인하고 최신 `gh-pages`를 가져온다. 임시 Git index에 공개 파일만 담아 이전 배포의 자식 커밋을 만든 뒤 강제 푸시 없이 올린다. 현재 체크아웃을 교체하지 않는다.
 
-공개 파일은 `index.html`, `arena.css`, `arena.js`, `arena-engine.mjs`, `.nojekyll`, `assets/3d`와 `vendor/three` 안의 자산·모듈·라이선스다. docs의 목표 시안을 실제 게임 화면으로 배포하지 않는다.
+공개 파일은 `index.html`, `arena.css`, `arena.js`, `arena-engine.mjs`, `arena-art.mjs`, `.nojekyll`, `assets/3d`와 `vendor/three` 안의 자산·모듈·라이선스다. docs의 목표 시안을 실제 게임 화면으로 배포하지 않는다.
 
 GitHub Pages build and deployment 작업이 성공한 뒤 다음 검증을 실행한다.
 
