@@ -1,11 +1,21 @@
 import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 let pending;
-export function loadMotionPack(){return pending??=fetch('./assets/animations/knight-motion.json?v=2.2').then(r=>{if(!r.ok)throw new Error('Animation pack HTTP '+r.status);return r.json();}).then(pack=>{if(pack.schema!==1||pack.joints?.length!==15||!['idle','run','walk','attack','roll','hurt','dead'].every(k=>{const c=pack.clips?.[k];return c&&c.duration>0&&c.frames?.length>1&&c.frames.every(f=>f.length===63&&f.every(Number.isFinite));}))throw new Error('Invalid animation pack');return pack;});}
+export function loadMotionPack(){
+ return pending??=Promise.all([new GLTFLoader().loadAsync('./assets/characters/fullplate.glb?v=2.3'),fetch('./assets/animations/fullplate-motion.json?v=2.3').then(r=>{if(!r.ok)throw Error('Motion HTTP '+r.status);return r.json();})]).then(([model,pack])=>{
+  if(pack.schema!==2||pack.joints?.length!==53||!['idle','carry','run','walk','attack','roll','hurt','dead'].every(k=>{const c=pack.clips?.[k];return c?.duration>0&&c.frames?.length>1&&c.frames.every(f=>f.length===215&&f.every(Number.isFinite));}))throw Error('Invalid skinned motion pack');
+  return {model,pack};
+ });
+}
 export function bindMotion(actor,pack){
- const {pelvis,chest,head,arms,legs}=actor;
- const joints=[pelvis,chest,head];for(let i=0;i<2;i++)joints.push(arms[i].shoulder,arms[i].elbow,arms[i].hand,legs[i].hip,legs[i].knee,legs[i].ankle);
- joints.forEach((j,i)=>j.name=pack.joints[i]);
+ const joints=pack.joints.map(n=>actor.model.getObjectByName(THREE.PropertyBinding.sanitizeNodeName(n)));
+ if(joints.some(j=>!j?.isBone))throw Error('Character skeleton does not match animation');
  actor.clipRig={pack,joints,base:joints.map(()=>new THREE.Quaternion()),action:joints.map(()=>new THREE.Quaternion()),position:new THREE.Vector3(),actionPosition:new THREE.Vector3()};
+ actor.bones=Object.fromEntries(pack.joints.map((n,i)=>[n,joints[i]]));
+ actor.pelvis=actor.bones['DEF-hips'];actor.chest=actor.bones['DEF-spine.003'];actor.head=actor.bones['DEF-head'];
+ actor.arms=['L','R'].map((s,i)=>({shoulder:actor.bones['DEF-upper_arm.'+s],elbow:actor.bones['DEF-forearm.'+s],hand:actor.bones['DEF-hand.'+s],side:i===0?1:-1}));
+ actor.legs=['L','R'].map((s,i)=>({hip:actor.bones['DEF-thigh.'+s],knee:actor.bones['DEF-shin.'+s],ankle:actor.bones['DEF-foot.'+s],side:i===0?1:-1}));
+ actor.lower=new Set(pack.joints.filter(n=>/^DEF-(thigh|shin|foot|toe)/.test(n)));
 }
 export function sampleClip(clip,time,quaternions,position){
  const phase=Math.max(0,Math.min(1,time/clip.duration))*(clip.frames.length-1),index=Math.min(clip.frames.length-2,Math.floor(phase)),blend=phase-index,a=clip.frames[index],b=clip.frames[index+1];

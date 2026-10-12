@@ -1,15 +1,15 @@
 import * as THREE from 'three';
-import * as R from './arena-engine.mjs?v=2.2';
-import {createArtWorld,portrait} from './arena-art.mjs?v=2.2';
-import {createActor,animateActor} from './arena-actors.mjs?v=2.2';
-import {loadMotionPack} from './arena-clips.mjs?v=2.2';
+import * as R from './arena-engine.mjs?v=2.3';
+import {createArtWorld,portrait} from './arena-art.mjs?v=2.3';
+import {createActor,animateActor} from './arena-actors.mjs?v=2.3';
+import {loadMotionPack} from './arena-clips.mjs?v=2.3';
 async function setup(){
 const $=id=>document.getElementById(id),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const renderer=new THREE.WebGLRenderer({canvas:$('scene'),antialias:true,powerPreference:'high-performance'});
 let resolution=Math.min(devicePixelRatio,1.25);renderer.setPixelRatio(resolution);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
 const motionPack=await loadMotionPack();
 const art=createArtWorld(renderer),scene=art.scene,hero=createActor(scene,true,motionPack),enemy=createActor(scene,false,motionPack),camera=new THREE.PerspectiveCamera(39,innerWidth/innerHeight,.1,80),clock=new THREE.Clock();
-const offset=new THREE.Vector3(5.5,17,10),cameraTarget=new THREE.Vector3(),raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2(),groundPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0),sparks=[],floaters=[],keys=new Set(),yaw=Math.atan2(offset.x,offset.z);
+const offset=new THREE.Vector3(4.8,14.7,8.7),cameraTarget=new THREE.Vector3(),raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2(),groundPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0),sparks=[],floaters=[],keys=new Set(),yaw=Math.atan2(offset.x,offset.z);
 let state=R.create(),started=false,paused=false,accumulator=0,attackHeld=false,attackQueued=false,dodgeQueued=false,joystick={x:0,y:0,id:null},destination=null,route=[],lastEvent=0,muted=false,audioContext,noticeTimer,resetWasPaused=false,lastFootstep=0,slowAverage=.016,lastResolutionChange=0,visualTime=0;
 function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();}resize();window.addEventListener('resize',resize);
 function notify(text){clearTimeout(noticeTimer);$('notice').hidden=false;$('notice').textContent=text;noticeTimer=setTimeout(()=>$('notice').hidden=true,2800);}
@@ -21,7 +21,7 @@ function input(){let x=joystick.x+(keys.has('d')||keys.has('arrowright')?1:0)-(k
 }
 function clearInput(){keys.clear();attackHeld=attackQueued=dodgeQueued=false;joystick={x:0,y:0,id:null};$('joystick-thumb').style.transform='';destination=null;route=[];art.target.visible=false;}
 function pause(value){if(!started||state.status!=='playing')return;paused=value;clearInput();$('paused').hidden=!value;$('pause').textContent=value?'▶':'Ⅱ';$('pause').setAttribute('aria-label',value?'계속하기':'일시 정지');}
-function reset(){state=R.create();lastEvent=0;paused=false;accumulator=0;visualTime=0;clearInput();art.warning.visible=false;$('paused').hidden=$('result').hidden=true;$('pause').textContent='Ⅱ';$('pause').setAttribute('aria-label','일시 정지');$('hint').textContent='바닥 탭으로 이동 · 적의 준비 동작을 보고 거리를 벌리세요';for(const f of floaters)f.el.remove();floaters.length=0;for(const spark of sparks){scene.remove(spark.mesh);spark.mesh.geometry.dispose();spark.mesh.material.dispose();}sparks.length=0;animateActor(hero,state.hero,0,reduced);animateActor(enemy,state.enemy,0,reduced);cameraTarget.set(state.hero.x*.55,0,state.hero.z*.55);camera.position.copy(cameraTarget).add(offset);camera.lookAt(cameraTarget);updateHUD();}
+function reset(){state=R.create();lastEvent=0;lastFootstep=0;paused=false;accumulator=0;visualTime=0;clearInput();art.warning.visible=false;$('paused').hidden=$('result').hidden=true;$('pause').textContent='Ⅱ';$('pause').setAttribute('aria-label','일시 정지');$('hint').textContent='바닥 탭으로 이동 · 적의 준비 동작을 보고 거리를 벌리세요';for(const f of floaters)f.el.remove();floaters.length=0;for(const spark of sparks){scene.remove(spark.mesh);spark.mesh.geometry.dispose();spark.mesh.material.dispose();}sparks.length=0;animateActor(hero,state.hero,0,reduced);animateActor(enemy,state.enemy,0,reduced);cameraTarget.set(state.hero.x*.55,0,state.hero.z*.55);camera.position.copy(cameraTarget).add(offset);camera.lookAt(cameraTarget);updateHUD();}
 function updateHUD(){const h=state.hero,e=state.enemy;$('hero-health').style.width=h.hp/h.max*100+'%';$('hero-hp').textContent=`${h.hp} / ${h.max}`;$('enemy-health').style.width=e.hp/e.max*100+'%';$('enemy-hp').textContent=`${e.hp} / ${e.max}`;$('attack-cooldown').style.height=h.cooldown/.72*100+'%';$('dodge-cooldown').style.height=h.dodgeCooldown/1.45*100+'%';$('attack').disabled=$('dodge').disabled=state.status!=='playing'||paused;}
 function initSound(){try{audioContext??=new (window.AudioContext||window.webkitAudioContext)();audioContext.resume().catch(()=>{});}catch{}}
 function sound(type){if(muted||!audioContext||audioContext.state!=='running')return;const t=audioContext.currentTime,g=audioContext.createGain(),o=audioContext.createOscillator();g.connect(audioContext.destination);o.connect(g);o.type=type==='hit'?'triangle':'sine';o.frequency.setValueAtTime(type==='hit'?480:type==='step'?80:210,t);o.frequency.exponentialRampToValueAtTime(45,t+.14);g.gain.setValueAtTime(type==='step'?.018:.05,t);g.gain.exponentialRampToValueAtTime(.001,t+.17);o.start(t);o.stop(t+.19);}
@@ -30,15 +30,16 @@ function hitEffect(who,amount){const body=state[who],actor=who==='hero'?hero:ene
 }
 function events(){for(const event of state.events){if(event.id<=lastEvent)continue;lastEvent=event.id;if(event.type==='hit'){hitEffect(event.who,event.amount);sound('hit');}if(event.type==='swing')sound('swing');if(event.type==='warning')$('hint').textContent='수호병이 검을 들었습니다. 움직이거나 회피하세요.';if(event.type==='evade')$('hint').textContent='공격을 피했습니다. 빈틈을 노리세요.';if(event.type==='miss')$('hint').textContent='검이 닿지 않았습니다. 직접 다가가 공격하세요.';if(event.type==='won'||event.type==='lost'){$('result').hidden=false;$('result-caption').textContent=event.type==='won'?'SANCTUARY CLEARED':'FALLEN KNIGHT';$('result-title').textContent=event.type==='won'?'성역이 잠잠해졌다':'다시 검을 들 시간';$('result-copy').textContent=event.type==='won'?`검격 ${state.hero.swings}회 · 명중 ${state.hero.hits}회 · 남은 체력 ${state.hero.hp}`:'적이 검을 들면 공격 범위에서 벗어나거나 회피하세요.';clearInput();}}}
 function frame(){requestAnimationFrame(frame);const raw=clock.getDelta(),dt=Math.min(raw,.25),time=clock.elapsedTime;
- if(started&&!paused&&state.status==='playing'){accumulator+=dt;while(accumulator>=1/60){R.step(state,input(),1/60);accumulator-=1/60;}events();}
- if(started&&!paused)visualTime+=dt;animateActor(hero,state.hero,visualTime,reduced);animateActor(enemy,state.enemy,visualTime,reduced);
+ // Advance the skin at the same fixed 60Hz as movement. A slow render must not
+ // skip a foot contact or feed a large time step into the leg constraints.
+ if(started&&!paused){accumulator+=dt;while(accumulator>=1/60){if(state.status==='playing')R.step(state,input(),1/60);visualTime+=1/60;animateActor(hero,state.hero,visualTime,reduced);animateActor(enemy,state.enemy,visualTime,reduced);accumulator-=1/60;}events();}
  const goal=new THREE.Vector3(state.hero.x*.72,0,state.hero.z*.72),shift=goal.clone().sub(cameraTarget).multiplyScalar(reduced?1:1-Math.exp(-dt*4));cameraTarget.add(shift);camera.position.copy(cameraTarget).add(offset);camera.lookAt(cameraTarget);camera.updateMatrixWorld();
  for(const torch of art.torches){const flicker=reduced?1:1+Math.sin(time*7+torch.seed)*.055;torch.flame.scale.set(.56*flicker,.8*flicker,1);}
  art.warning.visible=started&&state.enemy.mode==='windup'&&state.status==='playing';art.warning.position.set(state.enemy.x,.019,state.enemy.z);art.warning.rotation.z=state.enemy.yaw-Math.PI/2-Math.PI/3;art.warning.material.opacity=.10+Math.min(1,state.enemy.elapsed/.72)*.22;
  const enemyPos=project(enemy.group.position.clone().add(new THREE.Vector3(0,2.50,0)));$('enemy-label').hidden=!started||state.enemy.hp<=0||!enemyPos.visible;$('enemy-label').style.left=enemyPos.x+'px';$('enemy-label').style.top=enemyPos.y+'px';
- for(let n=floaters.length-1;n>=0;n--){const f=floaters[n];f.time+=dt;const p=project(f.actor.group.position.clone().add(new THREE.Vector3(0,2.2,0)));f.el.style.left=p.x+'px';f.el.style.top=p.y+'px';if(f.time>.8){f.el.remove();floaters.splice(n,1);}}
+ for(let n=floaters.length-1;n>=0;n--){const f=floaters[n];f.time+=dt;const p=project(f.actor.group.position.clone().add(new THREE.Vector3(0,2.3,0)));f.el.style.left=p.x+'px';f.el.style.top=p.y+'px';if(f.time>.8){f.el.remove();floaters.splice(n,1);}}
  for(let n=sparks.length-1;n>=0;n--){const s=sparks[n];s.time+=dt;s.v.y-=5*dt;s.mesh.position.addScaledVector(s.v,dt);s.mesh.material.opacity=Math.max(0,1-s.time/.45);if(s.time>.45){scene.remove(s.mesh);s.mesh.geometry.dispose();s.mesh.material.dispose();sparks.splice(n,1);}}
- if(started&&!paused&&state.hero.mode==='walk'&&state.time-lastFootstep>.36){sound('step');lastFootstep=state.time;}updateHUD();
+ if(started&&!paused&&state.status==='playing'&&hero.motion.footsteps>lastFootstep){sound('step');lastFootstep=hero.motion.footsteps;}updateHUD();
  // Adapt world resolution to sustained slow frames; HTML controls and text stay at native resolution.
  slowAverage=slowAverage*.92+Math.min(raw,.2)*.08;if(time>5&&time-lastResolutionChange>5&&slowAverage>.052&&resolution>.7){resolution=Math.max(.7,resolution-.15);renderer.setPixelRatio(resolution);resize();lastResolutionChange=time;}
  renderer.render(scene,camera);

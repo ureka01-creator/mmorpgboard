@@ -3,11 +3,11 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
 BASE=os.environ.get('ARENA_BASE','http://127.0.0.1:8020/')
-SHOTS=ROOT/'docs/screenshots';SHOTS.mkdir(exist_ok=True,parents=True)
+SHOTS=Path(os.environ.get('ARENA_SHOTS',ROOT/'docs/screenshots'));SHOTS.mkdir(exist_ok=True,parents=True)
 ARGS=['--no-sandbox','--enable-unsafe-swiftshader','--use-gl=angle','--use-angle=swiftshader']
 def load(page):
  page.goto(BASE,wait_until='networkidle');page.wait_for_function('window.arena?.renderer&&document.getElementById("enter").offsetWidth>0',timeout=60000)
- assert page.locator('meta[name="application-version"]').get_attribute('content')=='2.2'
+ assert page.locator('meta[name="application-version"]').get_attribute('content')=='2.3'
  page.click('#enter');page.wait_for_function('document.getElementById("loading").hidden')
 def tap_move(page,point):
  p=page.evaluate('(p)=>arena.projectFloor(p)',point);assert p['visible'];page.touchscreen.tap(p['x'],p['y'])
