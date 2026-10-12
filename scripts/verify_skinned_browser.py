@@ -5,7 +5,7 @@ with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS);page=browser.new_page(viewport={'width':1024,'height':768});load(page);assert page.evaluate('Math.abs(arena.hero.motion.time-arena.state.time)<.0001&&arena.hero.skins[0].isSkinnedMesh')
  page.click('#pause')
  result=page.evaluate('''async()=>{
- const {createActor,animateActor,footPoint}=await import('./arena-actors.mjs?v=2.3'),{loadMotionPack}=await import('./arena-clips.mjs?v=2.3'),THREE=await import('three');
+ const {createActor,animateActor,footPoint}=await import('./arena-actors.mjs?v=2.4'),{loadMotionPack}=await import('./arena-clips.mjs?v=2.4'),THREE=await import('three');
  const assets=await loadMotionPack(),scene=new THREE.Scene(),a=createActor(scene,true,assets),other=createActor(scene,false,assets);
  const body=()=>({x:0,z:0,yaw:0,mode:'idle',elapsed:0,travel:0,swings:1});let b=body(),time=0;
  const snapshot=a=>JSON.stringify([...a.clipRig.joints.map(j=>[...j.position.toArray(),...j.quaternion.toArray()]),a.group.position.toArray(),a.samples.map(s=>s.map(p=>p.toArray()))]);
@@ -33,7 +33,7 @@ with sync_playwright() as pw:
  assert result['skinCount']>0 and result['boneCount']==53 and result['deformation']>.2 and result['independent'],result
  assert result['backwards'],result
  assert result['runActive'] and result['layered'] and result['frozen'] and result['settled'] and result['resetGood'],result
- assert result['minFoot']>-.035 and result['maxJump']<.5 and result['plantN']>10 and result['plantAverage']<.008,result
+ assert result['minFoot']>-.035 and result['maxJump']<.5 and result['plantN']>10 and result['plantAverage']<.008 and result['maxLift']<.36,result
  assert result['maxTurn']<=16/120+.000001,result
  failed=browser.new_page();failed.route('**/assets/animations/fullplate-motion.json*',lambda route:route.fulfill(status=503,body='unavailable'))
  failed.goto(BASE,wait_until='networkidle');failed.wait_for_function('document.getElementById("enter").textContent==="다시 불러오기"');assert failed.evaluate('!window.arena?.renderer')
