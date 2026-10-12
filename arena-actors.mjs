@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {clone} from 'three/addons/utils/SkeletonUtils.js';
-import {damp,turn} from './arena-motion.mjs?v=2.3';
-import {bindMotion,sampleClip,actionTime} from './arena-clips.mjs?v=2.3';
+import {damp,turn} from './arena-motion.mjs?v=2.4';
+import {bindMotion,sampleClip,actionTime} from './arena-clips.mjs?v=2.4';
 const PI=Math.PI,GROUND=.02;
 const material=(color,metalness=0,roughness=.65)=>new THREE.MeshStandardMaterial({color,metalness,roughness});
 function mesh(parent,g,m,x=0,y=0,z=0,scale){const o=new THREE.Mesh(g,m);o.position.set(x,y,z);if(scale)o.scale.set(...scale);o.castShadow=o.receiveShadow=true;parent.add(o);return o;}
@@ -53,7 +53,7 @@ export function animateActor(actor,body,time,reduced=false){
  if(!fresh&&dt===0)return;
  const locomotion=!['dodge','dead'].includes(body.mode);m.speed=damp(m.speed,dt?Math.hypot(body.x-m.x,body.z-m.z)/dt:0,16,dt);
  m.blend=damp(m.blend,locomotion?Math.min(1,m.speed/1.3):0,20,dt);
- const runWeight=Math.max(0,Math.min(1,(m.speed-1.2)/1.9));if(locomotion){const backwards=['attack','windup'].includes(body.mode)&&(body.x-m.x)*Math.sin(m.yaw)+(body.z-m.z)*Math.cos(m.yaw)<-.00001;m.phase+=(backwards?-1:1)*travel/(1.4+(2.8-1.4)*runWeight);}
+ const runWeight=Math.max(0,Math.min(1,(m.speed-1.2)/1.9));if(locomotion){const backwards=['attack','windup'].includes(body.mode)&&(body.x-m.x)*Math.sin(m.yaw)+(body.z-m.z)*Math.cos(m.yaw)<-.00001;m.phase+=(backwards?-1:1)*travel/(1.12+(2.24-1.12)*runWeight);}
  const oldYaw=m.yaw;m.yaw=turn(m.yaw,body.yaw,dt,24,16);const turning=dt?Math.abs(m.yaw-oldYaw)/dt:0;
  group.position.set(body.x,m.ground,body.z);group.rotation.y=m.yaw;actor.pose=body.mode;
  sampleClip(clips.walk,(((m.phase+clips.walk.contactPhase)%1+1)%1)*clips.walk.duration,base,position);
@@ -83,9 +83,23 @@ export function animateActor(actor,body,time,reduced=false){
   const below=Math.min(feet[0].y,feet[1].y),phase=((m.phase%1)+1)%1,stance=m.blend<.2||phase<.14||phase>.9||phase>.4&&phase<.64,goal=stance?Math.max(m.blend<.25?-.28:-.08,Math.min(.18,m.ground-below+GROUND)):m.ground;
   m.ground=damp(m.ground,goal,40,dt);group.position.y=m.ground;updateSkin(actor);feet=[footPoint(actor,0),footPoint(actor,1)];
   actor.legs.forEach((leg,i)=>{
-   const f=m.feet[i],contact=m.blend>.75&&turning<3&&feet[i].y<GROUND+.045;
+   const f=m.feet[i],ankle=leg.ankle.getWorldPosition(new THREE.Vector3());
+   const local=group.worldToLocal(ankle.clone()),forwardSpeed=f.authoredZ!==undefined&&dt?(local.z-f.authoredZ)/dt:0;
+   f.authoredZ=local.z;
+   // A low foot is not necessarily in stance: release it as soon as the
+   // authored cycle starts swinging forward, before height clears the floor.
+   const backwards=(body.x-m.x)*Math.sin(m.yaw)+(body.z-m.z)*Math.cos(m.yaw)<-.00001;
+   const swinging=forwardSpeed*(backwards?-1:1)>.15;
+   const contact=m.blend>.75&&turning<3&&!swinging&&feet[i].y<GROUND+.045;
+   // Shorten stride and travelled cycle distance by 20%, lower swing
+   // clearance by 40%, and preserve the authored knee bend.
+   if(m.blend>.01){
+    const hip=leg.hip.getWorldPosition(new THREE.Vector3()),forward=new THREE.Vector3(Math.sin(m.yaw),0,Math.cos(m.yaw)),goal=ankle.clone();
+    goal.addScaledVector(forward,-ankle.clone().sub(hip).dot(forward)*.2);goal.y-=Math.max(0,feet[i].y-GROUND)*.4;
+    solveLeg(leg,goal,m.blend,null,leg.knee.getWorldPosition(new THREE.Vector3()).sub(hip));
+   }
    if(contact&&!f.planted){f.anchor=leg.ankle.getWorldPosition(new THREE.Vector3());f.anchor.y=GROUND-actor.restFeet[i].offset;f.q=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),m.yaw).multiply(actor.restFeet[i].q);f.planted=true;m.footsteps++;f.weight=1-Math.exp(-dt*60);}
-   if(feet[i].y>GROUND+.09||m.blend<.5||turning>5)f.planted=false;
+   if(swinging||feet[i].y>GROUND+.09||m.blend<.5||turning>5)f.planted=false;
    f.weight=damp(f.weight,f.planted?1:0,f.planted?45:30,dt);
    if(f.anchor&&f.weight>.01)solveLeg(leg,f.anchor,f.weight,f.q,new THREE.Vector3(Math.sin(m.yaw),0,Math.cos(m.yaw)));
   });updateSkin(actor);

@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 let pending;
 export function loadMotionPack(){
- return pending??=Promise.all([new GLTFLoader().loadAsync('./assets/characters/fullplate.glb?v=2.3'),fetch('./assets/animations/fullplate-motion.json?v=2.3').then(r=>{if(!r.ok)throw Error('Motion HTTP '+r.status);return r.json();})]).then(([model,pack])=>{
+ return pending??=Promise.all([new GLTFLoader().loadAsync('./assets/characters/fullplate.glb?v=2.4'),fetch('./assets/animations/fullplate-motion.json?v=2.4').then(r=>{if(!r.ok)throw Error('Motion HTTP '+r.status);return r.json();})]).then(([model,pack])=>{
   if(pack.schema!==2||pack.joints?.length!==53||!['idle','carry','run','walk','attack','roll','hurt','dead'].every(k=>{const c=pack.clips?.[k];return c?.duration>0&&c.frames?.length>1&&c.frames.every(f=>f.length===215&&f.every(Number.isFinite));}))throw Error('Invalid skinned motion pack');
   return {model,pack};
  });
