@@ -1,8 +1,8 @@
 import * as THREE from 'three';
-import * as R from './arena-engine.mjs?v=2.4';
-import {createArtWorld,portrait} from './arena-art.mjs?v=2.4';
-import {createActor,animateActor} from './arena-actors.mjs?v=2.4';
-import {loadMotionPack} from './arena-clips.mjs?v=2.4';
+import * as R from './arena-engine.mjs?v=2.5';
+import {createArtWorld,portrait} from './arena-art.mjs?v=2.5';
+import {createActor,animateActor} from './arena-actors.mjs?v=2.5';
+import {loadMotionPack} from './arena-clips.mjs?v=2.5';
 async function setup(){
 const $=id=>document.getElementById(id),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const renderer=new THREE.WebGLRenderer({canvas:$('scene'),antialias:true,powerPreference:'high-performance'});
@@ -48,7 +48,8 @@ function queueAttack(){if(started&&!paused&&state.status==='playing'){initSound(
 function queueDodge(){if(started&&!paused&&state.status==='playing'){initSound();dodgeQueued=true;}}
 const stick=$('joystick');function stickMove(event){const r=stick.getBoundingClientRect(),dx=event.clientX-r.x-r.width/2,dy=event.clientY-r.y-r.height/2,limit=r.width*.32,d=Math.hypot(dx,dy),scale=d>limit?limit/d:1;joystick.x=d<6?0:dx*scale/limit;joystick.y=d<6?0:dy*scale/limit;$('joystick-thumb').style.transform=`translate(${dx*scale}px,${dy*scale}px)`;}
 stick.addEventListener('pointerdown',e=>{if(!started||paused||joystick.id!==null)return;e.preventDefault();initSound();joystick.id=e.pointerId;stick.setPointerCapture(e.pointerId);stickMove(e);});stick.addEventListener('pointermove',e=>{if(e.pointerId===joystick.id)stickMove(e);});for(const name of ['pointerup','pointercancel','lostpointercapture'])stick.addEventListener(name,e=>{if(e.pointerId===joystick.id){joystick={x:0,y:0,id:null};$('joystick-thumb').style.transform='';}});
-$('attack').addEventListener('pointerdown',e=>{if(!started||paused)return;e.preventDefault();$('attack').setPointerCapture(e.pointerId);attackHeld=true;queueAttack();});for(const name of ['pointerup','pointercancel','lostpointercapture'])$('attack').addEventListener(name,()=>attackHeld=false);$('attack').addEventListener('click',e=>{if(e.detail===0)queueAttack();});$('dodge').addEventListener('click',queueDodge);
+$('attack').addEventListener('pointerdown',e=>{if(!started||paused)return;e.preventDefault();$('attack').setPointerCapture(e.pointerId);attackHeld=true;queueAttack();});for(const name of ['pointerup','pointercancel','lostpointercapture'])$('attack').addEventListener(name,()=>attackHeld=false);$('attack').addEventListener('click',e=>{if(e.detail===0)queueAttack();});
+$('dodge').addEventListener('pointerdown',e=>{if(!started||paused)return;e.preventDefault();$('dodge').setPointerCapture(e.pointerId);queueDodge();});$('dodge').addEventListener('click',e=>{if(e.detail===0)queueDodge();});
 let tapStart=null;$('scene').addEventListener('pointerdown',e=>tapStart={x:e.clientX,y:e.clientY,id:e.pointerId});$('scene').addEventListener('pointerup',e=>{if(!started||paused||state.status!=='playing'||!tapStart||tapStart.id!==e.pointerId||Math.hypot(e.clientX-tapStart.x,e.clientY-tapStart.y)>10)return;pointer.set(e.clientX/innerWidth*2-1,-e.clientY/innerHeight*2+1);raycaster.setFromCamera(pointer,camera);const p=raycaster.ray.intersectPlane(groundPlane,new THREE.Vector3());tapStart=null;if(!p)return;const next=R.route(state.hero,{x:p.x,z:p.z});if(!next){notify('벽과 기둥을 피해 바닥을 누르세요.');return;}initSound();route=next;destination={x:p.x,z:p.z};art.target.position.set(p.x,.018,p.z);art.target.visible=true;});
 window.addEventListener('keydown',e=>{if(e.target.isContentEditable||['INPUT','TEXTAREA'].includes(e.target.tagName))return;const key=e.key.toLowerCase();if(key===' '&&e.target instanceof HTMLButtonElement)return;if([' ','arrowup','arrowdown','arrowleft','arrowright','w','a','s','d','shift','escape','p'].includes(key))e.preventDefault();if(key==='escape'||key==='p'){if(!e.repeat&&!$('reset-dialog').open)pause(!paused);return;}if(!started||paused||$('reset-dialog').open)return;if(key==='shift'&&!e.repeat)queueDodge();keys.add(key);});window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>{clearInput();if(started)pause(true);});document.addEventListener('visibilitychange',()=>{if(document.hidden)pause(true);});
 $('pause').onclick=()=>pause(!paused);$('resume').onclick=()=>pause(false);$('sound').onclick=()=>{muted=!muted;$('sound').textContent=muted?'♩':'♪';$('sound').setAttribute('aria-pressed',String(muted));$('sound').setAttribute('aria-label',muted?'소리 켜기':'소리 끄기');if(!muted)initSound();};

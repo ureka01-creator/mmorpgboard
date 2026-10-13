@@ -7,7 +7,7 @@ SHOTS=Path(os.environ.get('ARENA_SHOTS',ROOT/'docs/screenshots'));SHOTS.mkdir(ex
 ARGS=['--no-sandbox','--enable-unsafe-swiftshader','--use-gl=angle','--use-angle=swiftshader']
 def load(page):
  page.goto(BASE,wait_until='networkidle');page.wait_for_function('window.arena?.renderer&&document.getElementById("enter").offsetWidth>0',timeout=60000)
- assert page.locator('meta[name="application-version"]').get_attribute('content')=='2.4'
+ assert page.locator('meta[name="application-version"]').get_attribute('content')=='2.5'
  page.click('#enter');page.wait_for_function('document.getElementById("loading").hidden')
 def tap_move(page,point):
  p=page.evaluate('(p)=>arena.projectFloor(p)',point);assert p['visible'];page.touchscreen.tap(p['x'],p['y'])
@@ -43,8 +43,15 @@ if __name__=='__main__':
   travel=page.evaluate('arena.state.hero.travel');cdp.send('Input.dispatchTouchEvent',{'type':'touchStart','touchPoints':points});page.wait_for_function('(v)=>arena.state.hero.travel>v+.2&&arena.state.hero.swings>0',arg=travel,timeout=30000)
   assert page.evaluate('arena.input.attackHeld&&arena.input.joystick.id!==null')
   cdp.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[]});page.wait_for_function('!arena.input.attackHeld&&arena.input.joystick.id===null')
-  # Dodge is a genuine displacement with an active cooldown, not an ornamental icon.
-  travel=page.evaluate('arena.state.hero.travel');page.click('#dodge');page.wait_for_function('(v)=>arena.state.hero.travel>v+.3&&arena.state.hero.dodgeCooldown>0',arg=travel,timeout=30000);page.screenshot(path=str(SHOTS/'nox-actual-dodge.png'))
+  page.click('#reset');page.click('#reset-confirm')
+  # Keep one finger moving. Dodge must start before the second finger lifts,
+  # and walking must resume with the first finger still captured.
+  dodge=page.locator('#dodge').bounding_box();moving=[points[0]];rolling=moving+[{'id':3,'x':dodge['x']+dodge['width']/2,'y':dodge['y']+dodge['height']/2}]
+  travel=page.evaluate('arena.state.hero.travel');cdp.send('Input.dispatchTouchEvent',{'type':'touchStart','touchPoints':moving});page.wait_for_function('(v)=>arena.state.hero.travel>v+.1',arg=travel)
+  cdp.send('Input.dispatchTouchEvent',{'type':'touchStart','touchPoints':rolling});page.wait_for_function('arena.state.events.some(e=>e.type==="dodge")&&arena.input.joystick.id!==null',polling=10,timeout=30000)
+  assert page.evaluate('arena.state.hero.dodgeCooldown>0');page.screenshot(path=str(SHOTS/'nox-actual-dodge.png'))
+  cdp.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[rolling[1]]});travel=page.evaluate('arena.state.hero.travel');page.wait_for_function('(v)=>arena.state.hero.mode==="walk"&&arena.state.hero.travel>v+.15&&arena.input.joystick.id!==null',arg=travel)
+  assert page.evaluate('arena.state.events.filter(e=>e.type==="dodge").length===1');cdp.send('Input.dispatchTouchEvent',{'type':'touchEnd','touchPoints':[]});page.wait_for_function('arena.input.joystick.id===null')
   page.click('#reset');page.click('#reset-confirm');fight(page)
   assert page.locator('#result').is_visible();assert page.locator('#attack').is_disabled();page.screenshot(path=str(SHOTS/'nox-actual-victory.png'))
   page.click('#again');assert page.evaluate('arena.state.status==="playing"&&arena.state.hero.hp===40&&arena.state.enemy.hp===50')

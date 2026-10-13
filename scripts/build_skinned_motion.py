@@ -1,5 +1,5 @@
-"""Retarget selected CC0 Quaternius clips to Elderfall's original rigid armour rig.
-Usage: python scripts/build_animation_pack.py --source /path/to/downloaded/glTF
+"""Retarget selected CC0 Quaternius clips to Elderfall's complete skinned rig.
+Usage: python scripts/build_skinned_motion.py --source /path/to/downloaded/glTF
 Requires numpy/scipy only for this offline conversion; the game needs neither.
 """
 import argparse,hashlib,json,shutil
@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 from scipy.spatial.transform import Rotation as R,Slerp
 ROOT=Path(__file__).resolve().parents[1]
-parser=argparse.ArgumentParser();parser.add_argument('--source',type=Path,required=True);parser.add_argument('--model',type=Path,default=ROOT/'assets/characters/fullplate.glb');args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('--source',type=Path,required=True);parser.add_argument('--model',type=Path,default=ROOT/'assets/characters/sentinel.glb');args=parser.parse_args()
 src=args.source
 expected={
  'AnimationLibrary_Godot_Standard.gltf':'0ff075c7ad6855c5c2c37a171592ee8f0d6ab2f58259e2be77a9b63dd8027765',

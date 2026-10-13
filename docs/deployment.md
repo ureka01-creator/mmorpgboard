@@ -1,6 +1,6 @@
 # 3D 장면 배포
 
-공개 주소: https://ureka01-creator.github.io/mmorpgboard/?release=2.3
+공개 주소: https://ureka01-creator.github.io/mmorpgboard/?release=2.5
 
 HTML/CSS, ES 모듈과 로컬 Three.js와 원본 관절/던전 메시으로 실행되는 정적 앱이다. 소스는 `main`, GitHub Pages 공개 파일은 `gh-pages`에 있다. `main` 푸시만으로 사이트가 교체되지는 않는다.
 

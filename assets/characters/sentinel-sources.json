@@ -1,0 +1,35 @@
+{
+  "author": "Luana Coppio (Scoppio / magicalgothgirrl)",
+  "original": "https://magicalgothgirrl.itch.io/fullplate-armor-knight",
+  "license": "CC0-1.0",
+  "licenseEvidence": {
+    "declaration": "https://raw.githubusercontent.com/JoaquimJunes/Ashen-Courtyard/main/CREDITS.md",
+    "collectionReuseStatement": "https://github.com/M3-org/retro3d-assets/blob/f6c82602d44747cca876b25b2fb2781ffeb7db93/README.md"
+  },
+  "mirror": "https://github.com/M3-org/retro3d-assets",
+  "commit": "f6c82602d44747cca876b25b2fb2781ffeb7db93",
+  "sourceSha256": {
+    "knight.blend": "cb9cfdd972faa59c21aae603d15cb32ba33e337f04ac0981cfdbb76f7347702a",
+    "knightlowres.png": "532126a65d280e886a4a0092c15da74f8172aae9ad1f824a31e6282685657c99",
+    "texture_source.txt": "26bdb8915ce23ad0b6cd52c87b21d7c34ff532c2188fb6361a6170c87c6e2b41"
+  },
+  "generatedSha256": "de52bf8aa316076529345ee52363997338e54b862ee21e71342b97b0e6ee12e7",
+  "changes": [
+    "baked complete mirrored mesh in T pose",
+    "rebound to full 53-joint Quaternius-compatible skeleton with distributed spine skin weights",
+    "changed emission-only photograph texture to lit metal albedo",
+    "preserved source UV/photo texture; original art and texture attribution retained",
+    "replaced photograph material with original painted vertex colours",
+    "replaced source helmet with original sculpted head, short hair, beard and leather circlet",
+    "authored shoulder plates, cuffs, buckles and leather harness",
+    "added folded mantle weighted across three spine/hip joints",
+    "rebalanced leg and torso proportions together with all bind joints",
+    "baked original 512px painted noise and contact shading atlas"
+  ],
+  "textureAuthor": "Petr Kratochvil",
+  "textureLicense": "Public Domain",
+  "textureSource": "knight armor by Petr Kratochvil, this photo, \u201cSuit Of Armor\u201d, is released under Public Domain license. \nhttps://www.publicdomainpictures.net/en/view-image.php?image=377696&picture=suit-of-armor",
+  "baseModelSha256": "b4954d9bbbc8a9c826f8e50e167f3bab122d88327dd67ebb5b42f50a1ea122a0",
+  "artBuild": "scripts/build_sentinel_art.py",
+  "runtimeTexture": "Original 512px grayscale paint/noise/AO atlas multiplied by authored vertex colours; source photograph is not used"
+}
