@@ -31,7 +31,7 @@ export function step(s,input={},dt=1/60){
  let x=Number.isFinite(input.x)?input.x:0,z=Number.isFinite(input.z)?input.z:0;const length=Math.hypot(x,z);if(length>1){x/=length;z/=length;}
  if(input.dodge&&h.dodgeCooldown===0&&h.mode!=='dodge'){h.mode='dodge';h.elapsed=0;h.hit=true;h.dodgeCooldown=1.45;if(Math.hypot(x,z)>.1)h.yaw=Math.atan2(x,z);emit(s,'dodge');}
  else if(input.attack&&h.cooldown===0&&h.mode!=='dodge'){h.mode='attack';h.elapsed=0;h.hit=false;h.cooldown=.72;h.swings++;if(distance(h,e)<3.2&&e.hp>0)h.yaw=angle(h,e);emit(s,'swing',{who:'hero'});}
- if(h.mode==='dodge'){moveBody(h,Math.sin(h.yaw)*7.0*dt,Math.cos(h.yaw)*7.0*dt,e);if(h.elapsed>=.34){h.mode='idle';h.elapsed=0;}}
+ if(h.mode==='dodge'){moveBody(h,Math.sin(h.yaw)*7.0*dt,Math.cos(h.yaw)*7.0*dt,e);if(h.elapsed>=.34){h.mode=Math.hypot(x,z)>.1?'walk':'idle';h.elapsed=0;if(h.mode==='walk')h.yaw=Math.atan2(x,z);}}
  else {const speed=h.mode==='attack'?1.1:3.3,moving=moveBody(h,x*speed*dt,z*speed*dt,e)>.0001;if(h.mode!=='attack'){h.mode=moving?'walk':'idle';if(moving)h.yaw=Math.atan2(x,z);}}
  if(h.mode==='attack'){
   if(h.elapsed>=.26&&!h.hit){h.hit=true;if(e.hp>0&&distance(h,e)<=1.85&&Math.abs(wrap(angle(h,e)-h.yaw))<=1.02&&clearLine(h,e,.08)){e.hp=Math.max(0,e.hp-10);h.hits++;if(e.hp===0){e.mode='dead';e.elapsed=0;}else if(!['windup','attack'].includes(e.mode)){e.mode='hurt';e.elapsed=0;e.cooldown=.65;}emit(s,'hit',{who:'enemy',amount:10});if(e.hp===0){s.status='won';h.mode='idle';h.elapsed=0;emit(s,'won');}}else emit(s,'miss');}
