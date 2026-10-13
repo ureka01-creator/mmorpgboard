@@ -12,4 +12,4 @@
 
 실제 플레이 화면은 `docs/screenshots/nox-actual-*.png`이며 목표 시안과 구분한다. 자세 안내와 기존 2.5 기록은 별도로 보관한다.
 
-공개 배포 결과는 완료 뒤 이 기록에 추가한다.
+공개 배포: GitHub Pages 실행 `38385617557` 성공. 공개 HTTPS 실행 파일 27개의 SHA256과 ES 모듈 MIME을 확인했고, 동일한 공개 응답으로 실제 WebGL의 새 캐릭터·이동·회피·검격 다섯 번과 승리를 검증했다. TLS 검증은 유지한다. 소스 `08d0248`, 배포 `20c768535340e7e18c52198635f2f8d929acf660`. 플레이: https://ureka01-creator.github.io/mmorpgboard/?release=2.6.
