@@ -1,3 +1,4 @@
+import {spritePortrait} from './arena-sprites.mjs?v=2.6';
 import * as THREE from 'three';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 import {rooms,columns,obstacles} from './arena-engine.mjs';
@@ -72,6 +73,7 @@ export function createArtWorld(renderer){
  return {scene,torches,target,warning,sun};
 }
 export function portrait(renderer,scene,actor){
+ if(actor.renderType==='directional-sprite')return spritePortrait(actor);
  // Reuse the live renderer and its compiled programs instead of creating a second WebGL context.
  const w=144,h=180,target=new THREE.WebGLRenderTarget(w,h,{colorSpace:THREE.SRGBColorSpace}),previous=renderer.getRenderTarget();
  const camera=new THREE.PerspectiveCamera(28,w/h,.1,30),p=actor.group.position;camera.position.copy(p).add(new THREE.Vector3(1.45,1.85,2.8).applyAxisAngle(new THREE.Vector3(0,1,0),actor.group.rotation.y));camera.lookAt(p.x,p.y+1.62,p.z);

@@ -1,0 +1,3379 @@
+{
+  "schema": 1,
+  "directions": [
+    "S",
+    "SE",
+    "E",
+    "NE",
+    "N",
+    "NW",
+    "W",
+    "SW"
+  ],
+  "atlases": {
+    "idle-front": {
+      "file": "assets/sprites/warrior/idle-front.png",
+      "width": 1536,
+      "height": 1024,
+      "worldHeight": 2.637918,
+      "sha256": "c6aeb07563d2fbcc290edaf6fedc583d151176bc1a8dc79c9290c0ac71cb218b",
+      "guideSha256": "4eb5800ff7bcdb18cb46eb115c433cade39c1bc2a7dc1ac07e36a7d6a5db6c2a",
+      "generatedSource": "exec-3ceba00b-9ebe-4ed4-a9ae-c50f98568043.png"
+    },
+    "idle-back": {
+      "file": "assets/sprites/warrior/idle-back.png",
+      "width": 1536,
+      "height": 1024,
+      "worldHeight": 2.558824,
+      "sha256": "2eaafcb36610564e53e0fa2e0568926798f332414758076d9ab1ed98081d0ac1",
+      "guideSha256": "5015fa075ecd9b54fc56cc548b2cf0fb8ba8ef222263949d03b5afa9dfe0d854",
+      "generatedSource": "exec-af32af0c-e085-4069-b0ad-3e5ac8dcddc2.png"
+    },
+    "run-front-a": {
+      "file": "assets/sprites/warrior/run-front-a.png",
+      "width": 1536,
+      "height": 1024,
+      "worldHeight": 2.36109,
+      "sha256": "a02ff2e50abf7cc1828880518f378373aaccb026223bdd93bbe1942c430a144e",
+      "guideSha256": "5cfbcc4599e09b9f3b00dd6740f703fe6457881737c18eaaad9fde1e14de00a5",
+      "generatedSource": "exec-50a1b817-4f57-4579-b23c-7b8eb569c762.png"
+    },
+    "run-front-b": {
+      "file": "assets/sprites/warrior/run-front-b.png",
+      "width": 1536,
+      "height": 1024,
+      "worldHeight": 2.285261,
+      "sha256": "9e7e157d18f747e99d766a16f13249a4c13e4c62ea1109abc2f818a8d0c8906c",
+      "guideSha256": "4d7aca4658147e0f4a3da42ae981a1df592f262ced37735053e60641977648b1",
+      "generatedSource": "exec-5e05164c-ea5e-4741-903b-e500f781a0a8.png"
+    },
+    "run-back-a": {
+      "file": "assets/sprites/warrior/run-back-a.png",
+      "width": 1536,
+      "height": 1024,
+      "worldHeight": 2.427593,
+      "sha256": "526b801df33df940b7e15d0c0a3140cd629c92562e4b2cb5f74b1d8f097bfef1",
+      "guideSha256": "54501103b84dc67cd8ad514f4dada3716ce6ea0ac49490022bc94292267cd761",
+      "generatedSource": "exec-7ab98f03-a912-4deb-8bec-9916aa87a9be.png"
+    },
+    "run-back-b": {
+      "file": "assets/sprites/warrior/run-back-b.png",
+      "width": 1536,
+      "height": 1024,
+      "worldHeight": 2.438964,
+      "sha256": "cfab64152fb87f2809e9ef3af6900f6938d57ec407ab2900c3470f09fddac3e7",
+      "guideSha256": "8d01b74495b30244c23737e5cc43a0d92887f590236c9bec5e47ff671580c114",
+      "generatedSource": "exec-0f505f42-c6d9-47ad-b199-db0f998f64df.png"
+    },
+    "attack-front": {
+      "file": "assets/sprites/warrior/attack-front.png",
+      "width": 1536,
+      "height": 1024,
+      "worldHeight": 2.835601,
+      "sha256": "1c68c457a6ee26ffe94e629378c03f501be70ba13cd7ae7b238f57e9b471a1c5",
+      "guideSha256": "51a66c965912b43b8e2e6bc52ae9f1164b196b12d3e916ee861daaaea1347e53",
+      "generatedSource": "exec-11a616ce-ec0f-4de4-b002-34926fbfb634.png"
+    },
+    "attack-back": {
+      "file": "assets/sprites/warrior/attack-back.png",
+      "width": 1536,
+      "height": 1024,
+      "worldHeight": 2.952137,
+      "sha256": "423f5ab90aa4d4422218b7ca01c962adb2d6772e3a5b5c3b851221fb77daea49",
+      "guideSha256": "5e98973ccfda5580cc02a9ef425182a022314c343285fdf52d3f711df8a5d3b4",
+      "generatedSource": "exec-3e62cdff-5e03-4bf4-8132-754d2cdc6950.png"
+    },
+    "dodge-front": {
+      "file": "assets/sprites/warrior/dodge-front.png",
+      "width": 1536,
+      "height": 1024,
+      "worldHeight": 2.618901,
+      "sha256": "00dc7e35d86e22f71672be76d03fede582c65bb48d5776a333686aa7e75448e3",
+      "guideSha256": "997b25f552d22819ade17a61570e9d1fbc4ed7f5f2f2f60e6e7fac164b4cd057",
+      "generatedSource": "exec-cda3d9cd-8a05-4e70-84e4-109e9b5b19d0.png"
+    },
+    "dodge-back": {
+      "file": "assets/sprites/warrior/dodge-back.png",
+      "width": 1536,
+      "height": 1024,
+      "worldHeight": 2.565599,
+      "sha256": "339701be47c33ae7d7145dd8b3b94b620d544de4bd38eb51d3fd24498eadf484",
+      "guideSha256": "ee6a29bbfa9401e34afd64f2be01cbb8a7294291ad6cc11e3f5dd058de336da7",
+      "generatedSource": "exec-7b245a59-b45d-4187-a569-9708632dd69d.png"
+    }
+  },
+  "frames": {
+    "idle": [
+      [
+        {
+          "atlas": "idle-front",
+          "rect": [
+            66,
+            34,
+            222,
+            207
+          ],
+          "bbox": [
+            6,
+            6,
+            216,
+            201
+          ],
+          "pivot": [
+            0.502024,
+            0.971014
+          ],
+          "worldHeight": 2.355239
+        },
+        {
+          "atlas": "idle-front",
+          "rect": [
+            67,
+            292,
+            221,
+            205
+          ],
+          "bbox": [
+            6,
+            6,
+            215,
+            199
+          ],
+          "pivot": [
+            0.502003,
+            0.970732
+          ],
+          "worldHeight": 2.367514
+        },
+        {
+          "atlas": "idle-front",
+          "rect": [
+            67,
+            548,
+            221,
+            205
+          ],
+          "bbox": [
+            6,
+            6,
+            215,
+            199
+          ],
+          "pivot": [
+            0.506065,
+            0.970732
+          ],
+          "worldHeight": 2.345794
+        },
+        {
+          "atlas": "idle-front",
+          "rect": [
+            66,
+            787,
+            222,
+            212
+          ],
+          "bbox": [
+            6,
+            6,
+            216,
+            206
+          ],
+          "pivot": [
+            0.504152,
+            0.971698
+          ],
+          "worldHeight": 2.351825
+        }
+      ],
+      [
+        {
+          "atlas": "idle-front",
+          "rect": [
+            491,
+            34,
+            178,
+            195
+          ],
+          "bbox": [
+            6,
+            6,
+            172,
+            189
+          ],
+          "pivot": [
+            0.39871,
+            0.969231
+          ],
+          "worldHeight": 2.211663
+        },
+        {
+          "atlas": "idle-front",
+          "rect": [
+            492,
+            289,
+            178,
+            197
+          ],
+          "bbox": [
+            6,
+            6,
+            172,
+            191
+          ],
+          "pivot": [
+            0.398105,
+            0.969543
+          ],
+          "worldHeight": 2.22108
+        },
+        {
+          "atlas": "idle-front",
+          "rect": [
+            492,
+            547,
+            177,
+            195
+          ],
+          "bbox": [
+            6,
+            6,
+            171,
+            189
+          ],
+          "pivot": [
+            0.400193,
+            0.969231
+          ],
+          "worldHeight": 2.200769
+        },
+        {
+          "atlas": "idle-front",
+          "rect": [
+            492,
+            786,
+            176,
+            197
+          ],
+          "bbox": [
+            6,
+            6,
+            170,
+            191
+          ],
+          "pivot": [
+            0.395927,
+            0.969543
+          ],
+          "worldHeight": 2.199304
+        }
+      ],
+      [
+        {
+          "atlas": "idle-front",
+          "rect": [
+            893,
+            32,
+            159,
+            216
+          ],
+          "bbox": [
+            6,
+            6,
+            153,
+            210
+          ],
+          "pivot": [
+            0.083523,
+            0.972222
+          ],
+          "worldHeight": 2.067742
+        },
+        {
+          "atlas": "idle-front",
+          "rect": [
+            891,
+            289,
+            162,
+            215
+          ],
+          "bbox": [
+            6,
+            6,
+            156,
+            209
+          ],
+          "pivot": [
+            0.089959,
+            0.972093
+          ],
+          "worldHeight": 2.068308
+        },
+        {
+          "atlas": "idle-front",
+          "rect": [
+            892,
+            545,
+            161,
+            215
+          ],
+          "bbox": [
+            6,
+            6,
+            155,
+            209
+          ],
+          "pivot": [
+            0.087412,
+            0.972093
+          ],
+          "worldHeight": 2.068308
+        },
+        {
+          "atlas": "idle-front",
+          "rect": [
+            894,
+            786,
+            159,
+            217
+          ],
+          "bbox": [
+            6,
+            6,
+            153,
+            211
+          ],
+          "pivot": [
+            0.08,
+            0.97235
+          ],
+          "worldHeight": 2.056359
+        }
+      ],
+      [
+        {
+          "atlas": "idle-front",
+          "rect": [
+            1273,
+            19,
+            197,
+            229
+          ],
+          "bbox": [
+            6,
+            6,
+            191,
+            223
+          ],
+          "pivot": [
+            0.22178,
+            0.973799
+          ],
+          "worldHeight": 2.09323
+        },
+        {
+          "atlas": "idle-front",
+          "rect": [
+            1273,
+            275,
+            198,
+            230
+          ],
+          "bbox": [
+            6,
+            6,
+            192,
+            224
+          ],
+          "pivot": [
+            0.220513,
+            0.973913
+          ],
+          "worldHeight": 2.103514
+        },
+        {
+          "atlas": "idle-front",
+          "rect": [
+            1272,
+            532,
+            198,
+            228
+          ],
+          "bbox": [
+            6,
+            6,
+            192,
+            222
+          ],
+          "pivot": [
+            0.221649,
+            0.973684
+          ],
+          "worldHeight": 2.093738
+        },
+        {
+          "atlas": "idle-front",
+          "rect": [
+            1272,
+            773,
+            198,
+            230
+          ],
+          "bbox": [
+            6,
+            6,
+            192,
+            224
+          ],
+          "pivot": [
+            0.216235,
+            0.973913
+          ],
+          "worldHeight": 2.092727
+        }
+      ],
+      [
+        {
+          "atlas": "idle-back",
+          "rect": [
+            107,
+            29,
+            185,
+            218
+          ],
+          "bbox": [
+            6,
+            6,
+            179,
+            212
+          ],
+          "pivot": [
+            0.497526,
+            0.972477
+          ],
+          "worldHeight": 2.434508
+        },
+        {
+          "atlas": "idle-back",
+          "rect": [
+            107,
+            283,
+            184,
+            219
+          ],
+          "bbox": [
+            6,
+            6,
+            178,
+            213
+          ],
+          "pivot": [
+            0.497511,
+            0.972603
+          ],
+          "worldHeight": 2.444678
+        },
+        {
+          "atlas": "idle-back",
+          "rect": [
+            107,
+            539,
+            187,
+            217
+          ],
+          "bbox": [
+            6,
+            6,
+            181,
+            211
+          ],
+          "pivot": [
+            0.495149,
+            0.97235
+          ],
+          "worldHeight": 2.445985
+        },
+        {
+          "atlas": "idle-back",
+          "rect": [
+            107,
+            795,
+            187,
+            217
+          ],
+          "bbox": [
+            6,
+            6,
+            181,
+            211
+          ],
+          "pivot": [
+            0.495128,
+            0.97235
+          ],
+          "worldHeight": 2.435162
+        }
+      ],
+      [
+        {
+          "atlas": "idle-back",
+          "rect": [
+            491,
+            29,
+            226,
+            210
+          ],
+          "bbox": [
+            6,
+            6,
+            220,
+            204
+          ],
+          "pivot": [
+            0.575526,
+            0.971429
+          ],
+          "worldHeight": 2.201353
+        },
+        {
+          "atlas": "idle-back",
+          "rect": [
+            491,
+            283,
+            225,
+            212
+          ],
+          "bbox": [
+            6,
+            6,
+            219,
+            206
+          ],
+          "pivot": [
+            0.574439,
+            0.971698
+          ],
+          "worldHeight": 2.200095
+        },
+        {
+          "atlas": "idle-back",
+          "rect": [
+            491,
+            541,
+            232,
+            209
+          ],
+          "bbox": [
+            6,
+            6,
+            226,
+            203
+          ],
+          "pivot": [
+            0.57111,
+            0.971292
+          ],
+          "worldHeight": 2.201991
+        },
+        {
+          "atlas": "idle-back",
+          "rect": [
+            489,
+            795,
+            227,
+            210
+          ],
+          "bbox": [
+            6,
+            6,
+            221,
+            204
+          ],
+          "pivot": [
+            0.573045,
+            0.971429
+          ],
+          "worldHeight": 2.201353
+        }
+      ],
+      [
+        {
+          "atlas": "idle-back",
+          "rect": [
+            853,
+            24,
+            167,
+            214
+          ],
+          "bbox": [
+            6,
+            6,
+            161,
+            208
+          ],
+          "pivot": [
+            0.92,
+            0.971963
+          ],
+          "worldHeight": 1.928066
+        },
+        {
+          "atlas": "idle-back",
+          "rect": [
+            848,
+            280,
+            173,
+            215
+          ],
+          "bbox": [
+            6,
+            6,
+            167,
+            209
+          ],
+          "pivot": [
+            0.90971,
+            0.972093
+          ],
+          "worldHeight": 1.938362
+        },
+        {
+          "atlas": "idle-back",
+          "rect": [
+            855,
+            534,
+            166,
+            216
+          ],
+          "bbox": [
+            6,
+            6,
+            160,
+            210
+          ],
+          "pivot": [
+            0.92,
+            0.972222
+          ],
+          "worldHeight": 1.937832
+        },
+        {
+          "atlas": "idle-back",
+          "rect": [
+            848,
+            790,
+            176,
+            215
+          ],
+          "bbox": [
+            6,
+            6,
+            170,
+            209
+          ],
+          "pivot": [
+            0.900489,
+            0.972093
+          ],
+          "worldHeight": 1.949191
+        }
+      ],
+      [
+        {
+          "atlas": "idle-back",
+          "rect": [
+            1213,
+            29,
+            199,
+            226
+          ],
+          "bbox": [
+            6,
+            6,
+            193,
+            220
+          ],
+          "pivot": [
+            0.800232,
+            0.973451
+          ],
+          "worldHeight": 2.127161
+        },
+        {
+          "atlas": "idle-back",
+          "rect": [
+            1212,
+            284,
+            199,
+            226
+          ],
+          "bbox": [
+            6,
+            6,
+            193,
+            220
+          ],
+          "pivot": [
+            0.802619,
+            0.973451
+          ],
+          "worldHeight": 2.148757
+        },
+        {
+          "atlas": "idle-back",
+          "rect": [
+            1212,
+            540,
+            200,
+            222
+          ],
+          "bbox": [
+            6,
+            6,
+            194,
+            216
+          ],
+          "pivot": [
+            0.798477,
+            0.972973
+          ],
+          "worldHeight": 2.129312
+        },
+        {
+          "atlas": "idle-back",
+          "rect": [
+            1212,
+            795,
+            199,
+            222
+          ],
+          "bbox": [
+            6,
+            6,
+            193,
+            216
+          ],
+          "pivot": [
+            0.798462,
+            0.972973
+          ],
+          "worldHeight": 2.140121
+        }
+      ]
+    ],
+    "run": [
+      [
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            114,
+            36,
+            160,
+            232
+          ],
+          "bbox": [
+            6,
+            6,
+            154,
+            226
+          ],
+          "pivot": [
+            0.517719,
+            0.974138
+          ],
+          "worldHeight": 2.091734
+        },
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            117,
+            299,
+            154,
+            232
+          ],
+          "bbox": [
+            6,
+            6,
+            148,
+            226
+          ],
+          "pivot": [
+            0.49618,
+            0.974138
+          ],
+          "worldHeight": 2.016259
+        },
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            119,
+            552,
+            159,
+            227
+          ],
+          "bbox": [
+            6,
+            6,
+            153,
+            221
+          ],
+          "pivot": [
+            0.509943,
+            0.973568
+          ],
+          "worldHeight": 2.202201
+        },
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            120,
+            792,
+            154,
+            225
+          ],
+          "bbox": [
+            6,
+            6,
+            148,
+            219
+          ],
+          "pivot": [
+            0.523162,
+            0.973333
+          ],
+          "worldHeight": 2.257297
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            121,
+            29,
+            155,
+            238
+          ],
+          "bbox": [
+            6,
+            6,
+            149,
+            232
+          ],
+          "pivot": [
+            0.522902,
+            0.97479
+          ],
+          "worldHeight": 2.05656
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            121,
+            293,
+            149,
+            223
+          ],
+          "bbox": [
+            6,
+            6,
+            143,
+            217
+          ],
+          "pivot": [
+            0.5,
+            0.973094
+          ],
+          "worldHeight": 2.020708
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            121,
+            537,
+            149,
+            230
+          ],
+          "bbox": [
+            6,
+            6,
+            143,
+            224
+          ],
+          "pivot": [
+            0.510865,
+            0.973913
+          ],
+          "worldHeight": 2.179025
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            121,
+            787,
+            152,
+            231
+          ],
+          "bbox": [
+            6,
+            6,
+            146,
+            225
+          ],
+          "pivot": [
+            0.521398,
+            0.974026
+          ],
+          "worldHeight": 2.178506
+        }
+      ],
+      [
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            500,
+            37,
+            169,
+            221
+          ],
+          "bbox": [
+            6,
+            6,
+            163,
+            215
+          ],
+          "pivot": [
+            0.377654,
+            0.972851
+          ],
+          "worldHeight": 2.021748
+        },
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            503,
+            286,
+            175,
+            231
+          ],
+          "bbox": [
+            6,
+            6,
+            169,
+            225
+          ],
+          "pivot": [
+            0.341237,
+            0.974026
+          ],
+          "worldHeight": 2.167721
+        },
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            502,
+            532,
+            176,
+            233
+          ],
+          "bbox": [
+            6,
+            6,
+            170,
+            227
+          ],
+          "pivot": [
+            0.339962,
+            0.974249
+          ],
+          "worldHeight": 2.199041
+        },
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            484,
+            779,
+            190,
+            235
+          ],
+          "bbox": [
+            6,
+            6,
+            184,
+            229
+          ],
+          "pivot": [
+            0.43163,
+            0.974468
+          ],
+          "worldHeight": 2.219574
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            483,
+            30,
+            193,
+            231
+          ],
+          "bbox": [
+            6,
+            6,
+            187,
+            225
+          ],
+          "pivot": [
+            0.441017,
+            0.974026
+          ],
+          "worldHeight": 2.178506
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            505,
+            276,
+            161,
+            238
+          ],
+          "bbox": [
+            6,
+            6,
+            155,
+            232
+          ],
+          "pivot": [
+            0.316599,
+            0.97479
+          ],
+          "worldHeight": 2.142699
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            498,
+            527,
+            168,
+            232
+          ],
+          "bbox": [
+            6,
+            6,
+            162,
+            226
+          ],
+          "pivot": [
+            0.328596,
+            0.974138
+          ],
+          "worldHeight": 2.059388
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            487,
+            774,
+            180,
+            224
+          ],
+          "bbox": [
+            6,
+            6,
+            174,
+            218
+          ],
+          "pivot": [
+            0.376523,
+            0.973214
+          ],
+          "worldHeight": 2.009392
+        }
+      ],
+      [
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            843,
+            28,
+            296,
+            193
+          ],
+          "bbox": [
+            6,
+            6,
+            290,
+            187
+          ],
+          "pivot": [
+            0.321169,
+            0.968912
+          ],
+          "worldHeight": 1.733466
+        },
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            867,
+            279,
+            271,
+            200
+          ],
+          "bbox": [
+            6,
+            6,
+            265,
+            194
+          ],
+          "pivot": [
+            0.210242,
+            0.97
+          ],
+          "worldHeight": 1.783838
+        },
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            870,
+            527,
+            268,
+            203
+          ],
+          "bbox": [
+            6,
+            6,
+            262,
+            197
+          ],
+          "pivot": [
+            0.209411,
+            0.970443
+          ],
+          "worldHeight": 1.825624
+        },
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            858,
+            769,
+            280,
+            197
+          ],
+          "bbox": [
+            6,
+            6,
+            274,
+            191
+          ],
+          "pivot": [
+            0.307461,
+            0.969543
+          ],
+          "worldHeight": 1.774686
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            842,
+            22,
+            296,
+            192
+          ],
+          "bbox": [
+            6,
+            6,
+            290,
+            186
+          ],
+          "pivot": [
+            0.308404,
+            0.96875
+          ],
+          "worldHeight": 1.592286
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            883,
+            277,
+            255,
+            195
+          ],
+          "bbox": [
+            6,
+            6,
+            249,
+            189
+          ],
+          "pivot": [
+            0.190825,
+            0.969231
+          ],
+          "worldHeight": 1.732288
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            862,
+            525,
+            276,
+            192
+          ],
+          "bbox": [
+            6,
+            6,
+            270,
+            186
+          ],
+          "pivot": [
+            0.231701,
+            0.96875
+          ],
+          "worldHeight": 1.723159
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            838,
+            773,
+            301,
+            194
+          ],
+          "bbox": [
+            6,
+            6,
+            295,
+            188
+          ],
+          "pivot": [
+            0.320135,
+            0.969072
+          ],
+          "worldHeight": 1.721975
+        }
+      ],
+      [
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            1241,
+            20,
+            264,
+            225
+          ],
+          "bbox": [
+            6,
+            6,
+            258,
+            219
+          ],
+          "pivot": [
+            0.317205,
+            0.973333
+          ],
+          "worldHeight": 2.073689
+        },
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            1250,
+            275,
+            251,
+            197
+          ],
+          "bbox": [
+            6,
+            6,
+            245,
+            191
+          ],
+          "pivot": [
+            0.281533,
+            0.969543
+          ],
+          "worldHeight": 1.818237
+        },
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            1245,
+            520,
+            259,
+            224
+          ],
+          "bbox": [
+            6,
+            6,
+            253,
+            218
+          ],
+          "pivot": [
+            0.292186,
+            0.973214
+          ],
+          "worldHeight": 2.085014
+        },
+        {
+          "atlas": "run-front-a",
+          "rect": [
+            1249,
+            770,
+            255,
+            240
+          ],
+          "bbox": [
+            6,
+            6,
+            249,
+            234
+          ],
+          "pivot": [
+            0.293341,
+            0.975
+          ],
+          "worldHeight": 2.281664
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            1260,
+            14,
+            247,
+            244
+          ],
+          "bbox": [
+            6,
+            6,
+            241,
+            238
+          ],
+          "pivot": [
+            0.27336,
+            0.97541
+          ],
+          "worldHeight": 2.161411
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            1258,
+            269,
+            251,
+            217
+          ],
+          "bbox": [
+            6,
+            6,
+            245,
+            211
+          ],
+          "pivot": [
+            0.251429,
+            0.97235
+          ],
+          "worldHeight": 1.742494
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            1263,
+            515,
+            245,
+            222
+          ],
+          "bbox": [
+            6,
+            6,
+            239,
+            216
+          ],
+          "pivot": [
+            0.260852,
+            0.972973
+          ],
+          "worldHeight": 1.956373
+        },
+        {
+          "atlas": "run-front-b",
+          "rect": [
+            1258,
+            766,
+            250,
+            235
+          ],
+          "bbox": [
+            6,
+            6,
+            244,
+            229
+          ],
+          "pivot": [
+            0.30822,
+            0.974468
+          ],
+          "worldHeight": 2.154927
+        }
+      ],
+      [
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            120,
+            1,
+            143,
+            250
+          ],
+          "bbox": [
+            6,
+            6,
+            137,
+            244
+          ],
+          "pivot": [
+            0.483154,
+            0.976
+          ],
+          "worldHeight": 2.652769
+        },
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            119,
+            251,
+            144,
+            239
+          ],
+          "bbox": [
+            6,
+            6,
+            138,
+            233
+          ],
+          "pivot": [
+            0.504127,
+            0.974895
+          ],
+          "worldHeight": 2.056103
+        },
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            122,
+            501,
+            144,
+            238
+          ],
+          "bbox": [
+            6,
+            6,
+            138,
+            232
+          ],
+          "pivot": [
+            0.488948,
+            0.97479
+          ],
+          "worldHeight": 2.293441
+        },
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            121,
+            745,
+            145,
+            270
+          ],
+          "bbox": [
+            6,
+            6,
+            139,
+            264
+          ],
+          "pivot": [
+            0.473943,
+            0.977778
+          ],
+          "worldHeight": 2.557299
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            120,
+            0,
+            142,
+            252
+          ],
+          "bbox": [
+            6,
+            3,
+            136,
+            246
+          ],
+          "pivot": [
+            0.479382,
+            0.97619
+          ],
+          "worldHeight": 2.640177
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            120,
+            246,
+            142,
+            242
+          ],
+          "bbox": [
+            6,
+            6,
+            136,
+            236
+          ],
+          "pivot": [
+            0.49576,
+            0.975207
+          ],
+          "worldHeight": 2.054757
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            120,
+            498,
+            144,
+            247
+          ],
+          "bbox": [
+            6,
+            6,
+            138,
+            241
+          ],
+          "pivot": [
+            0.488667,
+            0.975709
+          ],
+          "worldHeight": 2.321252
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            119,
+            753,
+            145,
+            264
+          ],
+          "bbox": [
+            6,
+            6,
+            139,
+            258
+          ],
+          "pivot": [
+            0.478276,
+            0.977273
+          ],
+          "worldHeight": 2.570716
+        }
+      ],
+      [
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            471,
+            12,
+            196,
+            232
+          ],
+          "bbox": [
+            6,
+            6,
+            190,
+            226
+          ],
+          "pivot": [
+            0.584667,
+            0.974138
+          ],
+          "worldHeight": 2.501455
+        },
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            468,
+            257,
+            195,
+            208
+          ],
+          "bbox": [
+            6,
+            6,
+            189,
+            202
+          ],
+          "pivot": [
+            0.60217,
+            0.971154
+          ],
+          "worldHeight": 1.974777
+        },
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            464,
+            511,
+            199,
+            222
+          ],
+          "bbox": [
+            6,
+            6,
+            193,
+            216
+          ],
+          "pivot": [
+            0.602378,
+            0.972973
+          ],
+          "worldHeight": 2.172547
+        },
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            470,
+            750,
+            195,
+            242
+          ],
+          "bbox": [
+            6,
+            6,
+            189,
+            236
+          ],
+          "pivot": [
+            0.559515,
+            0.975207
+          ],
+          "worldHeight": 2.34522
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            467,
+            5,
+            205,
+            236
+          ],
+          "bbox": [
+            6,
+            6,
+            199,
+            230
+          ],
+          "pivot": [
+            0.558719,
+            0.974576
+          ],
+          "worldHeight": 2.305246
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            473,
+            254,
+            194,
+            209
+          ],
+          "bbox": [
+            6,
+            6,
+            188,
+            203
+          ],
+          "pivot": [
+            0.599453,
+            0.971292
+          ],
+          "worldHeight": 2.104366
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            478,
+            498,
+            189,
+            243
+          ],
+          "bbox": [
+            6,
+            6,
+            183,
+            237
+          ],
+          "pivot": [
+            0.576389,
+            0.975309
+          ],
+          "worldHeight": 2.323205
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            477,
+            743,
+            195,
+            271
+          ],
+          "bbox": [
+            6,
+            6,
+            189,
+            265
+          ],
+          "pivot": [
+            0.566123,
+            0.97786
+          ],
+          "worldHeight": 2.471275
+        }
+      ],
+      [
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            774,
+            46,
+            283,
+            174
+          ],
+          "bbox": [
+            6,
+            6,
+            277,
+            168
+          ],
+          "pivot": [
+            0.680357,
+            0.965517
+          ],
+          "worldHeight": 1.603343
+        },
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            773,
+            294,
+            282,
+            184
+          ],
+          "bbox": [
+            6,
+            6,
+            276,
+            178
+          ],
+          "pivot": [
+            0.774869,
+            0.967391
+          ],
+          "worldHeight": 1.662541
+        },
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            773,
+            542,
+            281,
+            177
+          ],
+          "bbox": [
+            6,
+            6,
+            275,
+            171
+          ],
+          "pivot": [
+            0.766374,
+            0.966102
+          ],
+          "worldHeight": 1.656173
+        },
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            773,
+            789,
+            291,
+            177
+          ],
+          "bbox": [
+            6,
+            6,
+            285,
+            171
+          ],
+          "pivot": [
+            0.673761,
+            0.966102
+          ],
+          "worldHeight": 1.700045
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            785,
+            42,
+            275,
+            175
+          ],
+          "bbox": [
+            6,
+            6,
+            269,
+            169
+          ],
+          "pivot": [
+            0.678206,
+            0.965714
+          ],
+          "worldHeight": 1.679505
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            783,
+            291,
+            257,
+            184
+          ],
+          "bbox": [
+            6,
+            6,
+            251,
+            178
+          ],
+          "pivot": [
+            0.793874,
+            0.967391
+          ],
+          "worldHeight": 1.706292
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            791,
+            538,
+            275,
+            194
+          ],
+          "bbox": [
+            6,
+            6,
+            269,
+            188
+          ],
+          "pivot": [
+            0.754545,
+            0.969072
+          ],
+          "worldHeight": 1.84186
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            782,
+            789,
+            290,
+            192
+          ],
+          "bbox": [
+            6,
+            6,
+            284,
+            186
+          ],
+          "pivot": [
+            0.682328,
+            0.96875
+          ],
+          "worldHeight": 1.744971
+        }
+      ],
+      [
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            1185,
+            52,
+            245,
+            185
+          ],
+          "bbox": [
+            6,
+            6,
+            239,
+            179
+          ],
+          "pivot": [
+            0.681753,
+            0.967568
+          ],
+          "worldHeight": 1.847787
+        },
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            1185,
+            301,
+            228,
+            186
+          ],
+          "bbox": [
+            6,
+            6,
+            222,
+            180
+          ],
+          "pivot": [
+            0.789385,
+            0.967742
+          ],
+          "worldHeight": 1.628506
+        },
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            1185,
+            550,
+            236,
+            196
+          ],
+          "bbox": [
+            6,
+            6,
+            230,
+            190
+          ],
+          "pivot": [
+            0.759123,
+            0.969388
+          ],
+          "worldHeight": 1.851513
+        },
+        {
+          "atlas": "run-back-a",
+          "rect": [
+            1185,
+            795,
+            244,
+            204
+          ],
+          "bbox": [
+            6,
+            6,
+            238,
+            198
+          ],
+          "pivot": [
+            0.736986,
+            0.970588
+          ],
+          "worldHeight": 1.857653
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            1191,
+            51,
+            249,
+            193
+          ],
+          "bbox": [
+            6,
+            6,
+            243,
+            187
+          ],
+          "pivot": [
+            0.710421,
+            0.968912
+          ],
+          "worldHeight": 1.864294
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            1193,
+            301,
+            227,
+            185
+          ],
+          "bbox": [
+            6,
+            6,
+            221,
+            179
+          ],
+          "pivot": [
+            0.769122,
+            0.967568
+          ],
+          "worldHeight": 1.749384
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            1191,
+            544,
+            239,
+            193
+          ],
+          "bbox": [
+            6,
+            6,
+            233,
+            187
+          ],
+          "pivot": [
+            0.741369,
+            0.968912
+          ],
+          "worldHeight": 1.864294
+        },
+        {
+          "atlas": "run-back-b",
+          "rect": [
+            1192,
+            795,
+            249,
+            194
+          ],
+          "bbox": [
+            6,
+            6,
+            243,
+            188
+          ],
+          "pivot": [
+            0.683812,
+            0.969072
+          ],
+          "worldHeight": 1.84186
+        }
+      ]
+    ],
+    "attack": [
+      [
+        {
+          "atlas": "attack-front",
+          "rect": [
+            64,
+            29,
+            232,
+            214
+          ],
+          "bbox": [
+            6,
+            6,
+            226,
+            208
+          ],
+          "pivot": [
+            0.65129,
+            0.971963
+          ],
+          "worldHeight": 2.18184
+        },
+        {
+          "atlas": "attack-front",
+          "rect": [
+            140,
+            243,
+            121,
+            258
+          ],
+          "bbox": [
+            6,
+            6,
+            115,
+            252
+          ],
+          "pivot": [
+            0.565937,
+            0.976744
+          ],
+          "worldHeight": 2.833986
+        },
+        {
+          "atlas": "attack-front",
+          "rect": [
+            57,
+            511,
+            223,
+            207
+          ],
+          "bbox": [
+            6,
+            6,
+            217,
+            201
+          ],
+          "pivot": [
+            0.622533,
+            0.971014
+          ],
+          "worldHeight": 2.434315
+        },
+        {
+          "atlas": "attack-front",
+          "rect": [
+            139,
+            752,
+            164,
+            253
+          ],
+          "bbox": [
+            6,
+            6,
+            158,
+            247
+          ],
+          "pivot": [
+            0.386165,
+            0.976285
+          ],
+          "worldHeight": 3.266063
+        }
+      ],
+      [
+        {
+          "atlas": "attack-front",
+          "rect": [
+            480,
+            36,
+            187,
+            189
+          ],
+          "bbox": [
+            6,
+            6,
+            181,
+            183
+          ],
+          "pivot": [
+            0.520577,
+            0.968254
+          ],
+          "worldHeight": 1.793609
+        },
+        {
+          "atlas": "attack-front",
+          "rect": [
+            495,
+            250,
+            182,
+            233
+          ],
+          "bbox": [
+            6,
+            6,
+            176,
+            227
+          ],
+          "pivot": [
+            0.541226,
+            0.974249
+          ],
+          "worldHeight": 2.49471
+        },
+        {
+          "atlas": "attack-front",
+          "rect": [
+            506,
+            507,
+            138,
+            242
+          ],
+          "bbox": [
+            6,
+            6,
+            132,
+            236
+          ],
+          "pivot": [
+            0.490741,
+            0.975207
+          ],
+          "worldHeight": 2.766314
+        },
+        {
+          "atlas": "attack-front",
+          "rect": [
+            501,
+            744,
+            257,
+            224
+          ],
+          "bbox": [
+            6,
+            6,
+            251,
+            218
+          ],
+          "pivot": [
+            0.304757,
+            0.973214
+          ],
+          "worldHeight": 2.608196
+        }
+      ],
+      [
+        {
+          "atlas": "attack-front",
+          "rect": [
+            877,
+            46,
+            160,
+            180
+          ],
+          "bbox": [
+            6,
+            6,
+            154,
+            174
+          ],
+          "pivot": [
+            0.573828,
+            0.966667
+          ],
+          "worldHeight": 2.003155
+        },
+        {
+          "atlas": "attack-front",
+          "rect": [
+            851,
+            252,
+            202,
+            243
+          ],
+          "bbox": [
+            6,
+            6,
+            196,
+            237
+          ],
+          "pivot": [
+            0.579703,
+            0.975309
+          ],
+          "worldHeight": 2.535244
+        },
+        {
+          "atlas": "attack-front",
+          "rect": [
+            883,
+            515,
+            252,
+            191
+          ],
+          "bbox": [
+            6,
+            6,
+            246,
+            185
+          ],
+          "pivot": [
+            0.344456,
+            0.968586
+          ],
+          "worldHeight": 2.135219
+        },
+        {
+          "atlas": "attack-front",
+          "rect": [
+            871,
+            795,
+            276,
+            159
+          ],
+          "bbox": [
+            6,
+            6,
+            270,
+            153
+          ],
+          "pivot": [
+            0.372442,
+            0.962264
+          ],
+          "worldHeight": 1.880045
+        }
+      ],
+      [
+        {
+          "atlas": "attack-front",
+          "rect": [
+            1275,
+            36,
+            223,
+            198
+          ],
+          "bbox": [
+            6,
+            6,
+            217,
+            192
+          ],
+          "pivot": [
+            0.385966,
+            0.969697
+          ],
+          "worldHeight": 1.990232
+        },
+        {
+          "atlas": "attack-front",
+          "rect": [
+            1285,
+            261,
+            123,
+            231
+          ],
+          "bbox": [
+            6,
+            6,
+            117,
+            225
+          ],
+          "pivot": [
+            0.582539,
+            0.974026
+          ],
+          "worldHeight": 2.32641
+        },
+        {
+          "atlas": "attack-front",
+          "rect": [
+            1250,
+            550,
+            279,
+            157
+          ],
+          "bbox": [
+            6,
+            6,
+            273,
+            151
+          ],
+          "pivot": [
+            0.308411,
+            0.961783
+          ],
+          "worldHeight": 1.866187
+        },
+        {
+          "atlas": "attack-front",
+          "rect": [
+            1280,
+            739,
+            176,
+            220
+          ],
+          "bbox": [
+            6,
+            6,
+            170,
+            214
+          ],
+          "pivot": [
+            0.53011,
+            0.972727
+          ],
+          "worldHeight": 2.425495
+        }
+      ],
+      [
+        {
+          "atlas": "attack-back",
+          "rect": [
+            127,
+            70,
+            186,
+            180
+          ],
+          "bbox": [
+            6,
+            6,
+            180,
+            174
+          ],
+          "pivot": [
+            0.315591,
+            0.966667
+          ],
+          "worldHeight": 1.877958
+        },
+        {
+          "atlas": "attack-back",
+          "rect": [
+            144,
+            271,
+            111,
+            213
+          ],
+          "bbox": [
+            6,
+            6,
+            105,
+            207
+          ],
+          "pivot": [
+            0.4497,
+            0.971831
+          ],
+          "worldHeight": 2.228884
+        },
+        {
+          "atlas": "attack-back",
+          "rect": [
+            121,
+            494,
+            182,
+            249
+          ],
+          "bbox": [
+            6,
+            6,
+            176,
+            243
+          ],
+          "pivot": [
+            0.367937,
+            0.975904
+          ],
+          "worldHeight": 3.253331
+        },
+        {
+          "atlas": "attack-back",
+          "rect": [
+            99,
+            756,
+            162,
+            228
+          ],
+          "bbox": [
+            6,
+            6,
+            156,
+            222
+          ],
+          "pivot": [
+            0.589385,
+            0.973684
+          ],
+          "worldHeight": 2.759787
+        }
+      ],
+      [
+        {
+          "atlas": "attack-back",
+          "rect": [
+            506,
+            26,
+            158,
+            203
+          ],
+          "bbox": [
+            6,
+            6,
+            152,
+            197
+          ],
+          "pivot": [
+            0.478566,
+            0.970443
+          ],
+          "worldHeight": 2.188886
+        },
+        {
+          "atlas": "attack-back",
+          "rect": [
+            510,
+            271,
+            172,
+            195
+          ],
+          "bbox": [
+            6,
+            6,
+            166,
+            189
+          ],
+          "pivot": [
+            0.456654,
+            0.969231
+          ],
+          "worldHeight": 2.101158
+        },
+        {
+          "atlas": "attack-back",
+          "rect": [
+            527,
+            491,
+            139,
+            261
+          ],
+          "bbox": [
+            6,
+            6,
+            133,
+            255
+          ],
+          "pivot": [
+            0.495795,
+            0.977011
+          ],
+          "worldHeight": 3.261086
+        },
+        {
+          "atlas": "attack-back",
+          "rect": [
+            422,
+            799,
+            239,
+            185
+          ],
+          "bbox": [
+            6,
+            6,
+            233,
+            179
+          ],
+          "pivot": [
+            0.708302,
+            0.967568
+          ],
+          "worldHeight": 2.17111
+        }
+      ],
+      [
+        {
+          "atlas": "attack-back",
+          "rect": [
+            902,
+            13,
+            149,
+            236
+          ],
+          "bbox": [
+            6,
+            6,
+            143,
+            230
+          ],
+          "pivot": [
+            0.418981,
+            0.974576
+          ],
+          "worldHeight": 2.569934
+        },
+        {
+          "atlas": "attack-back",
+          "rect": [
+            888,
+            262,
+            194,
+            227
+          ],
+          "bbox": [
+            6,
+            6,
+            188,
+            221
+          ],
+          "pivot": [
+            0.418823,
+            0.973568
+          ],
+          "worldHeight": 2.421188
+        },
+        {
+          "atlas": "attack-back",
+          "rect": [
+            825,
+            514,
+            234,
+            223
+          ],
+          "bbox": [
+            6,
+            6,
+            228,
+            217
+          ],
+          "pivot": [
+            0.652832,
+            0.973094
+          ],
+          "worldHeight": 2.732355
+        },
+        {
+          "atlas": "attack-back",
+          "rect": [
+            817,
+            803,
+            245,
+            162
+          ],
+          "bbox": [
+            6,
+            6,
+            239,
+            156
+          ],
+          "pivot": [
+            0.64663,
+            0.962963
+          ],
+          "worldHeight": 1.877207
+        }
+      ],
+      [
+        {
+          "atlas": "attack-back",
+          "rect": [
+            1242,
+            45,
+            182,
+            208
+          ],
+          "bbox": [
+            6,
+            6,
+            176,
+            202
+          ],
+          "pivot": [
+            0.632867,
+            0.971154
+          ],
+          "worldHeight": 2.387093
+        },
+        {
+          "atlas": "attack-back",
+          "rect": [
+            1303,
+            264,
+            141,
+            226
+          ],
+          "bbox": [
+            6,
+            6,
+            135,
+            220
+          ],
+          "pivot": [
+            0.440977,
+            0.973451
+          ],
+          "worldHeight": 2.77657
+        },
+        {
+          "atlas": "attack-back",
+          "rect": [
+            1161,
+            568,
+            275,
+            160
+          ],
+          "bbox": [
+            6,
+            6,
+            269,
+            154
+          ],
+          "pivot": [
+            0.705913,
+            0.9625
+          ],
+          "worldHeight": 1.815924
+        },
+        {
+          "atlas": "attack-back",
+          "rect": [
+            1260,
+            765,
+            167,
+            242
+          ],
+          "bbox": [
+            6,
+            6,
+            161,
+            236
+          ],
+          "pivot": [
+            0.472862,
+            0.975207
+          ],
+          "worldHeight": 3.119787
+        }
+      ]
+    ],
+    "roll": [
+      [
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            132,
+            29,
+            125,
+            223
+          ],
+          "bbox": [
+            6,
+            6,
+            119,
+            217
+          ],
+          "pivot": [
+            0.562309,
+            0.973094
+          ],
+          "worldHeight": 2.300118
+        },
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            127,
+            267,
+            121,
+            274
+          ],
+          "bbox": [
+            6,
+            6,
+            115,
+            268
+          ],
+          "pivot": [
+            0.522208,
+            0.978102
+          ],
+          "worldHeight": 2.97869
+        },
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            115,
+            551,
+            150,
+            180
+          ],
+          "bbox": [
+            6,
+            6,
+            144,
+            174
+          ],
+          "pivot": [
+            0.4888,
+            0.966667
+          ],
+          "worldHeight": 1.564965
+        },
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            94,
+            786,
+            173,
+            223
+          ],
+          "bbox": [
+            6,
+            6,
+            167,
+            217
+          ],
+          "pivot": [
+            0.487025,
+            0.973094
+          ],
+          "worldHeight": 2.176622
+        }
+      ],
+      [
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            474,
+            39,
+            231,
+            202
+          ],
+          "bbox": [
+            6,
+            6,
+            225,
+            196
+          ],
+          "pivot": [
+            0.506798,
+            0.970297
+          ],
+          "worldHeight": 1.87899
+        },
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            470,
+            286,
+            207,
+            226
+          ],
+          "bbox": [
+            6,
+            6,
+            201,
+            220
+          ],
+          "pivot": [
+            0.537656,
+            0.973451
+          ],
+          "worldHeight": 2.329234
+        },
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            490,
+            548,
+            157,
+            191
+          ],
+          "bbox": [
+            6,
+            6,
+            151,
+            185
+          ],
+          "pivot": [
+            0.582277,
+            0.968586
+          ],
+          "worldHeight": 1.511797
+        },
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            497,
+            789,
+            188,
+            185
+          ],
+          "bbox": [
+            6,
+            6,
+            182,
+            179
+          ],
+          "pivot": [
+            0.446911,
+            0.967568
+          ],
+          "worldHeight": 2.030535
+        }
+      ],
+      [
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            830,
+            54,
+            271,
+            156
+          ],
+          "bbox": [
+            6,
+            6,
+            265,
+            150
+          ],
+          "pivot": [
+            0.518414,
+            0.961538
+          ],
+          "worldHeight": 1.598177
+        },
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            828,
+            313,
+            258,
+            149
+          ],
+          "bbox": [
+            6,
+            6,
+            252,
+            143
+          ],
+          "pivot": [
+            0.5236,
+            0.959732
+          ],
+          "worldHeight": 1.429716
+        },
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            798,
+            559,
+            210,
+            166
+          ],
+          "bbox": [
+            6,
+            6,
+            204,
+            160
+          ],
+          "pivot": [
+            0.737255,
+            0.963855
+          ],
+          "worldHeight": 1.605939
+        },
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            872,
+            781,
+            193,
+            212
+          ],
+          "bbox": [
+            6,
+            6,
+            187,
+            206
+          ],
+          "pivot": [
+            0.37506,
+            0.971698
+          ],
+          "worldHeight": 2.183064
+        }
+      ],
+      [
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            1220,
+            6,
+            206,
+            230
+          ],
+          "bbox": [
+            6,
+            6,
+            200,
+            224
+          ],
+          "pivot": [
+            0.529726,
+            0.973913
+          ],
+          "worldHeight": 2.743044
+        },
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            1227,
+            315,
+            208,
+            161
+          ],
+          "bbox": [
+            6,
+            6,
+            202,
+            155
+          ],
+          "pivot": [
+            0.609645,
+            0.962733
+          ],
+          "worldHeight": 1.546704
+        },
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            1219,
+            569,
+            189,
+            175
+          ],
+          "bbox": [
+            6,
+            6,
+            183,
+            169
+          ],
+          "pivot": [
+            0.651304,
+            0.965714
+          ],
+          "worldHeight": 1.787709
+        },
+        {
+          "atlas": "dodge-front",
+          "rect": [
+            1275,
+            780,
+            172,
+            200
+          ],
+          "bbox": [
+            6,
+            6,
+            166,
+            194
+          ],
+          "pivot": [
+            0.363372,
+            0.97
+          ],
+          "worldHeight": 2.113258
+        }
+      ],
+      [
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            126,
+            4,
+            138,
+            264
+          ],
+          "bbox": [
+            6,
+            6,
+            132,
+            258
+          ],
+          "pivot": [
+            0.44953,
+            0.977273
+          ],
+          "worldHeight": 3.045074
+        },
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            123,
+            330,
+            133,
+            160
+          ],
+          "bbox": [
+            6,
+            6,
+            127,
+            154
+          ],
+          "pivot": [
+            0.480478,
+            0.9625
+          ],
+          "worldHeight": 1.800133
+        },
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            117,
+            555,
+            143,
+            219
+          ],
+          "bbox": [
+            6,
+            6,
+            137,
+            213
+          ],
+          "pivot": [
+            0.510266,
+            0.972603
+          ],
+          "worldHeight": 2.178885
+        },
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            104,
+            748,
+            172,
+            240
+          ],
+          "bbox": [
+            6,
+            6,
+            166,
+            234
+          ],
+          "pivot": [
+            0.517793,
+            0.975
+          ],
+          "worldHeight": 2.290889
+        }
+      ],
+      [
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            438,
+            38,
+            265,
+            215
+          ],
+          "bbox": [
+            6,
+            6,
+            259,
+            209
+          ],
+          "pivot": [
+            0.492236,
+            0.972093
+          ],
+          "worldHeight": 2.289526
+        },
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            458,
+            315,
+            250,
+            177
+          ],
+          "bbox": [
+            6,
+            6,
+            244,
+            171
+          ],
+          "pivot": [
+            0.466697,
+            0.966102
+          ],
+          "worldHeight": 1.70788
+        },
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            504,
+            543,
+            167,
+            216
+          ],
+          "bbox": [
+            6,
+            6,
+            161,
+            210
+          ],
+          "pivot": [
+            0.435024,
+            0.972222
+          ],
+          "worldHeight": 2.180641
+        },
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            475,
+            748,
+            167,
+            227
+          ],
+          "bbox": [
+            6,
+            6,
+            161,
+            221
+          ],
+          "pivot": [
+            0.571524,
+            0.973568
+          ],
+          "worldHeight": 2.081913
+        }
+      ],
+      [
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            783,
+            67,
+            319,
+            141
+          ],
+          "bbox": [
+            6,
+            6,
+            313,
+            135
+          ],
+          "pivot": [
+            0.480065,
+            0.957447
+          ],
+          "worldHeight": 1.13352
+        },
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            802,
+            327,
+            281,
+            153
+          ],
+          "bbox": [
+            6,
+            6,
+            275,
+            147
+          ],
+          "pivot": [
+            0.480513,
+            0.960784
+          ],
+          "worldHeight": 1.632492
+        },
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            886,
+            537,
+            234,
+            184
+          ],
+          "bbox": [
+            6,
+            6,
+            228,
+            178
+          ],
+          "pivot": [
+            0.266765,
+            0.967391
+          ],
+          "worldHeight": 1.62504
+        },
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            845,
+            783,
+            184,
+            196
+          ],
+          "bbox": [
+            6,
+            6,
+            178,
+            190
+          ],
+          "pivot": [
+            0.623077,
+            0.969388
+          ],
+          "worldHeight": 2.022661
+        }
+      ],
+      [
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            1226,
+            43,
+            233,
+            210
+          ],
+          "bbox": [
+            6,
+            6,
+            227,
+            204
+          ],
+          "pivot": [
+            0.469161,
+            0.971429
+          ],
+          "worldHeight": 1.920955
+        },
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            1245,
+            297,
+            218,
+            241
+          ],
+          "bbox": [
+            6,
+            6,
+            212,
+            235
+          ],
+          "pivot": [
+            0.414498,
+            0.975104
+          ],
+          "worldHeight": 2.643939
+        },
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            1278,
+            553,
+            217,
+            166
+          ],
+          "bbox": [
+            6,
+            6,
+            211,
+            160
+          ],
+          "pivot": [
+            0.352151,
+            0.963855
+          ],
+          "worldHeight": 1.511472
+        },
+        {
+          "atlas": "dodge-back",
+          "rect": [
+            1238,
+            797,
+            188,
+            204
+          ],
+          "bbox": [
+            6,
+            6,
+            182,
+            198
+          ],
+          "pivot": [
+            0.637619,
+            0.970588
+          ],
+          "worldHeight": 2.188213
+        }
+      ]
+    ]
+  }
+}

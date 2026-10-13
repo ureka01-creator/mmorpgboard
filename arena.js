@@ -1,13 +1,12 @@
 import * as THREE from 'three';
-import * as R from './arena-engine.mjs?v=2.5';
-import {createArtWorld,portrait} from './arena-art.mjs?v=2.5';
-import {createActor,animateActor} from './arena-actors.mjs?v=2.5';
-import {loadMotionPack} from './arena-clips.mjs?v=2.5';
+import * as R from './arena-engine.mjs?v=2.6';
+import {createArtWorld,portrait} from './arena-art.mjs?v=2.6';
+import {createActor,animateActor,loadSpriteAssets} from './arena-sprites.mjs?v=2.6';
 async function setup(){
 const $=id=>document.getElementById(id),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const renderer=new THREE.WebGLRenderer({canvas:$('scene'),antialias:true,powerPreference:'high-performance'});
 let resolution=Math.min(devicePixelRatio,1.25);renderer.setPixelRatio(resolution);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
-const motionPack=await loadMotionPack();
+const motionPack=await loadSpriteAssets();
 const art=createArtWorld(renderer),scene=art.scene,hero=createActor(scene,true,motionPack),enemy=createActor(scene,false,motionPack),camera=new THREE.PerspectiveCamera(39,innerWidth/innerHeight,.1,80),clock=new THREE.Clock();
 const offset=new THREE.Vector3(4.8,14.7,8.7),cameraTarget=new THREE.Vector3(),raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2(),groundPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0),sparks=[],floaters=[],keys=new Set(),yaw=Math.atan2(offset.x,offset.z);
 let state=R.create(),started=false,paused=false,accumulator=0,attackHeld=false,attackQueued=false,dodgeQueued=false,joystick={x:0,y:0,id:null},destination=null,route=[],lastEvent=0,muted=false,audioContext,noticeTimer,resetWasPaused=false,lastFootstep=0,slowAverage=.016,lastResolutionChange=0,visualTime=0;
