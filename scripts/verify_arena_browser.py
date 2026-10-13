@@ -7,7 +7,7 @@ SHOTS=Path(os.environ.get('ARENA_SHOTS',ROOT/'docs/screenshots'));SHOTS.mkdir(ex
 ARGS=['--no-sandbox','--enable-unsafe-swiftshader','--use-gl=angle','--use-angle=swiftshader']
 def load(page):
  page.goto(BASE,wait_until='networkidle');page.wait_for_function('window.arena?.renderer&&document.getElementById("enter").offsetWidth>0',timeout=60000)
- assert page.locator('meta[name="application-version"]').get_attribute('content')=='2.5'
+ assert page.locator('meta[name="application-version"]').get_attribute('content')=='2.6'
  page.click('#enter');page.wait_for_function('document.getElementById("loading").hidden')
 def tap_move(page,point):
  p=page.evaluate('(p)=>arena.projectFloor(p)',point);assert p['visible'];page.touchscreen.tap(p['x'],p['y'])
@@ -28,9 +28,9 @@ if __name__=='__main__':
   page.click('#pause');before=page.evaluate('JSON.stringify(arena.state)');page.wait_for_timeout(700);assert page.evaluate('JSON.stringify(arena.state)')==before
   assert page.locator('#paused').is_visible();page.click('#resume');page.wait_for_function('!arena.paused')
   # Real keyboard movement is continuous and animates articulated legs.
-  travel=page.evaluate('arena.state.hero.travel');pose=page.evaluate('arena.hero.legs[0].hip.rotation.x');page.keyboard.down('a')
+  travel=page.evaluate('arena.state.hero.travel');pose=page.evaluate('arena.hero.motion.phase');page.keyboard.down('a')
   page.wait_for_function('(v)=>arena.state.hero.travel>v+.5',arg=travel,timeout=30000)
-  assert page.evaluate('arena.hero.pose==="walk"');assert page.evaluate('arena.hero.legs[0].hip.rotation.x')!=pose
+  assert page.evaluate('arena.hero.pose==="walk"');assert page.evaluate('arena.hero.motion.phase')>pose
   page.screenshot(path=str(SHOTS/'nox-actual-walking.png'));page.keyboard.up('a')
   # Reachable terrain taps queue a legal route; a column rejects a destination.
   tap_move(page,{'x':-3,'z':2});page.wait_for_function('arena.destination===null',timeout=60000)
@@ -58,7 +58,7 @@ if __name__=='__main__':
   # Backgrounding pauses and releases held input.
   page.evaluate('window.dispatchEvent(new Event("blur"))');assert page.evaluate('arena.paused&&!arena.input.attackHeld&&arena.input.joystick.id===null');page.click('#resume')
   assert not errors,errors;assert not bad,bad
-  print('PASS real 3D adult-proportion actors, portrait, articulated walk, continuous keyboard, terrain navigation, collision, pause/reset, simultaneous touch, dodge, real-time pursuit/attack/death, blur release',flush=True)
+  print('PASS real 3D adult-proportion actors, portrait, directional sprite walk, continuous keyboard, terrain navigation, collision, pause/reset, simultaneous touch, dodge, real-time pursuit/attack/death, blur release',flush=True)
   context.close()
   for width,height in [(768,1024),(390,844)]:
    c=browser.new_context(viewport={'width':width,'height':height},has_touch=True,is_mobile=True);p=c.new_page();load(p)
