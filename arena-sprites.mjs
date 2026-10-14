@@ -1,22 +1,59 @@
 import * as THREE from 'three';
-import {facing,spritePose} from './arena-sprite-motion.mjs?v=2.7';
+import {facing,spritePose} from './arena-sprite-motion.mjs?v=2.8';
 const VIEW_YAW=Math.atan2(4.8,8.7),VIEW_COS=Math.hypot(4.8,8.7)/Math.hypot(4.8,14.7,8.7),FLOOR=.025;
-let pending;
+let pending,shadowTexture;
+const poseGeometry=new WeakMap();
+function geometryFor(frame){
+ if(!frame.contour)return null;
+ if(poseGeometry.has(frame))return poseGeometry.get(frame);
+ const w=frame.rect[2],h=frame.rect[3],vertices=[],uv=[];
+ for(let y=0;y<h;y++){
+  const [lo,hi]=frame.contour[y];if(hi<=lo)continue;
+  for(const [x,row] of [[lo,y],[lo,y+1],[hi,y],[hi,y],[lo,y+1],[hi,y+1]]){
+   vertices.push(x/w-.5,.5-row/h,0);uv.push(x/w,1-row/h);
+  }
+ }
+ const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geometry.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));poseGeometry.set(frame,geometry);return geometry;
+}
+function softShadow(){
+ if(shadowTexture)return shadowTexture;
+ const canvas=document.createElement('canvas');canvas.width=canvas.height=64;const c=canvas.getContext('2d'),g=c.createRadialGradient(32,32,2,32,32,32);
+ g.addColorStop(0,'rgba(0,0,0,.85)');g.addColorStop(.45,'rgba(0,0,0,.55)');g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,64,64);return shadowTexture=new THREE.CanvasTexture(canvas);
+}
 export function loadSpriteAssets(){
  return pending??=(async()=>{
-  const response=await fetch('./assets/sprites/warrior.json?v=2.7');if(!response.ok)throw Error('Sprite pack HTTP '+response.status);const pack=await response.json();
-  if(pack.schema!==1||pack.directions?.length!==8)throw Error('Invalid directional sprite pack');
-  for(const [clip,count] of Object.entries({idle:4,run:8,attack:4,roll:4}))if(pack.frames[clip]?.length!==8||!pack.frames[clip].every(row=>row.length===count&&row.every(f=>pack.atlases[f.atlas]&&f.rect?.length===4&&f.pivot?.length===2&&f.pivot.every(Number.isFinite)&&Number.isFinite(f.worldHeight)&&f.worldHeight>0)))throw Error('Missing animation directions: '+clip);
-  const loader=new THREE.TextureLoader(),textures={};await Promise.all(Object.entries(pack.atlases).map(async([id,a])=>{const tex=await loader.loadAsync('./'+a.file+'?v=2.7');if(tex.image.width!==a.width||tex.image.height!==a.height)throw Error('Sprite dimensions mismatch: '+id);tex.colorSpace=THREE.SRGBColorSpace;tex.minFilter=THREE.LinearMipmapLinearFilter;tex.magFilter=THREE.LinearFilter;tex.anisotropy=4;textures[id]=tex;}));return {pack,textures};
+  const response=await fetch('./assets/sprites/warrior.json?v=2.8');if(!response.ok)throw Error('Sprite pack HTTP '+response.status);const pack=await response.json();
+  if(pack.schema!==2||pack.refined!==true||pack.directions?.length!==8)throw Error('Invalid directional sprite pack');
+  for(const [clip,count] of Object.entries({idle:1,run:12,attack:7,roll:4}))if(pack.frames[clip]?.length!==8||!pack.frames[clip].every(row=>row.length===count&&row.every(f=>pack.atlases[f.atlas]&&f.rect?.length===4&&f.pivot?.length===2&&f.pivot.every(Number.isFinite)&&Number.isFinite(f.worldHeight)&&f.worldHeight>0)))throw Error('Missing animation directions: '+clip);
+  const loader=new THREE.TextureLoader(),textures={};await Promise.all(Object.entries(pack.atlases).map(async([id,a])=>{const tex=await loader.loadAsync('./'+a.file+'?v=2.8');if(tex.image.width!==a.width||tex.image.height!==a.height)throw Error('Sprite dimensions mismatch: '+id);tex.colorSpace=THREE.SRGBColorSpace;tex.minFilter=THREE.LinearMipmapLinearFilter;tex.magFilter=THREE.LinearFilter;tex.anisotropy=4;textures[id]=tex;}));return {pack,textures};
  })();
 }
 export function createActor(scene,isHero,assets){
  const group=new THREE.Group();group.rotation.y=VIEW_YAW;scene.add(group);
  const material=new THREE.MeshBasicMaterial({color:isHero?0xffffff:0x9eafbd,transparent:true,alphaTest:.035,depthWrite:false,side:THREE.DoubleSide,toneMapped:false});
+ const depth={spriteEye:{value:new THREE.Vector3()},spriteVP:{value:new THREE.Matrix4()},spriteRay:{value:new THREE.Vector3()},spriteOrtho:{value:0}};
+ material.onBeforeCompile=shader=>{
+  Object.assign(shader.uniforms,depth);
+  shader.vertexShader='varying vec3 vSpriteWorld;\n'+shader.vertexShader;
+  shader.vertexShader=shader.vertexShader.replace('#include <project_vertex>','#include <project_vertex>\nvSpriteWorld=(modelMatrix*vec4(transformed,1.0)).xyz;');
+  shader.fragmentShader='varying vec3 vSpriteWorld;\nuniform vec3 spriteEye;\nuniform mat4 spriteVP;\nuniform vec3 spriteRay;\nuniform float spriteOrtho;\n'+shader.fragmentShader;
+  // A projected sword can extend below the boots in screen space. Clamp only
+  // its depth to the floor at that pixel; walls/props still occlude normally.
+  shader.fragmentShader=shader.fragmentShader.replace('#include <logdepthbuf_fragment>',`#include <logdepthbuf_fragment>
+   gl_FragDepth=gl_FragCoord.z;
+   if(vSpriteWorld.y<0.025){
+    vec3 ray=spriteOrtho>0.5?spriteRay:vSpriteWorld-spriteEye;
+    vec3 ground=vSpriteWorld+ray*((0.025-vSpriteWorld.y)/ray.y);
+    vec4 p=spriteVP*vec4(ground,1.0);
+    gl_FragDepth=min(gl_FragCoord.z,p.z/p.w*0.5+0.5-0.000001);
+   }`);
+ };
+ material.customProgramCacheKey=()=> 'sprite-floor-depth-2';
  const sprite=new THREE.Mesh(new THREE.PlaneGeometry(1,1),material);sprite.frustumCulled=false;group.add(sprite);
- const shadow=new THREE.Mesh(new THREE.CircleGeometry(.37,24),new THREE.MeshBasicMaterial({color:0x070707,transparent:true,opacity:.26,depthWrite:false}));shadow.rotation.x=-Math.PI/2;shadow.position.y=.019;shadow.scale.y=.72;group.add(shadow);
+ sprite.onBeforeRender=(_r,_s,camera)=>{depth.spriteEye.value.setFromMatrixPosition(camera.matrixWorld);depth.spriteVP.value.multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse);camera.getWorldDirection(depth.spriteRay.value);depth.spriteOrtho.value=camera.isOrthographicCamera?1:0;};
+ const shadow=new THREE.Mesh(new THREE.PlaneGeometry(.90,.70),new THREE.MeshBasicMaterial({map:softShadow(),color:0x070707,transparent:true,opacity:.26,depthWrite:false}));shadow.rotation.x=-Math.PI/2;shadow.position.y=.019;shadow.scale.y=.72;group.add(shadow);
  const maps=Object.fromEntries(Object.entries(assets.textures).map(([id,tex])=>[id,tex.clone()]));
- return {group,sprite,shadow,maps,pack:assets.pack,isHero,height:2.05,headDiameter:.27,renderType:'directional-sprite',pose:'idle'};
+ return {group,sprite,planeGeometry:sprite.geometry,shadow,maps,pack:assets.pack,isHero,height:2.05,headDiameter:.27,renderType:'directional-sprite',pose:'idle'};
 }
 export function animateActor(actor,body,time,reduced=false){
  const fresh=actor.motion?.body!==body||time<actor.motion.time;
@@ -30,8 +67,9 @@ export function animateActor(actor,body,time,reduced=false){
  if(!fresh&&actor.isHero&&m.bodyMode==='attack'&&body.mode==='idle'&&body.hit&&(body.hits||0)>(m.hits||0))m.finishUntil=time+.40;
  if(body.mode!=='idle'||time>=m.finishUntil)m.finishUntil=undefined;
  const visualBody=m.finishUntil?{...body,mode:'attack',elapsed:Math.max(.26,.66-(m.finishUntil-time))}:body;
- const pose=spritePose(visualBody,m.phase,time,m.direction),frame=actor.pack.frames[pose.clip][m.direction][pose.frame],atlas=actor.pack.atlases[frame.atlas],map=actor.maps[frame.atlas];
+ const pose=spritePose(visualBody,m.phase,time,m.direction,actor.pack.refined),frame=actor.pack.frames[pose.clip][m.direction][pose.frame],atlas=actor.pack.atlases[frame.atlas],map=actor.maps[frame.atlas];
  map.repeat.set(frame.rect[2]/atlas.width,frame.rect[3]/atlas.height);map.offset.set(frame.rect[0]/atlas.width,1-(frame.rect[1]+frame.rect[3])/atlas.height);
+ actor.sprite.geometry=geometryFor(frame)||actor.planeGeometry;
  if(actor.sprite.material.map!==map){actor.sprite.material.map=map;actor.sprite.material.needsUpdate=true;}
  const height=frame.worldHeight,width=height*frame.rect[2]/frame.rect[3]*VIEW_COS;actor.sprite.scale.set(width,height,1);
  actor.sprite.position.set((.5-frame.pivot[0])*width,FLOOR+(frame.pivot[1]-.5)*height,0);
