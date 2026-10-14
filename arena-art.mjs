@@ -1,4 +1,4 @@
-import {spritePortrait} from './arena-sprites.mjs?v=2.7';
+import {spritePortrait} from './arena-sprites.mjs?v=2.8';
 import * as THREE from 'three';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 import {rooms,columns,obstacles} from './arena-engine.mjs';
