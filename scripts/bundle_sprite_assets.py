@@ -68,6 +68,16 @@ for name,e in entries.items():
    target[index]=frame
 for k,n in {'idle':4,'run':8,'attack':4,'roll':4}.items():
  if any(len(row)!=n or any(f is None for f in row) for row in pack['frames'][k]):raise ValueError('Incomplete '+k+' animation')
+# Blade tips and raised feet change silhouette height without changing body size.
+# Keep one pixel-to-world scale per direction through each gait/sword sequence.
+# Retain the old guide fit so calibration is auditable and repeatable.
+pack['calibration']={'method':'shared-run-attack-pixel-scale-per-direction','clips':['run','attack']}
+for direction in range(8):
+ row=pack['frames']['run'][direction]
+ pixelScale=float(np.median([f['worldHeight']/f['rect'][3] for f in row]))
+ for clip in pack['calibration']['clips']:
+  for f in pack['frames'][clip][direction]:
+   f['guideWorldHeight']=f['worldHeight'];f['worldHeight']=round(pixelScale*f['rect'][3],6)
 (ROOT/'assets/sprites/warrior.json').write_text(json.dumps(pack,indent=2)+'\n')
 (ROOT/'assets/sprites/LICENSE.txt').write_text('Original artwork generated for Elderfall using OpenAI image generation. No Nox game artwork is included. Pose guides were rendered from the project\'s CC0-derived Luana Coppio character skin and Quaternius animation library; their original attribution remains in assets/characters/LICENSE.txt and assets/animations/LICENSE.txt. Raw generated artwork is imported without repainting.\n')
 print('Imported',len(entries),'RGBA atlases,',sum(len(row) for bank in pack['frames'].values() for row in bank),'directional animation frames')

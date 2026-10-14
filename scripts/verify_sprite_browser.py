@@ -5,7 +5,7 @@ with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS)
  context=browser.new_context(viewport={'width':1024,'height':768});page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));load(page);page.click('#pause')
  result=page.evaluate('''async()=>{
- const {animateActor}=await import('./arena-sprites.mjs?v=2.6'),a=arena.hero,b=arena.enemy,view=Math.atan2(4.8,8.7),THREE=await import('three');
+ const {animateActor}=await import('./arena-sprites.mjs?v=2.7'),a=arena.hero,b=arena.enemy,view=Math.atan2(4.8,8.7),THREE=await import('three');
  if(a.renderType!=='directional-sprite'||!a.sprite.material.depthTest||a.sprite.material.depthWrite)throw Error('Invalid sprite rendering');
  let time=1,frames=0;const seen=new Set();
  const c=document.createElement('canvas');c.width=1536;c.height=1024;const ctx=c.getContext('2d');
@@ -21,14 +21,39 @@ with sync_playwright() as pw:
    seen.add(d+':'+f);frames++;
   }
   const before=JSON.stringify(a.motion);animateActor(a,body,time);if(JSON.stringify(a.motion)!==before)throw Error('Pause changed pose');
-  for(const [t,f]of [[0,0],[.17,1],[.26,2],[.47,3]]){body.mode='attack';body.elapsed=t;animateActor(a,body,time+=.01);if(a.motion.clip!=='attack'||a.motion.frame!==f)throw Error('Attack frame/contact');}
+  for(const [t,f]of ((d>=4&&d<=6)?[[0,0],[.13,1],[.22,2],[.26,3],[.48,0]]:[[0,0],[.17,1],[.26,2],[.47,3],[.56,0]])){body.mode='attack';body.elapsed=t;animateActor(a,body,time+=.01);if(a.motion.clip!==(t>=.48?'idle':'attack')||a.motion.frame!==f)throw Error('Attack frame/contact');}
   for(let f=0;f<4;f++){body.mode='dodge';body.elapsed=f*.085+.001;animateActor(a,body,time+=.01);if(a.motion.clip!=='roll'||a.motion.frame!==f)throw Error('Dodge frame');}
+ }
+ // The guardian retains the pose already established during windup.
+ for(let d=0;d<8;d++){
+  const body={x:0,z:0,yaw:view+d*Math.PI/4,mode:'windup',elapsed:.70,travel:0,max:50};animateActor(b,body,++time);const prepared=b.motion.frame;
+  body.mode='attack';body.elapsed=0;animateActor(b,body,time+=.01);if(b.motion.frame!==prepared)throw Error('Enemy returned to ready before hit');
+  body.elapsed=.18;animateActor(b,body,time+=.18);if(b.motion.frame!==((d>=4&&d<=6)?3:2))throw Error('Enemy blade is not striking at hit');
+ }
+ // A lethal hit must still show the cut and finish before idling.
+ {
+  const R=await import('./arena-engine.mjs'),state=R.create();Object.assign(state.hero,{x:0,z:0});Object.assign(state.enemy,{x:0,z:1,hp:10});animateActor(a,state.hero,0);
+  for(let i=0;i<30&&state.status==='playing';i++){R.step(state,{attack:i===0},1/60);animateActor(a,state.hero,state.time);}
+  if(state.status!=='won'||state.hero.mode!=='idle'||a.motion.clip!=='attack'||a.motion.frame!==((a.motion.direction>=4&&a.motion.direction<=6)?3:2))throw Error('Victory erased lethal cut');
+  animateActor(a,state.hero,state.time+.41);if(a.motion.clip!=='idle')throw Error('Lethal cut never finishes');
+ }
+ // Travelling the same distance while swinging must not double gait phase.
+ {
+ const body={x:0,z:0,yaw:view,mode:'walk',elapsed:0,travel:0,max:40};animateActor(a,body,++time);body.travel=.28;animateActor(a,body,time+=.1);const phase=a.motion.phase,steps=a.motion.footsteps;
+  body.mode='attack';body.travel+=.28;animateActor(a,body,time+=.1);if(Math.abs(a.motion.phase-phase-.125)>1e-8||a.motion.footsteps!==steps)throw Error('Attack accelerated gait or played phantom footsteps');
+  body.mode='walk';body.travel+=.28;animateActor(a,body,time+=.1);if(Math.abs(a.motion.phase-.375)>1e-8)throw Error('Walking resumed at wrong phase');
+ }
+ // Physical damage and the visible cut coincide on the first resolved hit.
+ {
+  const R=await import('./arena-engine.mjs'),state=R.create();Object.assign(state.hero,{x:0,z:0});Object.assign(state.enemy,{x:0,z:1});animateActor(a,state.hero,0);
+  for(let i=0;i<30&&!state.hero.hits;i++){R.step(state,{attack:i===0},1/60);animateActor(a,state.hero,state.time);}
+  if(state.hero.hits!==1||a.motion.clip!=='attack'||a.motion.frame!==((a.motion.direction>=4&&a.motion.direction<=6)?3:2))throw Error('Visible cut and damage are out of sync');
  }
  const body={x:0,z:0,yaw:view,mode:'idle',elapsed:0,travel:0};animateActor(a,body,0);if(a.motion.phase!==0||a.motion.frame!==0)throw Error('Reset did not restart');
  const before=b.sprite.material.map.offset.clone();body.mode='walk';body.travel=.7;animateActor(a,body,.1);if(!b.sprite.material.map.offset.equals(before))throw Error('Hero changed enemy UV');
  const scene=new THREE.Scene();scene.add(a.group);const camera=new THREE.PerspectiveCamera(39,1,.1,80);camera.position.set(4.8,14.7,8.7);camera.lookAt(0,0,0);const target=new THREE.WebGLRenderTarget(256,256);const renderer=arena.renderer;renderer.setRenderTarget(target);renderer.render(scene,camera);const pixels=new Uint8Array(256*256*4);renderer.readRenderTargetPixels(target,0,0,256,256,pixels);renderer.setRenderTarget(null);target.dispose();if(!pixels.some((v,i)=>i%4!==3&&v>20))throw Error('Sprite missing from GPU output');
  return {directions:8,runFrames:seen.size,atlases:Object.keys(a.maps).length};
 }''')
- assert result=={'directions':8,'runFrames':64,'atlases':10};assert not errors,errors;print('PASS sprite GPU output, alpha, 64 run poses, 32 attack/32 dodge poses, foot anchors, independent UV, pause and reset',flush=True)
+ assert result=={'directions':8,'runFrames':64,'atlases':10};assert not errors,errors;print('PASS sprite GPU output, alpha, 64 run poses, 32 attack/32 dodge poses, foot anchors, independent UV, uniform travel phase, enemy windup continuity, damage-aligned cut, lethal follow-through, pause and reset',flush=True)
  context.close()
  c=browser.new_context();c.route('**/assets/sprites/warrior.json*',lambda route:route.fulfill(status=503,body='unavailable'));p=c.new_page();p.goto(BASE);p.wait_for_function('document.getElementById("enter").textContent==="다시 불러오기"',timeout=60000);assert p.locator('#enter').is_visible();assert p.locator('#load-copy').inner_text().startswith('3D 성역을 불러오지 못했습니다.');print('PASS missing sprite pack shows retry UI',flush=True);browser.close()
