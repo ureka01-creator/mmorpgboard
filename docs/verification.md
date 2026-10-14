@@ -21,3 +21,5 @@
 - `scripts/review_refined_motion.py`로 8방향의 대기·12개 이동·7개 공격 상태를 실제 렌더했다. [진단 화면](motion-review-v2.8/direction-0.png)은 확대용 직교 카메라이며, [게임 화면](screenshots/nox-actual-walking.png)은 실제 던전 화면이다.
 
 검증 환경은 Chromium 소프트웨어 WebGL이다. 실제 iPad Safari의 성능 측정은 포함하지 않는다. [이전 2.7 기록](verification-v2.7.md).
+
+공개 배포: [GitHub Pages 실행 38564542460](https://github.com/ureka01-creator/mmorpgboard/actions/runs/38564542460) 성공. 실행 소스 `8942919`, 배포 `d76822968bb8acdf3dfa16e5baf191ccbf879273`. 공개 HTTPS 실행 파일 27개의 SHA256과 ES 모듈 MIME을 소스와 비교했고, 동일 공개 응답을 실제 WebGL에서 실행하여 이동·회피·검격 다섯 번과 승리·결과창까지 통과했다. TLS 검증을 유지한다. 플레이: https://ureka01-creator.github.io/mmorpgboard/?release=2.8.
