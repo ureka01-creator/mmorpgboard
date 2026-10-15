@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import * as R from './arena-engine.mjs?v=2.8';
 import {createArtWorld,portrait} from './arena-art.mjs?v=2.8';
-import {createActor,animateActor,loadSpriteAssets} from './arena-sprites.mjs?v=2.8';
+import {createActor,animateActor,loadSpriteAssets} from './arena-sprites.mjs?v=2.10';
 async function setup(){
 const $=id=>document.getElementById(id),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const renderer=new THREE.WebGLRenderer({canvas:$('scene'),antialias:true,powerPreference:'high-performance'});
