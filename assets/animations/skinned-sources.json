@@ -1,0 +1,15 @@
+{
+  "author": "Quaternius",
+  "license": "CC0-1.0",
+  "original": "https://quaternius.itch.io/universal-animation-library",
+  "mirror": "https://github.com/J-Ponzo/gltf-universal-animation-library",
+  "commit": "e24c23cf2a1323488a3faa226ea7ea21f644b73e",
+  "sourceSha256": {
+    "AnimationLibrary_Godot_Standard.gltf": "0ff075c7ad6855c5c2c37a171592ee8f0d6ab2f58259e2be77a9b63dd8027765",
+    "AnimationLibrary_Godot_Standard.bin": "6e65377d81558333c4093dbb144a48fd19019343d82b1a3a7992a98ec0e0543c",
+    "LICENSE": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+  },
+  "modelSha256": "de52bf8aa316076529345ee52363997338e54b862ee21e71342b97b0e6ee12e7",
+  "generatedSha256": "c1523eb30f9c49a3d6604f92ff0e2cdd2c70042ffdacb4ac1bf6dbd91d919345",
+  "conversion": "scripts/build_skinned_motion.py; full 53-bone world-space T-pose retarget to matched skin bind; authored vertical hips, no horizontal root travel; shared right-foot phase markers"
+}
