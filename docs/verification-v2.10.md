@@ -14,3 +14,5 @@
 - `ARENA_BASE=http://127.0.0.1:8036/ ARENA_SHOTS=/tmp/elderfall-restored-game python scripts/verify_arena_browser.py`: 실제 키보드/지형 탭/두 손가락 공격·회피, 일시 정지/초기화, 5회 명중 승리와 1024×768·768×1024·390×844 스크롤 없는 조작 화면 통과.
 
 실제 iPad Safari에서 성능이나 모션의 자연스러움이 완성됐다는 의미는 아니다.
+
+공개 배포 검증도 통과했다. 소스 main 커밋은 `4f91e4a`, gh-pages는 `3b114fbb3fb42ac60af515d937b64ed9bc738825`, GitHub Pages 작업 `38719358579`는 성공했다. `python scripts/verify_public.py`로 공개 HTTPS 파일 29개의 정확한 SHA256과 모듈 MIME을 확인하고, 기본 주소와 study.html 각각에서 이동·회피·5회 명중·승리 화면을 확인했다.
