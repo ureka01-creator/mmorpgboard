@@ -47,3 +47,7 @@ python scripts/render_study_motion.py
 ```
 
 `render_study_motion.py`는 실제 훈련실과 같은 모델·재질·조명에서 한 방향의 232프레임을 계산한다. [동작 영상](../assets/study/motion-preview.mp4)은 60fps로 인코딩한 약 3.87초의 오프라인 렌더이며 실제 기기의 플레이 프레임 속도 녹화가 아니다. 렌더 영상의 그림자 맵은 768px, 플레이 장면은 2048px다. [접촉 시트](study-review-v2.9/motion-contact.png)는 같은 렌더를 HTML에서 배열한 검사 화면이다.
+
+## 공개 배포 확인
+
+2026-10-15. [GitHub Pages 실행 38677931365](https://github.com/ureka01-creator/mmorpgboard/actions/runs/38677931365) 성공. 실행 소스 `6155619`, 공개 배포 `1290e95285176fce8bcffe20811003707b73b889`. 공개 HTTPS 파일 41개의 SHA256과 ES 모듈 MIME을 소스와 대조했다. 동일 검증 응답을 실제 WebGL에서 실행해 기존 2.8과 새 2.9 훈련실 모두 이동·회피·다섯 번 명중·승리·결과창까지 통과했다. 시스템 인증서를 사용하며 TLS 검증을 유지했다. 새 GLB·JSON·MP4도 공개 원본과 SHA256이 일치한다.
