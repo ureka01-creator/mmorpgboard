@@ -21,3 +21,6 @@ python scripts/verify_public.py
 ```
 
 실제 공개 HTTPS 파일의 SHA256을 소스와 비교하고 동일 파일로 브라우저의 3D 직접 이동·회피·실시간 검격과 승리을 확인한다. 시스템 인증서로 HTTPS를 검증한 응답을 Chromium에 전달하며 TLS 검증을 끄지 않는다. HTML의 entry 파일에는 버전 query를 붙여 이전 앱 캐시와 구분한다.
+
+
+2.9 훈련실은 `/study.html?release=2.9`로 추가 배포한다. 기존 `/`의 2.8 실행 파일은 유지한다. 배포 파일과 HTTPS 검증 파일은 `scripts/publication_files.py`의 한 목록을 공유한다. 훈련실의 모듈·Warden GLB·동작 JSON·라이선스·동작 예시 MP4와 실제 ES 모듈 의존성만 추가하며, Blender 제작 코드와 진단 PNG는 실행 사이트에 올리지 않는다. 공개 검증은 두 진입점에서 이동·회피·다섯 번 명중과 승리까지 확인한다.

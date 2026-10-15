@@ -5,10 +5,11 @@ from urllib.parse import urlparse,unquote
 from playwright.sync_api import sync_playwright
 from verify_arena_browser import ARGS,fight
 ROOT=Path(__file__).resolve().parents[1];BASE='https://ureka01-creator.github.io/mmorpgboard/'
-FILES=['index.html','arena.css','arena.js','arena-engine.mjs','arena-art.mjs','arena-sprites.mjs','arena-sprite-motion.mjs','assets/sprites/warrior.json','assets/sprites/LICENSE.txt',*[str(p.relative_to(ROOT)) for p in sorted((ROOT/'assets/sprites/refined').glob('*.png'))], 'assets/sprites/warrior/dodge-front.png','assets/sprites/warrior/dodge-back.png','assets/3d/crest.svg',*[str(p.relative_to(ROOT)) for p in sorted((ROOT/'vendor/three').rglob('*')) if p.is_file()]]
+from publication_files import publication_files
+FILES=publication_files(ROOT)
 verified={};content_types={}
 for name in FILES:
- url=BASE+('' if name=='index.html' else name)+'?release=2.8'
+ url=BASE+('' if name=='index.html' else name)+'?release=2.9'
  for attempt in range(4):
   try:
    with urllib.request.urlopen(url,timeout=40) as response:
@@ -25,19 +26,23 @@ for name in FILES:
 # No TLS verification is disabled to work around the cloud browser's proxy certificate store.
 with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS)
- context=browser.new_context(viewport={'width':1024,'height':768},has_touch=True,is_mobile=True)
- def route(req):
-  name=unquote(urlparse(req.request.url).path).removeprefix('/mmorpgboard/') or 'index.html'
-  if name in verified:req.fulfill(status=200,content_type=content_types[name],body=verified[name])
-  else:req.fulfill(status=404,body='')
- context.route('https://ureka01-creator.github.io/**',route);page=context.new_page();errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
- page.goto(BASE+'?release=2.8',wait_until='networkidle');page.wait_for_function('window.arena?.renderer&&document.getElementById("enter").offsetWidth>0',timeout=60000)
- assert page.locator('meta[name="application-version"]').get_attribute('content')=='2.8'
- page.click('#enter');page.wait_for_function('document.getElementById("loading").hidden')
- assert page.evaluate('arena.hero.headDiameter/arena.hero.height<.17&&arena.hero.renderType==="directional-sprite"&&arena.hero.pack.schema===2&&arena.hero.pack.frames.run.every(row=>row.length===12)&&arena.hero.pack.frames.attack.every(row=>row.length===7)&&arena.hero.sprite.material.map.image.width===1536')
- travel=page.evaluate('arena.state.hero.travel');page.keyboard.down('d');page.wait_for_function('(v)=>arena.state.hero.travel>v+.3&&arena.hero.motion.clip==="run"',arg=travel,timeout=30000);page.keyboard.up('d')
- page.click('#dodge');page.wait_for_function('arena.state.hero.dodgeCooldown>0',timeout=30000)
- page.click('#reset');page.click('#reset-confirm');fight(page)
- assert not errors,errors
- page.screenshot(path='/tmp/elderfall-nox-public.png');browser.close()
-print(f'PASS public release 2.8: {len(FILES)} exact publication files, real 3D, direct movement, dodge, real-time sword combat and victory',flush=True)
+ for entry,version,render_type in [('', '2.8','directional-sprite'),('study.html','2.9','continuous-skin')]:
+  context=browser.new_context(viewport={'width':1024,'height':768},has_touch=True,is_mobile=True)
+  def route(req):
+   name=unquote(urlparse(req.request.url).path).removeprefix('/mmorpgboard/')or'index.html'
+   if name in verified:req.fulfill(status=200,content_type=content_types[name],body=verified[name])
+   else:req.fulfill(status=404,body='')
+  context.route('https://ureka01-creator.github.io/**',route);page=context.new_page();errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
+  page.goto(BASE+entry+'?release='+version,wait_until='networkidle');page.wait_for_function('window.arena?.renderer&&document.getElementById("enter").offsetWidth>0',timeout=60000)
+  assert page.locator('meta[name="application-version"]').get_attribute('content')==version
+  page.click('#enter');page.wait_for_function('document.getElementById("loading").hidden')
+  assert page.evaluate('(kind)=>arena.hero.renderType===kind&&arena.hero.headDiameter/arena.hero.height<.17',render_type)
+  if version=='2.8':assert page.evaluate('arena.hero.pack.schema===2&&arena.hero.pack.frames.run.every(row=>row.length===12)&&arena.hero.pack.frames.attack.every(row=>row.length===7)')
+  else:assert page.evaluate('arena.hero.skins.length===10&&arena.hero.skins.every(s=>s.isSkinnedMesh&&s.castShadow&&s.receiveShadow)&&arena.camera.isOrthographicCamera')
+  travel=page.evaluate('arena.state.hero.travel');page.keyboard.down('d');page.wait_for_function('(v)=>arena.state.hero.travel>v+.3',arg=travel,timeout=30000);page.keyboard.up('d')
+  page.click('#dodge');page.wait_for_function('arena.state.hero.dodgeCooldown>0',timeout=30000)
+  page.click('#reset');page.click('#reset-confirm');fight(page)
+  assert not errors,errors
+  page.screenshot(path='/tmp/elderfall-public-'+version+'.png');context.close();print('PASS public play',version,'movement, dodge, five hits, victory and result',flush=True)
+ browser.close()
+print(f'PASS {len(FILES)} exact HTTPS publication files, legacy 2.8 and continuous-motion training room 2.9',flush=True)

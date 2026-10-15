@@ -1,6 +1,13 @@
 # ELDERFALL · 잊힌 성역
 
-**플레이:** https://ureka01-creator.github.io/mmorpgboard/?release=2.8
+**새 동작·조명 훈련실:** https://ureka01-creator.github.io/mmorpgboard/study.html?release=2.9
+
+**기존 2.8 플레이:** https://ureka01-creator.github.io/mmorpgboard/?release=2.8
+
+2.9 훈련실은 동일한 3D 모델의 연속 보행·검격과 캐릭터/지형의 공통 조명을 확인하는 별도 플레이 장면입니다. 새 철제 갑옷·가죽·붉은 스카프 아트를 사용하며, 월드와 같은 조명·그림자를 받습니다. 한 방향의 확대 렌더를 기준으로 움직임을 검토하고, 실제 조작은 전 방향 이동·공격·회피를 지원합니다. [동작 렌더 영상](https://ureka01-creator.github.io/mmorpgboard/assets/study/motion-preview.mp4) · [제작·검증 기록](docs/study-v2.9.md)
+
+
+## 기존 2.8 게임
 
 녹스의 높은 시점과 직접 조작하는 액션 감각을 참고한 **3D 지형과 방향별 캐릭터 그림을 사용하는 실시간 던전 전투**입니다. 원작의 그림·캐릭터·UI를 복제하지 않습니다. 첫 범위는 성역 한 구역, 방과 연결 통로, 기사 한 명과 수호병 한 명의 이동·검격·회피입니다.
 

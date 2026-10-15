@@ -7,7 +7,7 @@ SHOTS=Path(os.environ.get('ARENA_SHOTS',ROOT/'docs/screenshots'));SHOTS.mkdir(ex
 ARGS=['--no-sandbox','--enable-unsafe-swiftshader','--use-gl=angle','--use-angle=swiftshader']
 def load(page):
  page.goto(BASE,wait_until='networkidle');page.wait_for_function('window.arena?.renderer&&document.getElementById("enter").offsetWidth>0',timeout=60000)
- assert page.locator('meta[name="application-version"]').get_attribute('content')=='2.8'
+ assert page.locator('meta[name="application-version"]').get_attribute('content')==os.environ.get('ARENA_VERSION','2.8')
  page.click('#enter');page.wait_for_function('document.getElementById("loading").hidden')
 def tap_move(page,point):
  p=page.evaluate('(p)=>arena.projectFloor(p)',point);assert p['visible'];page.touchscreen.tap(p['x'],p['y'])
@@ -58,7 +58,7 @@ if __name__=='__main__':
   # Backgrounding pauses and releases held input.
   page.evaluate('window.dispatchEvent(new Event("blur"))');assert page.evaluate('arena.paused&&!arena.input.attackHeld&&arena.input.joystick.id===null');page.click('#resume')
   assert not errors,errors;assert not bad,bad
-  print('PASS real 3D adult-proportion actors, portrait, directional sprite walk, continuous keyboard, terrain navigation, collision, pause/reset, simultaneous touch, dodge, real-time pursuit/attack/death, blur release',flush=True)
+  print('PASS real 3D adult-proportion actors, portrait, animated walk, continuous keyboard, terrain navigation, collision, pause/reset, simultaneous touch, dodge, real-time pursuit/attack/death, blur release',flush=True)
   context.close()
   for width,height in [(768,1024),(390,844)]:
    c=browser.new_context(viewport={'width':width,'height':height},has_touch=True,is_mobile=True);p=c.new_page();load(p)
