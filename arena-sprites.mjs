@@ -53,7 +53,7 @@ export function createActor(scene,isHero,assets){
  sprite.onBeforeRender=(_r,_s,camera)=>{depth.spriteEye.value.setFromMatrixPosition(camera.matrixWorld);depth.spriteVP.value.multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse);camera.getWorldDirection(depth.spriteRay.value);depth.spriteOrtho.value=camera.isOrthographicCamera?1:0;};
  const shadow=new THREE.Mesh(new THREE.PlaneGeometry(.90,.70),new THREE.MeshBasicMaterial({map:softShadow(),color:0x070707,transparent:true,opacity:.26,depthWrite:false}));shadow.rotation.x=-Math.PI/2;shadow.position.y=.019;shadow.scale.y=.72;group.add(shadow);
  const maps=Object.fromEntries(Object.entries(assets.textures).map(([id,tex])=>[id,tex.clone()]));
- return {group,sprite,planeGeometry:sprite.geometry,shadow,maps,pack:assets.pack,isHero,height:2.05,headDiameter:.27,renderType:'directional-sprite',pose:'idle'};
+ return {group,sprite,planeGeometry:sprite.geometry,shadow,maps,pack:assets.pack,isHero,height:2.05,headDiameter:.27,renderType:'directional-sprite',pose:'idle',baseTint:material.color.clone(),environmentTint:new THREE.Color(),warmLights:scene.children.filter(o=>o.isPointLight)};
 }
 export function animateActor(actor,body,time,reduced=false){
  const fresh=actor.motion?.body!==body||time<actor.motion.time;
@@ -73,6 +73,16 @@ export function animateActor(actor,body,time,reduced=false){
  if(actor.sprite.material.map!==map){actor.sprite.material.map=map;actor.sprite.material.needsUpdate=true;}
  const height=frame.worldHeight,width=height*frame.rect[2]/frame.rect[3]*VIEW_COS;actor.sprite.scale.set(width,height,1);
  actor.sprite.position.set((.5-frame.pivot[0])*width,FLOOR+(frame.pivot[1]-.5)*height,0);
+ // Painted highlights belong to the approved source art. Only add a restrained
+ // environment tint; never replace the image, stretch limbs or cross-fade poses.
+ const tint=actor.environmentTint.setRGB(.94,.96,1);
+ let warmth=0;
+ for(const light of actor.warmLights)if(light.visible){
+  const d=Math.hypot(body.x-light.position.x,body.z-light.position.z);
+  warmth+=Math.max(0,1-d/Math.max(1,(light.distance||12)*.65))**2*Math.min(1,light.intensity/14);
+ }
+ const pool=Math.min(1,warmth);tint.r+=.06*pool;tint.g+=.015*pool;tint.b-=.07*pool;
+ actor.sprite.material.color.copy(tint).multiply(actor.baseTint);
  actor.group.position.set(body.x,0,body.z);actor.pose=body.mode;actor.sprite.material.opacity=body.mode==='hurt'?.65+.35*Math.min(1,(body.elapsed||0)/.30):1;
  if(body.mode==='dead'){m.deadAt??=time;actor.sprite.material.opacity=Math.max(0,1-(time-m.deadAt)/.8);actor.shadow.material.opacity=.26*actor.sprite.material.opacity;}else{m.deadAt=null;actor.shadow.material.opacity=body.mode==='dodge'?.16:.26;}
  Object.assign(m,{time,travel:body.travel||0,yaw:body.yaw,bodyMode:body.mode,hits:body.hits||0,clip:pose.clip,frame:pose.frame,atlas:frame.atlas});
