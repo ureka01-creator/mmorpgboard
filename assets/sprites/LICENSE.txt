@@ -1,1 +1,3 @@
 Original artwork generated for Elderfall using OpenAI image generation. No Nox game artwork is included. Pose guides were rendered from the project's CC0-derived Luana Coppio character skin and Quaternius animation library; their original attribution remains in assets/characters/LICENSE.txt and assets/animations/LICENSE.txt. Raw generated artwork is imported without repainting.
+
+2.11 numerical motion data: motion/flow.json and motion/flow.bin.gz measure correspondences and weapon anchors in these same original artworks using OpenCV DIS. They contain numerical fields, not Nox game assets or replacement character artwork. Source PNG files remain unchanged.

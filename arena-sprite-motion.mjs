@@ -41,3 +41,21 @@ export function spritePose(body,phase,time,direction=0,refined=false){
  if(mode==='walk')return {clip:'run',frame:((Math.floor(phase*8)%8)+8)%8};
  return {clip:'idle',frame:Math.floor(time/1.2)%4};
 }
+
+// Continuous correspondence timeline; contact remains synchronized to engine damage.
+export function motionSegment(body,phase,direction){
+ const key=(clip,i)=>`${direction}:${clip}:${i}`;
+ if(body.mode==='walk'){
+  const p=((phase%1)+1)%1*12,i=Math.floor(p);
+  return {a:key('run',i),b:key('run',(i+1)%12),t:p-i};
+ }
+ if(body.mode!=='attack'&&body.mode!=='windup')return null;
+ const enemy=body.max===50,t=Math.max(0,body.elapsed||0);
+ let keys;
+ if(body.mode==='windup')keys=[[0,0],[.28,1],[.72,2]];
+ else if(enemy)keys=[[0,2],[.09,3],[.18,4],[.205,4],[.35,5],[.58,6]];
+ else keys=[[0,0],[.105,1],[.19,2],[.235,3],[.26,4],[.285,4],[.43,5],[.62,6]];
+ let j=1;while(j<keys.length&&t>=keys[j][0])j++;
+ if(j>=keys.length)return {a:key('attack',keys.at(-1)[1]),b:key('attack',keys.at(-1)[1]),t:0};
+ const [start,a]=keys[j-1],[end,b]=keys[j];return {a:key('attack',a),b:key('attack',b),t:(t-start)/(end-start)};
+}
