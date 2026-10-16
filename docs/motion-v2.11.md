@@ -42,3 +42,9 @@ ARENA_ORIGIN=http://127.0.0.1:8037/ python scripts/verify_approved_art.py
 - 양쪽 주소에서 승인된 원화와 색조 범위를 확인하고 GLB를 요청하지 않는 것을 검사했다.
 
 `scripts/review_sprite_flow.py`는 실제 WebGL의 중간 보행·공격 자세를 8방향으로 렌더한다. [확대 화면](motion-review-v2.11/direction-0.png)과 같은 디렉터리의 direction-1~7.png는 해당 렌더 결과다.
+
+## 공개 배포 확인
+
+실행 소스 `1c8993c`, gh-pages `74010792f9284fd97fb6611b863f2c25ad6ee57e`, GitHub Pages 작업 [38835022382](https://github.com/ureka01-creator/mmorpgboard/actions/runs/38835022382)는 성공했다. `python scripts/verify_public.py`로 공개 HTTPS 파일 32개의 정확한 SHA256과 JavaScript MIME을 확인하고, 기본 주소와 study.html 모두에서 새 보간 데이터를 로드한 뒤 이동·회피·5회 명중·승리 화면을 확인했다. 압축 파일은 Content-Type application/gzip, Content-Encoding 없음, gzip 헤더 1f8b로 전달되는 것도 확인했다.
+
+공개 플레이: https://ureka01-creator.github.io/mmorpgboard/?release=2.11
