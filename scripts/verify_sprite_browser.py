@@ -5,7 +5,7 @@ with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS)
  context=browser.new_context(viewport={'width':1024,'height':768});page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));load(page);page.click('#pause')
  result=page.evaluate('''async()=>{
- const {animateActor}=await import('./arena-sprites.mjs?v=2.8'),a=arena.hero,b=arena.enemy,view=Math.atan2(4.8,8.7),THREE=await import('three');
+ const {animateActor}=await import('./arena-sprites.mjs?v=2.11'),a=arena.hero,b=arena.enemy,view=Math.atan2(4.8,8.7),THREE=await import('three');
  if(a.renderType!=='directional-sprite'||!a.sprite.material.depthTest||a.sprite.material.depthWrite)throw Error('Invalid sprite rendering');
  let time=1,frames=0;const seen=new Set();
  const c=document.createElement('canvas');c.width=1536;c.height=1024;const ctx=c.getContext('2d');
@@ -18,7 +18,10 @@ with sync_playwright() as pw:
    body.travel=f*2.24/12+.002;animateActor(a,body,time+=.01);if(a.motion.direction!==d||a.motion.frame!==f)throw Error('Wrong direction/run frame '+d+' '+f);
    const box=a.pack.frames.run[d][f],atlas=a.pack.atlases[box.atlas];if(Math.abs(a.maps[box.atlas].repeat.x-box.rect[2]/atlas.width)>1e-6)throw Error('Incorrect UV crop');
    if(a.sprite.geometry.attributes.position.count<100)throw Error('Contour crop missing');
-   const bottom=a.sprite.position.y+a.sprite.scale.y/2-box.pivot[1]*a.sprite.scale.y;if(Math.abs(bottom-.025)>1e-5)throw Error('Foot anchor drift');
+   if(a.flow?.active){
+    const u=a.flow.u,root=[.5,(.025+1.4)/4.6],tr=u.motionTransformA.value;
+    if(Math.abs(root[0]*tr.x+tr.z-box.pivot[0])>1e-5||Math.abs(root[1]*tr.y+tr.w-(1-box.pivot[1]))>1e-5)throw Error('Interpolated root anchor drift');
+   }else{const bottom=a.sprite.position.y+a.sprite.scale.y/2-box.pivot[1]*a.sprite.scale.y;if(Math.abs(bottom-.025)>1e-5)throw Error('Foot anchor drift');}
    seen.add(d+':'+f);frames++;
   }
   const before=JSON.stringify(a.motion);animateActor(a,body,time);if(JSON.stringify(a.motion)!==before)throw Error('Pause changed pose');

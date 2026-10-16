@@ -1,8 +1,10 @@
 # ELDERFALL · 잊힌 성역
 
-**플레이:** https://ureka01-creator.github.io/mmorpgboard/?release=2.10
+**플레이:** https://ureka01-creator.github.io/mmorpgboard/?release=2.11
 
-2.10은 사용자가 승인한 2.8의 방향별 캐릭터 원화를 유지합니다. 얼굴·갑옷·비례·그림체와 모든 PNG 원본을 변경하지 않았습니다. 별도 훈련실 주소도 같은 게임으로 복구했으며, 단순한 3D 캐릭터는 더 이상 플레이 화면에 사용하지 않습니다. 횃불과의 거리에 따른 약한 색조만 더해 배경과의 색감 차이를 줄입니다. 이동·공격 원화 사이의 자세 차이는 남아 있으며, 이번 복구를 모션 완성으로 간주하지 않습니다.
+2.11은 승인된 2.8 캐릭터 PNG 10개와 자세 메타데이터를 그대로 사용하면서, 원화 사이의 움직임을 측정한 수치 데이터로 보행·망토·공격을 연결합니다. 두 반투명 그림을 겹치는 방식 대신 한 원화의 표시 위치를 움직이며, 검은 손잡이와 칼끝을 따로 추적해 회전합니다. 실제 피해가 발생하는 순간에는 원래의 명중 그림을 표시합니다. 기본 주소와 기존 훈련실 주소는 같은 캐릭터와 조작을 제공합니다. [2.11 동작 및 검증 기록](docs/motion-v2.11.md)
+
+수치 보간이 원화 자체의 자세 차이를 모두 해결하는 것은 아닙니다. 망토는 원화에 포함된 형태를 연결하며 별도의 천 물리 시뮬레이션은 아닙니다.
 
 ## 게임
 
@@ -39,7 +41,9 @@ python -m http.server 8020 --bind 127.0.0.1
 ```sh
 node scripts/verify_arena.mjs
 node scripts/verify_motion.mjs
+node scripts/verify_sprite_flow.mjs
 python scripts/verify_motion_browser.py
+python scripts/verify_sprite_flow_browser.py
 python scripts/verify_arena_browser.py
 ```
 
@@ -48,7 +52,8 @@ python scripts/verify_arena_browser.py
 - `arena-engine.mjs`: 연속 좌표, 충돌, 경로, 실시간 공격/회피와 적 행동.
 - `arena.js`: 고정 카메라, 터치/키보드 조작, 정지/재시작, 시뮬레이션과 연출 연결.
 - `arena-sprites.mjs`, `arena-sprite-motion.mjs`: 방향별 그림, 발 기준점, 이동 거리와 공격·회피 시점 연결.
-- `assets/sprites`: 새 RGBA 아트와 출처·영역 메타데이터.
+- `arena-sprite-flow.mjs`: 승인된 원화의 중간 동작·칼날 회전과 가림 영역 표시.
+- `assets/sprites`: RGBA 원화와 출처·영역 메타데이터, 수치 동작 데이터.
 - `arena-actors.mjs`, `arena-clips.mjs`, `arena-motion.mjs`: 이전 스킨과 자세 안내 렌더용 구현.
 - `arena-art.mjs`: 던전 구조, 생성 표면 맵, 재질·조명·초상 렌더.
 - `arena.css`, `index.html`: 화면을 가리지 않는 조작 UI.

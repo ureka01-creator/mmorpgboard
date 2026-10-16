@@ -7,7 +7,7 @@ SHOTS=Path(os.environ.get('ARENA_SHOTS',ROOT/'docs/screenshots'));SHOTS.mkdir(ex
 ARGS=['--no-sandbox','--enable-unsafe-swiftshader','--use-gl=angle','--use-angle=swiftshader']
 def load(page):
  page.goto(BASE,wait_until='networkidle');page.wait_for_function('window.arena?.renderer&&document.getElementById("enter").offsetWidth>0',timeout=60000)
- assert page.locator('meta[name="application-version"]').get_attribute('content')==os.environ.get('ARENA_VERSION','2.10')
+ assert page.locator('meta[name="application-version"]').get_attribute('content')==os.environ.get('ARENA_VERSION','2.11')
  page.click('#enter');page.wait_for_function('document.getElementById("loading").hidden')
 def tap_move(page,point):
  p=page.evaluate('(p)=>arena.projectFloor(p)',point);assert p['visible'];page.touchscreen.tap(p['x'],p['y'])

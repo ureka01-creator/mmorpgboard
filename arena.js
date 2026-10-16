@@ -1,12 +1,13 @@
 import * as THREE from 'three';
 import * as R from './arena-engine.mjs?v=2.8';
 import {createArtWorld,portrait} from './arena-art.mjs?v=2.8';
-import {createActor,animateActor,loadSpriteAssets} from './arena-sprites.mjs?v=2.10';
+import {createActor,animateActor,loadSpriteAssets} from './arena-sprites.mjs?v=2.11';
 async function setup(){
 const $=id=>document.getElementById(id),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const renderer=new THREE.WebGLRenderer({canvas:$('scene'),antialias:true,powerPreference:'high-performance'});
 let resolution=Math.min(devicePixelRatio,1.25);renderer.setPixelRatio(resolution);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
 const motionPack=await loadSpriteAssets();
+if(new URLSearchParams(location.search).get('motion')!=='legacy'){const {loadFlowAssets}=await import('./arena-sprite-flow.mjs?v=2.11');motionPack.flow=await loadFlowAssets();}
 const art=createArtWorld(renderer),scene=art.scene,hero=createActor(scene,true,motionPack),enemy=createActor(scene,false,motionPack),camera=new THREE.PerspectiveCamera(39,innerWidth/innerHeight,.1,80),clock=new THREE.Clock();
 const offset=new THREE.Vector3(4.8,14.7,8.7),cameraTarget=new THREE.Vector3(),raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2(),groundPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0),sparks=[],floaters=[],keys=new Set(),yaw=Math.atan2(offset.x,offset.z);
 let state=R.create(),started=false,paused=false,accumulator=0,attackHeld=false,attackQueued=false,dodgeQueued=false,joystick={x:0,y:0,id:null},destination=null,route=[],lastEvent=0,muted=false,audioContext,noticeTimer,resetWasPaused=false,lastFootstep=0,slowAverage=.016,lastResolutionChange=0,visualTime=0,pendingResultAt=null;
@@ -53,7 +54,7 @@ let tapStart=null;$('scene').addEventListener('pointerdown',e=>tapStart={x:e.cli
 window.addEventListener('keydown',e=>{if(e.target.isContentEditable||['INPUT','TEXTAREA'].includes(e.target.tagName))return;const key=e.key.toLowerCase();if(key===' '&&e.target instanceof HTMLButtonElement)return;if([' ','arrowup','arrowdown','arrowleft','arrowright','w','a','s','d','shift','escape','p'].includes(key))e.preventDefault();if(key==='escape'||key==='p'){if(!e.repeat&&!$('reset-dialog').open)pause(!paused);return;}if(!started||paused||$('reset-dialog').open)return;if(key==='shift'&&!e.repeat)queueDodge();keys.add(key);});window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>{clearInput();if(started)pause(true);});document.addEventListener('visibilitychange',()=>{if(document.hidden)pause(true);});
 $('pause').onclick=()=>pause(!paused);$('resume').onclick=()=>pause(false);$('sound').onclick=()=>{muted=!muted;$('sound').textContent=muted?'♩':'♪';$('sound').setAttribute('aria-pressed',String(muted));$('sound').setAttribute('aria-label',muted?'소리 켜기':'소리 끄기');if(!muted)initSound();};
 $('reset').onclick=()=>{resetWasPaused=paused;paused=true;clearInput();$('reset-dialog').showModal();};$('reset-cancel').onclick=()=>$('reset-dialog').close();$('reset-dialog').addEventListener('close',()=>{paused=resetWasPaused;});$('reset-confirm').onclick=()=>{resetWasPaused=false;$('reset-dialog').close();reset();};$('again').onclick=reset;
-reset();frame();$('hero-portrait').src=portrait(renderer,scene,hero);$('enter').hidden=false;$('load-copy').textContent='문 너머에서 수호병의 검이 울립니다.';$('enter').onclick=()=>{initSound();started=true;$('loading').classList.add('exiting');setTimeout(()=>$('loading').hidden=true,500);$('hud').hidden=$('controls').hidden=false;clock.getDelta();};
+reset();if(hero.flow)await renderer.compileAsync(scene,camera);frame();$('hero-portrait').src=portrait(renderer,scene,hero);$('enter').hidden=false;$('load-copy').textContent='문 너머에서 수호병의 검이 울립니다.';$('enter').onclick=()=>{initSound();started=true;$('loading').classList.add('exiting');setTimeout(()=>$('loading').hidden=true,500);$('hud').hidden=$('controls').hidden=false;clock.getDelta();};
 window.arena={get state(){return state;},get phase(){return !started?'loading':paused?'paused':state.status;},get hero(){return hero;},get enemy(){return enemy;},get renderer(){return renderer;},get camera(){return camera;},get started(){return started;},get paused(){return paused;},get destination(){return destination;},get input(){return {joystick:{...joystick},attackHeld};},projectFloor(p){return project(new THREE.Vector3(p.x,.01,p.z));},projectEnemy(){return project(enemy.group.position.clone().add(new THREE.Vector3(0,1,0)));}};
 
 }
