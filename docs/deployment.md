@@ -1,6 +1,6 @@
 # 3D 장면 배포
 
-공개 주소: https://ureka01-creator.github.io/mmorpgboard/?release=2.11
+공개 주소: https://ureka01-creator.github.io/mmorpgboard/?release=2.12
 
 HTML/CSS, ES 모듈과 로컬 Three.js와 투명 캐릭터 그림/던전 메시으로 실행되는 정적 앱이다. 소스는 `main`, GitHub Pages 공개 파일은 실행 HTML/CSS, arena 엔진·아트·스프라이트 모듈, `assets/sprites`의 PNG 10개와 JSON·출처 기록, `.nojekyll`, 문장 아이콘과 `vendor/three`이다. 이전 스킨/동작 자산과 docs 안내 그림은 실행 사이트에 올리지 않는다.
 
@@ -23,8 +23,10 @@ python scripts/verify_public.py
 실제 공개 HTTPS 파일의 SHA256을 소스와 비교하고 동일 파일로 브라우저의 3D 직접 이동·회피·실시간 검격과 승리을 확인한다. 시스템 인증서로 HTTPS를 검증한 응답을 Chromium에 전달하며 TLS 검증을 끄지 않는다. HTML의 entry 파일에는 버전 query를 붙여 이전 앱 캐시와 구분한다.
 
 
-2.10에서는 `/`와 `/study.html` 모두 같은 승인된 2.8 캐릭터를 사용한다. 오래된 훈련실 링크도 캐릭터가 바뀌지 않도록 동일 HTML을 제공하고, 예전 컨트롤러 모듈 주소는 현재 컨트롤러를 불러오는 호환 진입점으로 유지한다. 2.9의 모델·동작 파일·미리보기 영상은 공개 목록에서 제외하고 소스 Git 이력에만 보관한다. 현재 공개 파일은 `.nojekyll`을 제외하고 29개다.
+2.10에서는 `/`와 `/study.html` 모두 같은 승인된 2.8 캐릭터를 사용한다. 오래된 훈련실 링크도 캐릭터가 바뀌지 않도록 동일 HTML을 제공하고, 예전 컨트롤러 모듈 주소는 현재 컨트롤러를 불러오는 호환 진입점으로 유지한다. 2.9의 모델·동작 파일·미리보기 영상은 공개 목록에서 제외하고 소스 Git 이력에만 보관한다. 2.10의 공개 파일은 `.nojekyll`을 제외하고 29개였다.
 
 `python scripts/verify_approved_art.py`는 승인된 2.8 커밋과 PNG/자세 데이터가 동일한지 확인하고 두 진입점에서 실제 그림 캐릭터 사용, GLB 요청 없음, 제한된 횃불 색조를 검사한다.
 
 2.11은 기존 승인 원화에 `arena-sprite-flow.mjs`, `assets/sprites/motion/flow.json`, `assets/sprites/motion/flow.bin.gz`를 추가한다. 공개 파일은 `.nojekyll` 제외 32개다. `verify_public.py`는 두 진입점에 보간 데이터가 실제로 로드되는지도 확인한다. 동작 제작·검증은 [2.11 기록](motion-v2.11.md)을 참고한다.
+
+2.12는 같은 32개 공개 파일 구성으로 배포한다. 원본 PNG/warrior.json은 유지하며 모듈과 수치 마스크를 갱신한다. 변경 내용과 추가 공격/보행 회귀 검사는 [2.12 QA 기록](motion-v2.12.md)에 남긴다.

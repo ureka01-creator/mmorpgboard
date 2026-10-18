@@ -1,12 +1,12 @@
 """Measure actual GPU continuity, key-pose fidelity and damage-aligned interpolation."""
 from playwright.sync_api import sync_playwright
-from verify_arena_browser import ARGS,load
+from verify_arena_browser import ARGS,load_review as load
 with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS);page=browser.new_page(viewport={'width':1024,'height':768});errors=[]
  page.on('pageerror',lambda e:errors.append(str(e)));page.on('console',lambda m:errors.append(m.text)if m.type=='error'else None)
- load(page);page.click('#pause')
+ load(page)
  result=page.evaluate('''async()=>{
- const T=await import('three'),{createActor,animateActor,loadSpriteAssets}=await import('./arena-sprites.mjs?v=2.11'),assets=await loadSpriteAssets();
+ const T=await import('three'),{createActor,animateActor,loadSpriteAssets}=await import('./arena-sprites.mjs?v=2.12'),assets=await loadSpriteAssets();
  const scene=new T.Scene(),actor=createActor(scene,true,assets),legacy=createActor(scene,true,{...assets,flow:null});actor.shadow.visible=legacy.shadow.visible=false;
  const renderer=arena.renderer,target=new T.WebGLRenderTarget(128,128),camera=new T.OrthographicCamera(-1.7,1.7,1.7,-1.7,.1,80);camera.position.set(4.8,15.8,8.7);camera.lookAt(0,1,0);
  let time=10;const pixels=()=>{renderer.setRenderTarget(target);renderer.setClearColor(0,0);renderer.render(scene,camera);const p=new Uint8Array(128*128*4);renderer.readRenderTargetPixels(target,0,0,128,128,p);return p;};
@@ -50,6 +50,10 @@ with sync_playwright() as pw:
  if(excessFragments>5)throw Error('Blade removal detached body fragments '+excessFragments);
  // Pausing and reduced temporal advancement must leave all render uniforms unchanged.
  const before=actor.flow.u.motionMix.value;animateActor(actor,actor.motion.body,actor.motion.time);if(actor.flow.u.motionMix.value!==before)throw Error('Frozen interpolation changed');
+ // Returning from a translucent hurt pose must not leave sword/head one frame dim.
+ const hurt={...footBody,mode:'hurt',elapsed:.03};animateActor(actor,hurt,time+=1);
+ const attack={...footBody,mode:'attack',elapsed:.05};animateActor(actor,attack,time+=.01);
+ if(actor.flow.blade.material.opacity!==actor.sprite.material.opacity||actor.flow.head.material.opacity!==actor.sprite.material.opacity)throw Error('Stale layered opacity after hurt');
  renderer.setRenderTarget(null);target.dispose();return {directions:8,walkPairs:ratios.length,medianSwitchRatio:median,worstKeyPixelError:worstKey,excessBodyFragmentPixels:excessFragments};
  }''')
  assert not errors,errors;print('PASS GPU interpolation / key-pose fidelity / contact / freeze',result,flush=True);browser.close()

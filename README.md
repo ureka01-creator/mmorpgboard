@@ -1,8 +1,8 @@
 # ELDERFALL · 잊힌 성역
 
-**플레이:** https://ureka01-creator.github.io/mmorpgboard/?release=2.11
+**플레이:** https://ureka01-creator.github.io/mmorpgboard/?release=2.12
 
-2.11은 승인된 2.8 캐릭터 PNG 10개와 자세 메타데이터를 그대로 사용하면서, 원화 사이의 움직임을 측정한 수치 데이터로 보행·망토·공격을 연결합니다. 두 반투명 그림을 겹치는 방식 대신 한 원화의 표시 위치를 움직이며, 검은 손잡이와 칼끝을 따로 추적해 회전합니다. 실제 피해가 발생하는 순간에는 원래의 명중 그림을 표시합니다. 기본 주소와 기존 훈련실 주소는 같은 캐릭터와 조작을 제공합니다. [2.11 동작 및 검증 기록](docs/motion-v2.11.md)
+2.12는 승인된 2.8 캐릭터 PNG 10개와 자세 메타데이터를 유지하면서 보행·망토의 속도 연결과 공격의 준비·복귀를 다듬습니다. 검이 비운 자리에 다른 자세의 장화가 잘못 복사되는 현상, 어두운 칼날 대신 갑옷을 추적하는 현상을 수정합니다. 실제 피해 시점에는 원래 명중 그림을 표시하며 기본 주소와 훈련실 주소는 같은 캐릭터·조작을 제공합니다. [2.12 QA 및 수정 기록](docs/motion-v2.12.md)
 
 수치 보간이 원화 자체의 자세 차이를 모두 해결하는 것은 아닙니다. 망토는 원화에 포함된 형태를 연결하며 별도의 천 물리 시뮬레이션은 아닙니다.
 
@@ -44,6 +44,8 @@ node scripts/verify_motion.mjs
 node scripts/verify_sprite_flow.mjs
 python scripts/verify_motion_browser.py
 python scripts/verify_sprite_flow_browser.py
+python scripts/verify_attack_silhouette.py
+python scripts/verify_gait_continuity.py
 python scripts/verify_arena_browser.py
 ```
 

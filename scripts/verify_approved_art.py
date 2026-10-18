@@ -20,7 +20,7 @@ with sync_playwright() as pw:
   assert not any('.glb' in url or 'arena-study-actors' in url for url in requests),requests
   # Same original idle image at both positions; only a bounded tint changes.
   result=page.evaluate('''async()=>{
-   const {animateActor}=await import('./arena-sprites.mjs?v=2.11'),a=arena.hero;
+   const {animateActor}=await import('./arena-sprites.mjs?v=2.12'),a=arena.hero;
    const b={x:0,z:0,yaw:0,mode:'idle',elapsed:0,travel:0};animateActor(a,b,0);
    const center=a.sprite.material.color.clone(),frame=a.motion.frame,atlas=a.motion.atlas;
    b.x=-4;b.z=-2;animateActor(a,b,1);const near=a.sprite.material.color.clone();
