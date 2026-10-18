@@ -57,5 +57,10 @@ export function motionSegment(body,phase,direction){
  else keys=[[0,0],[.105,1],[.19,2],[.235,3],[.26,4],[.285,4],[.43,5],[.62,6]];
  let j=1;while(j<keys.length&&t>=keys[j][0])j++;
  if(j>=keys.length)return {a:key('attack',keys.at(-1)[1]),b:key('attack',keys.at(-1)[1]),t:0};
- const [start,a]=keys[j-1],[end,b]=keys[j];return {a:key('attack',a),b:key('attack',b),t:(t-start)/(end-start)};
+ const [start,a]=keys[j-1],[end,b]=keys[j];let mix=(t-start)/(end-start);
+ // Leave the resting guard at zero speed and settle into it without a hard
+ // stop. Interior strike segments and the engine's exact contact stay intact.
+ if(j===1&&(body.mode==='windup'||!enemy))mix=mix*mix*(2-mix);
+ if(j===keys.length-1&&body.mode==='attack')mix=mix+mix*mix-mix*mix*mix;
+ return {a:key('attack',a),b:key('attack',b),t:mix};
 }

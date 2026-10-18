@@ -1,6 +1,6 @@
-import {enableFlow,applyFlow} from './arena-sprite-flow.mjs?v=2.11';
+import {enableFlow,applyFlow} from './arena-sprite-flow.mjs?v=2.12';
 import * as THREE from 'three';
-import {facing,spritePose} from './arena-sprite-motion.mjs?v=2.11';
+import {facing,spritePose} from './arena-sprite-motion.mjs?v=2.12';
 const VIEW_YAW=Math.atan2(4.8,8.7),VIEW_COS=Math.hypot(4.8,8.7)/Math.hypot(4.8,14.7,8.7),FLOOR=.025;
 let pending,shadowTexture;
 const poseGeometry=new WeakMap();
@@ -89,6 +89,7 @@ export function animateActor(actor,body,time,reduced=false){
  if(actor.flow)actor.group.renderOrder=100+body.x*Math.sin(VIEW_YAW)+body.z*Math.cos(VIEW_YAW);
  actor.group.position.set(body.x,0,body.z);actor.pose=body.mode;actor.sprite.material.opacity=body.mode==='hurt'?.65+.35*Math.min(1,(body.elapsed||0)/.30):1;
  if(body.mode==='dead'){m.deadAt??=time;actor.sprite.material.opacity=Math.max(0,1-(time-m.deadAt)/.8);actor.shadow.material.opacity=.26*actor.sprite.material.opacity;}else{m.deadAt=null;actor.shadow.material.opacity=body.mode==='dodge'?.16:.26;}
+ if(actor.flow){actor.flow.blade.material.opacity=actor.flow.head.material.opacity=actor.sprite.material.opacity;}
  Object.assign(m,{time,travel:body.travel||0,yaw:body.yaw,bodyMode:body.mode,hits:body.hits||0,clip:pose.clip,frame:pose.frame,atlas:frame.atlas});
 }
 export function spritePortrait(actor){
