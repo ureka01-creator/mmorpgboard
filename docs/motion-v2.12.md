@@ -45,3 +45,11 @@ ARENA_ORIGIN=http://127.0.0.1:8037/ python scripts/verify_approved_art.py
 - 공격 248개 시점에서 추가 분리 픽셀 최대는 14였다. 수정 전 발견한 장화 복사 조각은 최대 66픽셀이었다. 이 서로 다른 수치를 품질 점수나 모든 조각의 완전 제거로 해석하지 않는다.
 - 실제 키보드/탭 이동·충돌·멀티터치 공격·이동 중 회피·정지·초기화·5회 명중 승리와 1024×768, 768×1024, 390×844 화면 검사를 통과했다.
 - 32개 바닥 깊이 사례, 기둥 가림, UV 독립성, 첫/마지막 타격, 적 준비 연결, 잘못된 데이터 재시도 UI 검사를 통과했다.
+
+## 배포 확인
+
+실행 소스 `a040108`, gh-pages `11ca5a4bf1a1d2ce71da018dbd10ae4481e3b5d3`, GitHub Pages 작업 [39131902440](https://github.com/ureka01-creator/mmorpgboard/actions/runs/39131902440)의 배포가 성공했다. 공개 HTTPS 파일 32개의 SHA256과 JavaScript MIME이 검증 소스와 일치했다. 압축 데이터는 Content-Type application/gzip, Content-Encoding 없음, gzip 헤더 1f8b로 전달되는 것을 확인했다.
+
+`python scripts/verify_public.py`로 기본 주소와 `study.html` 모두에서 보간 데이터 로드, 실제 키보드 이동, 회피, 5회 명중 승리와 결과 화면을 확인했다. 공개 파일 32개 검증과 양쪽 실제 전투 검사가 모두 통과했다.
+
+공개 플레이: https://ureka01-creator.github.io/mmorpgboard/?release=2.12
