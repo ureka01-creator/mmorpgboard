@@ -2,6 +2,8 @@
 
 **플레이:** https://ureka01-creator.github.io/mmorpgboard/?release=2.14
 
+**원본 걷기·검 공격 리소스 비교:** https://ureka01-creator.github.io/mmorpgboard/motion-resources.html?release=1 — 확보한 CC0 애니메이션의 원본 재생과 [8방향 제작 기준](docs/animation-resources/README.md). 게임 캐릭터 교체 화면은 아닙니다.
+
 2.14는 공격 중간의 찌르기와 두 번째 검 들기 자세를 제거한다. 캐릭터 원화와 전투 판정은 유지한다. 원작 Nox에서 확보한 자료와 아직 다른 부분은 [검 공격 대조 기록](docs/nox-attack-reference.md)에 구분해 남긴다.
 
 2.13은 승인된 캐릭터 원화를 유지하면서 표시 프레임마다 위치·보행을 갱신하고, 이동 시작·정지·공격 진입을 연결합니다. 회피는 같은 기사의 발동작을 이어받는 짧은 대시 형태로 표시하며 기존 속도·무적·재사용 시간은 유지합니다. 첫 방향 전환에 필요한 그림과 셰이더는 시작 전에 준비하고 고정 건축물의 그림자는 재사용합니다. [2.13 반복 시뮬레이션·검증 기록](docs/motion-v2.13.md)

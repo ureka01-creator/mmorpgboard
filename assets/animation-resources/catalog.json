@@ -1,0 +1,611 @@
+{
+  "schema": 1,
+  "purpose": "Native source animation evaluation; not replacement game character art",
+  "sources": {
+    "quaternius": {
+      "author": "Quaternius",
+      "page": "https://quaternius.itch.io/universal-animation-library",
+      "mirror": "https://github.com/J-Ponzo/gltf-universal-animation-library",
+      "commit": "e24c23cf2a1323488a3faa226ea7ea21f644b73e",
+      "license": "CC0-1.0"
+    },
+    "kaykit": {
+      "author": "Kay Lousberg",
+      "page": "https://kaylousberg.itch.io/kaykit-character-animations",
+      "mirror": "https://github.com/GeorgeQLe/assets-kaykit-3d-characters",
+      "commit": "af08a62d3669370ec4636ae6314b38cdcd5dd759",
+      "license": "CC0-1.0",
+      "licenseFile": "assets/animation-resources/kaykit/KayKit-CC0-License.txt"
+    }
+  },
+  "sha256": {
+    "assets/animation-resources/quaternius/AnimationLibrary_Godot_Standard.gltf": "0ff075c7ad6855c5c2c37a171592ee8f0d6ab2f58259e2be77a9b63dd8027765",
+    "assets/animation-resources/quaternius/AnimationLibrary_Godot_Standard.bin": "6e65377d81558333c4093dbb144a48fd19019343d82b1a3a7992a98ec0e0543c",
+    "assets/animation-resources/quaternius/LICENSE": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+    "assets/animation-resources/kaykit/Rig_Medium_MovementBasic.glb": "11422afd50abf7e8c92ea107e2e0bc94abd38023d6d15f55ad580347efbfa29e",
+    "assets/animation-resources/kaykit/Rig_Medium_CombatMelee.glb": "c55e6ec1c79e83ae21d46fe1cd921c1b64be8b9a524a24517e51c6ba99231459",
+    "assets/animation-resources/kaykit/KayKit-CC0-License.txt": "9f02357d1a4fdd7c6ed69eac5f4bf2171e34971c89d60e905af10a8db6bcc6e5"
+  },
+  "packs": [
+    {
+      "id": "quaternius",
+      "file": "assets/animation-resources/quaternius/AnimationLibrary_Godot_Standard.gltf",
+      "meshes": 1,
+      "skins": 1,
+      "joints": 53,
+      "clips": [
+        {
+          "name": "A_TPose",
+          "duration": 0.166667,
+          "channels": 159,
+          "keyTimes": 318,
+          "targetNodes": 53
+        },
+        {
+          "name": "Crouch_Fwd_Loop",
+          "duration": 2.0,
+          "channels": 159,
+          "keyTimes": 1164,
+          "targetNodes": 53
+        },
+        {
+          "name": "Crouch_Idle_Loop",
+          "duration": 2.916667,
+          "channels": 159,
+          "keyTimes": 3423,
+          "targetNodes": 53
+        },
+        {
+          "name": "Dance_Loop",
+          "duration": 1.0,
+          "channels": 159,
+          "keyTimes": 778,
+          "targetNodes": 53
+        },
+        {
+          "name": "Death01",
+          "duration": 2.375,
+          "channels": 159,
+          "keyTimes": 3174,
+          "targetNodes": 53
+        },
+        {
+          "name": "Driving_Loop",
+          "duration": 1.666667,
+          "channels": 159,
+          "keyTimes": 747,
+          "targetNodes": 53
+        },
+        {
+          "name": "Fixing_Kneeling",
+          "duration": 5.166667,
+          "channels": 159,
+          "keyTimes": 6591,
+          "targetNodes": 53
+        },
+        {
+          "name": "Hit_Chest",
+          "duration": 0.333333,
+          "channels": 159,
+          "keyTimes": 640,
+          "targetNodes": 53
+        },
+        {
+          "name": "Hit_Head",
+          "duration": 0.416667,
+          "channels": 159,
+          "keyTimes": 723,
+          "targetNodes": 53
+        },
+        {
+          "name": "Idle_Loop",
+          "duration": 2.5,
+          "channels": 159,
+          "keyTimes": 1380,
+          "targetNodes": 53
+        },
+        {
+          "name": "Idle_Talking_Loop",
+          "duration": 2.916667,
+          "channels": 159,
+          "keyTimes": 3216,
+          "targetNodes": 53
+        },
+        {
+          "name": "Idle_Torch_Loop",
+          "duration": 1.25,
+          "channels": 159,
+          "keyTimes": 869,
+          "targetNodes": 53
+        },
+        {
+          "name": "Interact",
+          "duration": 2.0,
+          "channels": 159,
+          "keyTimes": 1258,
+          "targetNodes": 53
+        },
+        {
+          "name": "Jog_Fwd_Loop",
+          "duration": 0.916667,
+          "channels": 159,
+          "keyTimes": 738,
+          "targetNodes": 53
+        },
+        {
+          "name": "Jump_Land",
+          "duration": 1.25,
+          "channels": 159,
+          "keyTimes": 1768,
+          "targetNodes": 53
+        },
+        {
+          "name": "Jump_Loop",
+          "duration": 2.5,
+          "channels": 159,
+          "keyTimes": 1321,
+          "targetNodes": 53
+        },
+        {
+          "name": "Jump_Start",
+          "duration": 1.333333,
+          "channels": 159,
+          "keyTimes": 1806,
+          "targetNodes": 53
+        },
+        {
+          "name": "PickUp_Table",
+          "duration": 0.833333,
+          "channels": 159,
+          "keyTimes": 888,
+          "targetNodes": 53
+        },
+        {
+          "name": "Pistol_Aim_Down",
+          "duration": 0.166667,
+          "channels": 159,
+          "keyTimes": 318,
+          "targetNodes": 53
+        },
+        {
+          "name": "Pistol_Aim_Neutral",
+          "duration": 0.166667,
+          "channels": 159,
+          "keyTimes": 318,
+          "targetNodes": 53
+        },
+        {
+          "name": "Pistol_Aim_Up",
+          "duration": 0.166667,
+          "channels": 159,
+          "keyTimes": 318,
+          "targetNodes": 53
+        },
+        {
+          "name": "Pistol_Idle_Loop",
+          "duration": 1.666667,
+          "channels": 159,
+          "keyTimes": 708,
+          "targetNodes": 53
+        },
+        {
+          "name": "Pistol_Reload",
+          "duration": 1.666667,
+          "channels": 159,
+          "keyTimes": 1683,
+          "targetNodes": 53
+        },
+        {
+          "name": "Pistol_Shoot",
+          "duration": 0.625,
+          "channels": 159,
+          "keyTimes": 430,
+          "targetNodes": 53
+        },
+        {
+          "name": "Punch_Cross",
+          "duration": 1.0,
+          "channels": 159,
+          "keyTimes": 755,
+          "targetNodes": 53
+        },
+        {
+          "name": "Punch_Enter",
+          "duration": 0.833333,
+          "channels": 159,
+          "keyTimes": 679,
+          "targetNodes": 53
+        },
+        {
+          "name": "Punch_Jab",
+          "duration": 0.833333,
+          "channels": 159,
+          "keyTimes": 641,
+          "targetNodes": 53
+        },
+        {
+          "name": "Push_Loop",
+          "duration": 2.666667,
+          "channels": 159,
+          "keyTimes": 1515,
+          "targetNodes": 53
+        },
+        {
+          "name": "Roll",
+          "duration": 1.458333,
+          "channels": 159,
+          "keyTimes": 2018,
+          "targetNodes": 53
+        },
+        {
+          "name": "Roll_RM",
+          "duration": 1.458333,
+          "channels": 159,
+          "keyTimes": 2052,
+          "targetNodes": 53
+        },
+        {
+          "name": "Sitting_Enter",
+          "duration": 1.291667,
+          "channels": 159,
+          "keyTimes": 1788,
+          "targetNodes": 53
+        },
+        {
+          "name": "Sitting_Exit",
+          "duration": 1.0,
+          "channels": 159,
+          "keyTimes": 1445,
+          "targetNodes": 53
+        },
+        {
+          "name": "Sitting_Idle_Loop",
+          "duration": 1.666667,
+          "channels": 159,
+          "keyTimes": 1332,
+          "targetNodes": 53
+        },
+        {
+          "name": "Sitting_Talking_Loop",
+          "duration": 2.916667,
+          "channels": 159,
+          "keyTimes": 3009,
+          "targetNodes": 53
+        },
+        {
+          "name": "Spell_Simple_Enter",
+          "duration": 0.5,
+          "channels": 159,
+          "keyTimes": 846,
+          "targetNodes": 53
+        },
+        {
+          "name": "Spell_Simple_Exit",
+          "duration": 0.416667,
+          "channels": 159,
+          "keyTimes": 750,
+          "targetNodes": 53
+        },
+        {
+          "name": "Spell_Simple_Idle_Loop",
+          "duration": 2.083333,
+          "channels": 159,
+          "keyTimes": 1200,
+          "targetNodes": 53
+        },
+        {
+          "name": "Spell_Simple_Shoot",
+          "duration": 0.5,
+          "channels": 159,
+          "keyTimes": 747,
+          "targetNodes": 53
+        },
+        {
+          "name": "Sprint_Loop",
+          "duration": 0.666667,
+          "channels": 159,
+          "keyTimes": 618,
+          "targetNodes": 53
+        },
+        {
+          "name": "Swim_Fwd_Loop",
+          "duration": 1.333333,
+          "channels": 159,
+          "keyTimes": 938,
+          "targetNodes": 53
+        },
+        {
+          "name": "Swim_Idle_Loop",
+          "duration": 3.333333,
+          "channels": 159,
+          "keyTimes": 3794,
+          "targetNodes": 53
+        },
+        {
+          "name": "Sword_Attack",
+          "duration": 1.5,
+          "channels": 159,
+          "keyTimes": 1088,
+          "targetNodes": 53
+        },
+        {
+          "name": "Sword_Attack_RM",
+          "duration": 1.5,
+          "channels": 159,
+          "keyTimes": 1123,
+          "targetNodes": 53
+        },
+        {
+          "name": "Sword_Idle",
+          "duration": 1.666667,
+          "channels": 159,
+          "keyTimes": 1488,
+          "targetNodes": 53
+        },
+        {
+          "name": "Walk_Formal_Loop",
+          "duration": 1.333333,
+          "channels": 159,
+          "keyTimes": 938,
+          "targetNodes": 53
+        },
+        {
+          "name": "Walk_Loop",
+          "duration": 1.333333,
+          "channels": 159,
+          "keyTimes": 1000,
+          "targetNodes": 53
+        }
+      ]
+    },
+    {
+      "id": "kaykit-movement",
+      "file": "assets/animation-resources/kaykit/Rig_Medium_MovementBasic.glb",
+      "meshes": 6,
+      "skins": 1,
+      "joints": 23,
+      "clips": [
+        {
+          "name": "Jump_Full_Long",
+          "duration": 2.333333,
+          "channels": 69,
+          "keyTimes": 1518,
+          "targetNodes": 23
+        },
+        {
+          "name": "Jump_Full_Short",
+          "duration": 1.166667,
+          "channels": 69,
+          "keyTimes": 784,
+          "targetNodes": 23
+        },
+        {
+          "name": "Jump_Idle",
+          "duration": 1.066667,
+          "channels": 69,
+          "keyTimes": 696,
+          "targetNodes": 23
+        },
+        {
+          "name": "Jump_Land",
+          "duration": 0.666667,
+          "channels": 69,
+          "keyTimes": 499,
+          "targetNodes": 23
+        },
+        {
+          "name": "Jump_Start",
+          "duration": 0.6,
+          "channels": 69,
+          "keyTimes": 427,
+          "targetNodes": 23
+        },
+        {
+          "name": "Running_A",
+          "duration": 0.8,
+          "channels": 68,
+          "keyTimes": 665,
+          "targetNodes": 23
+        },
+        {
+          "name": "Running_B",
+          "duration": 0.8,
+          "channels": 69,
+          "keyTimes": 713,
+          "targetNodes": 23
+        },
+        {
+          "name": "T-Pose",
+          "duration": 0.0,
+          "channels": 69,
+          "keyTimes": 69,
+          "targetNodes": 23
+        },
+        {
+          "name": "Walking_A",
+          "duration": 1.066667,
+          "channels": 69,
+          "keyTimes": 727,
+          "targetNodes": 23
+        },
+        {
+          "name": "Walking_B",
+          "duration": 1.066667,
+          "channels": 69,
+          "keyTimes": 758,
+          "targetNodes": 23
+        },
+        {
+          "name": "Walking_C",
+          "duration": 1.6,
+          "channels": 65,
+          "keyTimes": 976,
+          "targetNodes": 23
+        }
+      ]
+    },
+    {
+      "id": "kaykit-melee",
+      "file": "assets/animation-resources/kaykit/Rig_Medium_CombatMelee.glb",
+      "meshes": 6,
+      "skins": 1,
+      "joints": 23,
+      "clips": [
+        {
+          "name": "Melee_1H_Attack_Chop",
+          "duration": 1.066667,
+          "channels": 69,
+          "keyTimes": 758,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_1H_Attack_Jump_Chop",
+          "duration": 1.333333,
+          "channels": 69,
+          "keyTimes": 996,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_1H_Attack_Slice_Diagonal",
+          "duration": 1.0,
+          "channels": 69,
+          "keyTimes": 747,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_1H_Attack_Slice_Horizontal",
+          "duration": 1.366667,
+          "channels": 69,
+          "keyTimes": 898,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_1H_Attack_Stab",
+          "duration": 1.6,
+          "channels": 69,
+          "keyTimes": 1078,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_2H_Attack_Chop",
+          "duration": 1.633333,
+          "channels": 55,
+          "keyTimes": 1214,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_2H_Attack_Slice",
+          "duration": 1.1,
+          "channels": 52,
+          "keyTimes": 712,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_2H_Attack_Spin",
+          "duration": 2.4,
+          "channels": 55,
+          "keyTimes": 1814,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_2H_Attack_Spinning",
+          "duration": 0.666667,
+          "channels": 51,
+          "keyTimes": 463,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_2H_Attack_Stab",
+          "duration": 1.6,
+          "channels": 53,
+          "keyTimes": 1093,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_2H_Idle",
+          "duration": 1.066667,
+          "channels": 53,
+          "keyTimes": 633,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_Block",
+          "duration": 1.066667,
+          "channels": 69,
+          "keyTimes": 820,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_Block_Attack",
+          "duration": 1.066667,
+          "channels": 69,
+          "keyTimes": 789,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_Block_Hit",
+          "duration": 1.066667,
+          "channels": 69,
+          "keyTimes": 727,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_Blocking",
+          "duration": 1.066667,
+          "channels": 69,
+          "keyTimes": 696,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_Dualwield_Attack_Chop",
+          "duration": 1.266667,
+          "channels": 69,
+          "keyTimes": 952,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_Dualwield_Attack_Slice",
+          "duration": 1.166667,
+          "channels": 52,
+          "keyTimes": 818,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_Dualwield_Attack_Stab",
+          "duration": 1.6,
+          "channels": 54,
+          "keyTimes": 1189,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_Unarmed_Attack_Kick",
+          "duration": 0.933333,
+          "channels": 69,
+          "keyTimes": 759,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_Unarmed_Attack_Punch_A",
+          "duration": 1.166667,
+          "channels": 69,
+          "keyTimes": 818,
+          "targetNodes": 23
+        },
+        {
+          "name": "Melee_Unarmed_Idle",
+          "duration": 1.066667,
+          "channels": 69,
+          "keyTimes": 634,
+          "targetNodes": 23
+        },
+        {
+          "name": "T-Pose",
+          "duration": 0.0,
+          "channels": 69,
+          "keyTimes": 69,
+          "targetNodes": 23
+        }
+      ]
+    }
+  ]
+}

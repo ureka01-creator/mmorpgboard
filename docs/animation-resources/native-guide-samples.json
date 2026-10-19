@@ -1,0 +1,869 @@
+{
+  "method": "Original GLTFLoader and AnimationMixer; only outer display yaw/scale and camera; no IK/retarget/hand poses",
+  "guides": [
+    {
+      "clip": "Walk_Loop",
+      "direction": 0,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "5d87bab8d2c6f2a87249b2cdd327c593809dfa655146b9545ef1eb5cd89f31fb"
+        },
+        {
+          "time": 0.11111111442248027,
+          "localBonePoseSha256": "8fba3a45b3743b78ecac2f830966498aaf796340d36d4d038e7881165479cb55"
+        },
+        {
+          "time": 0.22222222884496054,
+          "localBonePoseSha256": "8ec29f84daaaef36bce37d991f92e2c0618c2c5f19030ea3b2f52c60c6d8cace"
+        },
+        {
+          "time": 0.3333333432674408,
+          "localBonePoseSha256": "ea414f91a6ebddbe5e7cec44c7b3351fa0bd7bd65efe4d7e2d339e2b60f13fca"
+        },
+        {
+          "time": 0.4444444576899211,
+          "localBonePoseSha256": "43238f9939497e2c1b01857194432e9351e72851f8aac16640f3a1d531aebc92"
+        },
+        {
+          "time": 0.5555555721124014,
+          "localBonePoseSha256": "58e73b8387812e0b345eadb4002d709c841cf802dbe9cf310181ce2a20ac39da"
+        },
+        {
+          "time": 0.6666666865348816,
+          "localBonePoseSha256": "e58f0fd2d701c6c893cd7b5fdf28dead6e5b3042c6b627a12e6444cd954c5981"
+        },
+        {
+          "time": 0.7777778009573618,
+          "localBonePoseSha256": "51de5f362a5f5494b25a4dd54f795e93e838e826cb71852b3b165cbbd286033c"
+        },
+        {
+          "time": 0.8888889153798422,
+          "localBonePoseSha256": "6686bb051c5f85bd8628b5950592b1dcf3c8bce084f8697e979bd29ae124bf0b"
+        },
+        {
+          "time": 1.0000000298023224,
+          "localBonePoseSha256": "08e47bcc323ab4081a2fa861bce59f28272ae77d22718bcd778c5059f6fe59b3"
+        },
+        {
+          "time": 1.1111111442248027,
+          "localBonePoseSha256": "e9c41486307548898270bc9c841a322e6c8339fb57b1486d292f4d1c95bb0639"
+        },
+        {
+          "time": 1.2222222586472828,
+          "localBonePoseSha256": "48eae98b64c4c99349b2c5accbad5f0ed5a781da9954f1ea9b07a793f7152283"
+        }
+      ]
+    },
+    {
+      "clip": "Walk_Loop",
+      "direction": 1,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "5d87bab8d2c6f2a87249b2cdd327c593809dfa655146b9545ef1eb5cd89f31fb"
+        },
+        {
+          "time": 0.11111111442248027,
+          "localBonePoseSha256": "8fba3a45b3743b78ecac2f830966498aaf796340d36d4d038e7881165479cb55"
+        },
+        {
+          "time": 0.22222222884496054,
+          "localBonePoseSha256": "8ec29f84daaaef36bce37d991f92e2c0618c2c5f19030ea3b2f52c60c6d8cace"
+        },
+        {
+          "time": 0.3333333432674408,
+          "localBonePoseSha256": "ea414f91a6ebddbe5e7cec44c7b3351fa0bd7bd65efe4d7e2d339e2b60f13fca"
+        },
+        {
+          "time": 0.4444444576899211,
+          "localBonePoseSha256": "43238f9939497e2c1b01857194432e9351e72851f8aac16640f3a1d531aebc92"
+        },
+        {
+          "time": 0.5555555721124014,
+          "localBonePoseSha256": "58e73b8387812e0b345eadb4002d709c841cf802dbe9cf310181ce2a20ac39da"
+        },
+        {
+          "time": 0.6666666865348816,
+          "localBonePoseSha256": "e58f0fd2d701c6c893cd7b5fdf28dead6e5b3042c6b627a12e6444cd954c5981"
+        },
+        {
+          "time": 0.7777778009573618,
+          "localBonePoseSha256": "51de5f362a5f5494b25a4dd54f795e93e838e826cb71852b3b165cbbd286033c"
+        },
+        {
+          "time": 0.8888889153798422,
+          "localBonePoseSha256": "6686bb051c5f85bd8628b5950592b1dcf3c8bce084f8697e979bd29ae124bf0b"
+        },
+        {
+          "time": 1.0000000298023224,
+          "localBonePoseSha256": "08e47bcc323ab4081a2fa861bce59f28272ae77d22718bcd778c5059f6fe59b3"
+        },
+        {
+          "time": 1.1111111442248027,
+          "localBonePoseSha256": "e9c41486307548898270bc9c841a322e6c8339fb57b1486d292f4d1c95bb0639"
+        },
+        {
+          "time": 1.2222222586472828,
+          "localBonePoseSha256": "48eae98b64c4c99349b2c5accbad5f0ed5a781da9954f1ea9b07a793f7152283"
+        }
+      ]
+    },
+    {
+      "clip": "Walk_Loop",
+      "direction": 2,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "5d87bab8d2c6f2a87249b2cdd327c593809dfa655146b9545ef1eb5cd89f31fb"
+        },
+        {
+          "time": 0.11111111442248027,
+          "localBonePoseSha256": "8fba3a45b3743b78ecac2f830966498aaf796340d36d4d038e7881165479cb55"
+        },
+        {
+          "time": 0.22222222884496054,
+          "localBonePoseSha256": "8ec29f84daaaef36bce37d991f92e2c0618c2c5f19030ea3b2f52c60c6d8cace"
+        },
+        {
+          "time": 0.3333333432674408,
+          "localBonePoseSha256": "ea414f91a6ebddbe5e7cec44c7b3351fa0bd7bd65efe4d7e2d339e2b60f13fca"
+        },
+        {
+          "time": 0.4444444576899211,
+          "localBonePoseSha256": "43238f9939497e2c1b01857194432e9351e72851f8aac16640f3a1d531aebc92"
+        },
+        {
+          "time": 0.5555555721124014,
+          "localBonePoseSha256": "58e73b8387812e0b345eadb4002d709c841cf802dbe9cf310181ce2a20ac39da"
+        },
+        {
+          "time": 0.6666666865348816,
+          "localBonePoseSha256": "e58f0fd2d701c6c893cd7b5fdf28dead6e5b3042c6b627a12e6444cd954c5981"
+        },
+        {
+          "time": 0.7777778009573618,
+          "localBonePoseSha256": "51de5f362a5f5494b25a4dd54f795e93e838e826cb71852b3b165cbbd286033c"
+        },
+        {
+          "time": 0.8888889153798422,
+          "localBonePoseSha256": "6686bb051c5f85bd8628b5950592b1dcf3c8bce084f8697e979bd29ae124bf0b"
+        },
+        {
+          "time": 1.0000000298023224,
+          "localBonePoseSha256": "08e47bcc323ab4081a2fa861bce59f28272ae77d22718bcd778c5059f6fe59b3"
+        },
+        {
+          "time": 1.1111111442248027,
+          "localBonePoseSha256": "e9c41486307548898270bc9c841a322e6c8339fb57b1486d292f4d1c95bb0639"
+        },
+        {
+          "time": 1.2222222586472828,
+          "localBonePoseSha256": "48eae98b64c4c99349b2c5accbad5f0ed5a781da9954f1ea9b07a793f7152283"
+        }
+      ]
+    },
+    {
+      "clip": "Walk_Loop",
+      "direction": 3,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "5d87bab8d2c6f2a87249b2cdd327c593809dfa655146b9545ef1eb5cd89f31fb"
+        },
+        {
+          "time": 0.11111111442248027,
+          "localBonePoseSha256": "8fba3a45b3743b78ecac2f830966498aaf796340d36d4d038e7881165479cb55"
+        },
+        {
+          "time": 0.22222222884496054,
+          "localBonePoseSha256": "8ec29f84daaaef36bce37d991f92e2c0618c2c5f19030ea3b2f52c60c6d8cace"
+        },
+        {
+          "time": 0.3333333432674408,
+          "localBonePoseSha256": "ea414f91a6ebddbe5e7cec44c7b3351fa0bd7bd65efe4d7e2d339e2b60f13fca"
+        },
+        {
+          "time": 0.4444444576899211,
+          "localBonePoseSha256": "43238f9939497e2c1b01857194432e9351e72851f8aac16640f3a1d531aebc92"
+        },
+        {
+          "time": 0.5555555721124014,
+          "localBonePoseSha256": "58e73b8387812e0b345eadb4002d709c841cf802dbe9cf310181ce2a20ac39da"
+        },
+        {
+          "time": 0.6666666865348816,
+          "localBonePoseSha256": "e58f0fd2d701c6c893cd7b5fdf28dead6e5b3042c6b627a12e6444cd954c5981"
+        },
+        {
+          "time": 0.7777778009573618,
+          "localBonePoseSha256": "51de5f362a5f5494b25a4dd54f795e93e838e826cb71852b3b165cbbd286033c"
+        },
+        {
+          "time": 0.8888889153798422,
+          "localBonePoseSha256": "6686bb051c5f85bd8628b5950592b1dcf3c8bce084f8697e979bd29ae124bf0b"
+        },
+        {
+          "time": 1.0000000298023224,
+          "localBonePoseSha256": "08e47bcc323ab4081a2fa861bce59f28272ae77d22718bcd778c5059f6fe59b3"
+        },
+        {
+          "time": 1.1111111442248027,
+          "localBonePoseSha256": "e9c41486307548898270bc9c841a322e6c8339fb57b1486d292f4d1c95bb0639"
+        },
+        {
+          "time": 1.2222222586472828,
+          "localBonePoseSha256": "48eae98b64c4c99349b2c5accbad5f0ed5a781da9954f1ea9b07a793f7152283"
+        }
+      ]
+    },
+    {
+      "clip": "Walk_Loop",
+      "direction": 4,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "5d87bab8d2c6f2a87249b2cdd327c593809dfa655146b9545ef1eb5cd89f31fb"
+        },
+        {
+          "time": 0.11111111442248027,
+          "localBonePoseSha256": "8fba3a45b3743b78ecac2f830966498aaf796340d36d4d038e7881165479cb55"
+        },
+        {
+          "time": 0.22222222884496054,
+          "localBonePoseSha256": "8ec29f84daaaef36bce37d991f92e2c0618c2c5f19030ea3b2f52c60c6d8cace"
+        },
+        {
+          "time": 0.3333333432674408,
+          "localBonePoseSha256": "ea414f91a6ebddbe5e7cec44c7b3351fa0bd7bd65efe4d7e2d339e2b60f13fca"
+        },
+        {
+          "time": 0.4444444576899211,
+          "localBonePoseSha256": "43238f9939497e2c1b01857194432e9351e72851f8aac16640f3a1d531aebc92"
+        },
+        {
+          "time": 0.5555555721124014,
+          "localBonePoseSha256": "58e73b8387812e0b345eadb4002d709c841cf802dbe9cf310181ce2a20ac39da"
+        },
+        {
+          "time": 0.6666666865348816,
+          "localBonePoseSha256": "e58f0fd2d701c6c893cd7b5fdf28dead6e5b3042c6b627a12e6444cd954c5981"
+        },
+        {
+          "time": 0.7777778009573618,
+          "localBonePoseSha256": "51de5f362a5f5494b25a4dd54f795e93e838e826cb71852b3b165cbbd286033c"
+        },
+        {
+          "time": 0.8888889153798422,
+          "localBonePoseSha256": "6686bb051c5f85bd8628b5950592b1dcf3c8bce084f8697e979bd29ae124bf0b"
+        },
+        {
+          "time": 1.0000000298023224,
+          "localBonePoseSha256": "08e47bcc323ab4081a2fa861bce59f28272ae77d22718bcd778c5059f6fe59b3"
+        },
+        {
+          "time": 1.1111111442248027,
+          "localBonePoseSha256": "e9c41486307548898270bc9c841a322e6c8339fb57b1486d292f4d1c95bb0639"
+        },
+        {
+          "time": 1.2222222586472828,
+          "localBonePoseSha256": "48eae98b64c4c99349b2c5accbad5f0ed5a781da9954f1ea9b07a793f7152283"
+        }
+      ]
+    },
+    {
+      "clip": "Walk_Loop",
+      "direction": 5,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "5d87bab8d2c6f2a87249b2cdd327c593809dfa655146b9545ef1eb5cd89f31fb"
+        },
+        {
+          "time": 0.11111111442248027,
+          "localBonePoseSha256": "8fba3a45b3743b78ecac2f830966498aaf796340d36d4d038e7881165479cb55"
+        },
+        {
+          "time": 0.22222222884496054,
+          "localBonePoseSha256": "8ec29f84daaaef36bce37d991f92e2c0618c2c5f19030ea3b2f52c60c6d8cace"
+        },
+        {
+          "time": 0.3333333432674408,
+          "localBonePoseSha256": "ea414f91a6ebddbe5e7cec44c7b3351fa0bd7bd65efe4d7e2d339e2b60f13fca"
+        },
+        {
+          "time": 0.4444444576899211,
+          "localBonePoseSha256": "43238f9939497e2c1b01857194432e9351e72851f8aac16640f3a1d531aebc92"
+        },
+        {
+          "time": 0.5555555721124014,
+          "localBonePoseSha256": "58e73b8387812e0b345eadb4002d709c841cf802dbe9cf310181ce2a20ac39da"
+        },
+        {
+          "time": 0.6666666865348816,
+          "localBonePoseSha256": "e58f0fd2d701c6c893cd7b5fdf28dead6e5b3042c6b627a12e6444cd954c5981"
+        },
+        {
+          "time": 0.7777778009573618,
+          "localBonePoseSha256": "51de5f362a5f5494b25a4dd54f795e93e838e826cb71852b3b165cbbd286033c"
+        },
+        {
+          "time": 0.8888889153798422,
+          "localBonePoseSha256": "6686bb051c5f85bd8628b5950592b1dcf3c8bce084f8697e979bd29ae124bf0b"
+        },
+        {
+          "time": 1.0000000298023224,
+          "localBonePoseSha256": "08e47bcc323ab4081a2fa861bce59f28272ae77d22718bcd778c5059f6fe59b3"
+        },
+        {
+          "time": 1.1111111442248027,
+          "localBonePoseSha256": "e9c41486307548898270bc9c841a322e6c8339fb57b1486d292f4d1c95bb0639"
+        },
+        {
+          "time": 1.2222222586472828,
+          "localBonePoseSha256": "48eae98b64c4c99349b2c5accbad5f0ed5a781da9954f1ea9b07a793f7152283"
+        }
+      ]
+    },
+    {
+      "clip": "Walk_Loop",
+      "direction": 6,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "5d87bab8d2c6f2a87249b2cdd327c593809dfa655146b9545ef1eb5cd89f31fb"
+        },
+        {
+          "time": 0.11111111442248027,
+          "localBonePoseSha256": "8fba3a45b3743b78ecac2f830966498aaf796340d36d4d038e7881165479cb55"
+        },
+        {
+          "time": 0.22222222884496054,
+          "localBonePoseSha256": "8ec29f84daaaef36bce37d991f92e2c0618c2c5f19030ea3b2f52c60c6d8cace"
+        },
+        {
+          "time": 0.3333333432674408,
+          "localBonePoseSha256": "ea414f91a6ebddbe5e7cec44c7b3351fa0bd7bd65efe4d7e2d339e2b60f13fca"
+        },
+        {
+          "time": 0.4444444576899211,
+          "localBonePoseSha256": "43238f9939497e2c1b01857194432e9351e72851f8aac16640f3a1d531aebc92"
+        },
+        {
+          "time": 0.5555555721124014,
+          "localBonePoseSha256": "58e73b8387812e0b345eadb4002d709c841cf802dbe9cf310181ce2a20ac39da"
+        },
+        {
+          "time": 0.6666666865348816,
+          "localBonePoseSha256": "e58f0fd2d701c6c893cd7b5fdf28dead6e5b3042c6b627a12e6444cd954c5981"
+        },
+        {
+          "time": 0.7777778009573618,
+          "localBonePoseSha256": "51de5f362a5f5494b25a4dd54f795e93e838e826cb71852b3b165cbbd286033c"
+        },
+        {
+          "time": 0.8888889153798422,
+          "localBonePoseSha256": "6686bb051c5f85bd8628b5950592b1dcf3c8bce084f8697e979bd29ae124bf0b"
+        },
+        {
+          "time": 1.0000000298023224,
+          "localBonePoseSha256": "08e47bcc323ab4081a2fa861bce59f28272ae77d22718bcd778c5059f6fe59b3"
+        },
+        {
+          "time": 1.1111111442248027,
+          "localBonePoseSha256": "e9c41486307548898270bc9c841a322e6c8339fb57b1486d292f4d1c95bb0639"
+        },
+        {
+          "time": 1.2222222586472828,
+          "localBonePoseSha256": "48eae98b64c4c99349b2c5accbad5f0ed5a781da9954f1ea9b07a793f7152283"
+        }
+      ]
+    },
+    {
+      "clip": "Walk_Loop",
+      "direction": 7,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "5d87bab8d2c6f2a87249b2cdd327c593809dfa655146b9545ef1eb5cd89f31fb"
+        },
+        {
+          "time": 0.11111111442248027,
+          "localBonePoseSha256": "8fba3a45b3743b78ecac2f830966498aaf796340d36d4d038e7881165479cb55"
+        },
+        {
+          "time": 0.22222222884496054,
+          "localBonePoseSha256": "8ec29f84daaaef36bce37d991f92e2c0618c2c5f19030ea3b2f52c60c6d8cace"
+        },
+        {
+          "time": 0.3333333432674408,
+          "localBonePoseSha256": "ea414f91a6ebddbe5e7cec44c7b3351fa0bd7bd65efe4d7e2d339e2b60f13fca"
+        },
+        {
+          "time": 0.4444444576899211,
+          "localBonePoseSha256": "43238f9939497e2c1b01857194432e9351e72851f8aac16640f3a1d531aebc92"
+        },
+        {
+          "time": 0.5555555721124014,
+          "localBonePoseSha256": "58e73b8387812e0b345eadb4002d709c841cf802dbe9cf310181ce2a20ac39da"
+        },
+        {
+          "time": 0.6666666865348816,
+          "localBonePoseSha256": "e58f0fd2d701c6c893cd7b5fdf28dead6e5b3042c6b627a12e6444cd954c5981"
+        },
+        {
+          "time": 0.7777778009573618,
+          "localBonePoseSha256": "51de5f362a5f5494b25a4dd54f795e93e838e826cb71852b3b165cbbd286033c"
+        },
+        {
+          "time": 0.8888889153798422,
+          "localBonePoseSha256": "6686bb051c5f85bd8628b5950592b1dcf3c8bce084f8697e979bd29ae124bf0b"
+        },
+        {
+          "time": 1.0000000298023224,
+          "localBonePoseSha256": "08e47bcc323ab4081a2fa861bce59f28272ae77d22718bcd778c5059f6fe59b3"
+        },
+        {
+          "time": 1.1111111442248027,
+          "localBonePoseSha256": "e9c41486307548898270bc9c841a322e6c8339fb57b1486d292f4d1c95bb0639"
+        },
+        {
+          "time": 1.2222222586472828,
+          "localBonePoseSha256": "48eae98b64c4c99349b2c5accbad5f0ed5a781da9954f1ea9b07a793f7152283"
+        }
+      ]
+    },
+    {
+      "clip": "Sword_Attack",
+      "direction": 0,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "9de7e9fb012d376374c2da784c05f7b2a0d9fa18bf4c918060569dfda93e599c"
+        },
+        {
+          "time": 0.13636363636363635,
+          "localBonePoseSha256": "4ca3348cbabac8af24be8d958e2831ef939ee6fd3979f7739fbf036435a915ee"
+        },
+        {
+          "time": 0.2727272727272727,
+          "localBonePoseSha256": "1bf7c1c52d5cd91696827b8ae9658aaba5230346c303c77494fb7c1caebc5315"
+        },
+        {
+          "time": 0.4090909090909091,
+          "localBonePoseSha256": "1782e785c8fb0dff253cd4ca1768613aa4acbe14ab2155c8a00ecef94fb9d955"
+        },
+        {
+          "time": 0.5454545454545454,
+          "localBonePoseSha256": "83b13e34f2ca49bea561ed16239825e4426984d560fd26b3beb3379bd870cb1c"
+        },
+        {
+          "time": 0.6818181818181818,
+          "localBonePoseSha256": "48acaa699d244346092fc4241752043d2d672d2583390c137842ef919930ecf4"
+        },
+        {
+          "time": 0.8181818181818182,
+          "localBonePoseSha256": "4e7900440960bc6cdf4ab1301657bf3084ab4fc80b001a2d236d3e8ca6634d1a"
+        },
+        {
+          "time": 0.9545454545454546,
+          "localBonePoseSha256": "38c538534cafcfeb278957c36a6916a28ccae6e530df971ae2dd583a8dfda9c9"
+        },
+        {
+          "time": 1.0909090909090908,
+          "localBonePoseSha256": "15ef90a36d3da4bd0e864117839f5e59829173a08c17bc8286acb7ca0b799e66"
+        },
+        {
+          "time": 1.2272727272727273,
+          "localBonePoseSha256": "3f194b67042ab96984df3db4bbbeb0d479b5f048bc0eba680ce0b9bd349c5667"
+        },
+        {
+          "time": 1.3636363636363635,
+          "localBonePoseSha256": "61a2371567a6ace968874f80398656185bddf6988c2d4c199b91ee1f008a5d8f"
+        },
+        {
+          "time": 1.4999999,
+          "localBonePoseSha256": "fe9d16bc4394ab77e5d463a5d433355b19b5c3b5ef9e620abc8cdc61b618e5bf"
+        }
+      ]
+    },
+    {
+      "clip": "Sword_Attack",
+      "direction": 1,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "9de7e9fb012d376374c2da784c05f7b2a0d9fa18bf4c918060569dfda93e599c"
+        },
+        {
+          "time": 0.13636363636363635,
+          "localBonePoseSha256": "4ca3348cbabac8af24be8d958e2831ef939ee6fd3979f7739fbf036435a915ee"
+        },
+        {
+          "time": 0.2727272727272727,
+          "localBonePoseSha256": "1bf7c1c52d5cd91696827b8ae9658aaba5230346c303c77494fb7c1caebc5315"
+        },
+        {
+          "time": 0.4090909090909091,
+          "localBonePoseSha256": "1782e785c8fb0dff253cd4ca1768613aa4acbe14ab2155c8a00ecef94fb9d955"
+        },
+        {
+          "time": 0.5454545454545454,
+          "localBonePoseSha256": "83b13e34f2ca49bea561ed16239825e4426984d560fd26b3beb3379bd870cb1c"
+        },
+        {
+          "time": 0.6818181818181818,
+          "localBonePoseSha256": "48acaa699d244346092fc4241752043d2d672d2583390c137842ef919930ecf4"
+        },
+        {
+          "time": 0.8181818181818182,
+          "localBonePoseSha256": "4e7900440960bc6cdf4ab1301657bf3084ab4fc80b001a2d236d3e8ca6634d1a"
+        },
+        {
+          "time": 0.9545454545454546,
+          "localBonePoseSha256": "38c538534cafcfeb278957c36a6916a28ccae6e530df971ae2dd583a8dfda9c9"
+        },
+        {
+          "time": 1.0909090909090908,
+          "localBonePoseSha256": "15ef90a36d3da4bd0e864117839f5e59829173a08c17bc8286acb7ca0b799e66"
+        },
+        {
+          "time": 1.2272727272727273,
+          "localBonePoseSha256": "3f194b67042ab96984df3db4bbbeb0d479b5f048bc0eba680ce0b9bd349c5667"
+        },
+        {
+          "time": 1.3636363636363635,
+          "localBonePoseSha256": "61a2371567a6ace968874f80398656185bddf6988c2d4c199b91ee1f008a5d8f"
+        },
+        {
+          "time": 1.4999999,
+          "localBonePoseSha256": "fe9d16bc4394ab77e5d463a5d433355b19b5c3b5ef9e620abc8cdc61b618e5bf"
+        }
+      ]
+    },
+    {
+      "clip": "Sword_Attack",
+      "direction": 2,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "9de7e9fb012d376374c2da784c05f7b2a0d9fa18bf4c918060569dfda93e599c"
+        },
+        {
+          "time": 0.13636363636363635,
+          "localBonePoseSha256": "4ca3348cbabac8af24be8d958e2831ef939ee6fd3979f7739fbf036435a915ee"
+        },
+        {
+          "time": 0.2727272727272727,
+          "localBonePoseSha256": "1bf7c1c52d5cd91696827b8ae9658aaba5230346c303c77494fb7c1caebc5315"
+        },
+        {
+          "time": 0.4090909090909091,
+          "localBonePoseSha256": "1782e785c8fb0dff253cd4ca1768613aa4acbe14ab2155c8a00ecef94fb9d955"
+        },
+        {
+          "time": 0.5454545454545454,
+          "localBonePoseSha256": "83b13e34f2ca49bea561ed16239825e4426984d560fd26b3beb3379bd870cb1c"
+        },
+        {
+          "time": 0.6818181818181818,
+          "localBonePoseSha256": "48acaa699d244346092fc4241752043d2d672d2583390c137842ef919930ecf4"
+        },
+        {
+          "time": 0.8181818181818182,
+          "localBonePoseSha256": "4e7900440960bc6cdf4ab1301657bf3084ab4fc80b001a2d236d3e8ca6634d1a"
+        },
+        {
+          "time": 0.9545454545454546,
+          "localBonePoseSha256": "38c538534cafcfeb278957c36a6916a28ccae6e530df971ae2dd583a8dfda9c9"
+        },
+        {
+          "time": 1.0909090909090908,
+          "localBonePoseSha256": "15ef90a36d3da4bd0e864117839f5e59829173a08c17bc8286acb7ca0b799e66"
+        },
+        {
+          "time": 1.2272727272727273,
+          "localBonePoseSha256": "3f194b67042ab96984df3db4bbbeb0d479b5f048bc0eba680ce0b9bd349c5667"
+        },
+        {
+          "time": 1.3636363636363635,
+          "localBonePoseSha256": "61a2371567a6ace968874f80398656185bddf6988c2d4c199b91ee1f008a5d8f"
+        },
+        {
+          "time": 1.4999999,
+          "localBonePoseSha256": "fe9d16bc4394ab77e5d463a5d433355b19b5c3b5ef9e620abc8cdc61b618e5bf"
+        }
+      ]
+    },
+    {
+      "clip": "Sword_Attack",
+      "direction": 3,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "9de7e9fb012d376374c2da784c05f7b2a0d9fa18bf4c918060569dfda93e599c"
+        },
+        {
+          "time": 0.13636363636363635,
+          "localBonePoseSha256": "4ca3348cbabac8af24be8d958e2831ef939ee6fd3979f7739fbf036435a915ee"
+        },
+        {
+          "time": 0.2727272727272727,
+          "localBonePoseSha256": "1bf7c1c52d5cd91696827b8ae9658aaba5230346c303c77494fb7c1caebc5315"
+        },
+        {
+          "time": 0.4090909090909091,
+          "localBonePoseSha256": "1782e785c8fb0dff253cd4ca1768613aa4acbe14ab2155c8a00ecef94fb9d955"
+        },
+        {
+          "time": 0.5454545454545454,
+          "localBonePoseSha256": "83b13e34f2ca49bea561ed16239825e4426984d560fd26b3beb3379bd870cb1c"
+        },
+        {
+          "time": 0.6818181818181818,
+          "localBonePoseSha256": "48acaa699d244346092fc4241752043d2d672d2583390c137842ef919930ecf4"
+        },
+        {
+          "time": 0.8181818181818182,
+          "localBonePoseSha256": "4e7900440960bc6cdf4ab1301657bf3084ab4fc80b001a2d236d3e8ca6634d1a"
+        },
+        {
+          "time": 0.9545454545454546,
+          "localBonePoseSha256": "38c538534cafcfeb278957c36a6916a28ccae6e530df971ae2dd583a8dfda9c9"
+        },
+        {
+          "time": 1.0909090909090908,
+          "localBonePoseSha256": "15ef90a36d3da4bd0e864117839f5e59829173a08c17bc8286acb7ca0b799e66"
+        },
+        {
+          "time": 1.2272727272727273,
+          "localBonePoseSha256": "3f194b67042ab96984df3db4bbbeb0d479b5f048bc0eba680ce0b9bd349c5667"
+        },
+        {
+          "time": 1.3636363636363635,
+          "localBonePoseSha256": "61a2371567a6ace968874f80398656185bddf6988c2d4c199b91ee1f008a5d8f"
+        },
+        {
+          "time": 1.4999999,
+          "localBonePoseSha256": "fe9d16bc4394ab77e5d463a5d433355b19b5c3b5ef9e620abc8cdc61b618e5bf"
+        }
+      ]
+    },
+    {
+      "clip": "Sword_Attack",
+      "direction": 4,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "9de7e9fb012d376374c2da784c05f7b2a0d9fa18bf4c918060569dfda93e599c"
+        },
+        {
+          "time": 0.13636363636363635,
+          "localBonePoseSha256": "4ca3348cbabac8af24be8d958e2831ef939ee6fd3979f7739fbf036435a915ee"
+        },
+        {
+          "time": 0.2727272727272727,
+          "localBonePoseSha256": "1bf7c1c52d5cd91696827b8ae9658aaba5230346c303c77494fb7c1caebc5315"
+        },
+        {
+          "time": 0.4090909090909091,
+          "localBonePoseSha256": "1782e785c8fb0dff253cd4ca1768613aa4acbe14ab2155c8a00ecef94fb9d955"
+        },
+        {
+          "time": 0.5454545454545454,
+          "localBonePoseSha256": "83b13e34f2ca49bea561ed16239825e4426984d560fd26b3beb3379bd870cb1c"
+        },
+        {
+          "time": 0.6818181818181818,
+          "localBonePoseSha256": "48acaa699d244346092fc4241752043d2d672d2583390c137842ef919930ecf4"
+        },
+        {
+          "time": 0.8181818181818182,
+          "localBonePoseSha256": "4e7900440960bc6cdf4ab1301657bf3084ab4fc80b001a2d236d3e8ca6634d1a"
+        },
+        {
+          "time": 0.9545454545454546,
+          "localBonePoseSha256": "38c538534cafcfeb278957c36a6916a28ccae6e530df971ae2dd583a8dfda9c9"
+        },
+        {
+          "time": 1.0909090909090908,
+          "localBonePoseSha256": "15ef90a36d3da4bd0e864117839f5e59829173a08c17bc8286acb7ca0b799e66"
+        },
+        {
+          "time": 1.2272727272727273,
+          "localBonePoseSha256": "3f194b67042ab96984df3db4bbbeb0d479b5f048bc0eba680ce0b9bd349c5667"
+        },
+        {
+          "time": 1.3636363636363635,
+          "localBonePoseSha256": "61a2371567a6ace968874f80398656185bddf6988c2d4c199b91ee1f008a5d8f"
+        },
+        {
+          "time": 1.4999999,
+          "localBonePoseSha256": "fe9d16bc4394ab77e5d463a5d433355b19b5c3b5ef9e620abc8cdc61b618e5bf"
+        }
+      ]
+    },
+    {
+      "clip": "Sword_Attack",
+      "direction": 5,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "9de7e9fb012d376374c2da784c05f7b2a0d9fa18bf4c918060569dfda93e599c"
+        },
+        {
+          "time": 0.13636363636363635,
+          "localBonePoseSha256": "4ca3348cbabac8af24be8d958e2831ef939ee6fd3979f7739fbf036435a915ee"
+        },
+        {
+          "time": 0.2727272727272727,
+          "localBonePoseSha256": "1bf7c1c52d5cd91696827b8ae9658aaba5230346c303c77494fb7c1caebc5315"
+        },
+        {
+          "time": 0.4090909090909091,
+          "localBonePoseSha256": "1782e785c8fb0dff253cd4ca1768613aa4acbe14ab2155c8a00ecef94fb9d955"
+        },
+        {
+          "time": 0.5454545454545454,
+          "localBonePoseSha256": "83b13e34f2ca49bea561ed16239825e4426984d560fd26b3beb3379bd870cb1c"
+        },
+        {
+          "time": 0.6818181818181818,
+          "localBonePoseSha256": "48acaa699d244346092fc4241752043d2d672d2583390c137842ef919930ecf4"
+        },
+        {
+          "time": 0.8181818181818182,
+          "localBonePoseSha256": "4e7900440960bc6cdf4ab1301657bf3084ab4fc80b001a2d236d3e8ca6634d1a"
+        },
+        {
+          "time": 0.9545454545454546,
+          "localBonePoseSha256": "38c538534cafcfeb278957c36a6916a28ccae6e530df971ae2dd583a8dfda9c9"
+        },
+        {
+          "time": 1.0909090909090908,
+          "localBonePoseSha256": "15ef90a36d3da4bd0e864117839f5e59829173a08c17bc8286acb7ca0b799e66"
+        },
+        {
+          "time": 1.2272727272727273,
+          "localBonePoseSha256": "3f194b67042ab96984df3db4bbbeb0d479b5f048bc0eba680ce0b9bd349c5667"
+        },
+        {
+          "time": 1.3636363636363635,
+          "localBonePoseSha256": "61a2371567a6ace968874f80398656185bddf6988c2d4c199b91ee1f008a5d8f"
+        },
+        {
+          "time": 1.4999999,
+          "localBonePoseSha256": "fe9d16bc4394ab77e5d463a5d433355b19b5c3b5ef9e620abc8cdc61b618e5bf"
+        }
+      ]
+    },
+    {
+      "clip": "Sword_Attack",
+      "direction": 6,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "9de7e9fb012d376374c2da784c05f7b2a0d9fa18bf4c918060569dfda93e599c"
+        },
+        {
+          "time": 0.13636363636363635,
+          "localBonePoseSha256": "4ca3348cbabac8af24be8d958e2831ef939ee6fd3979f7739fbf036435a915ee"
+        },
+        {
+          "time": 0.2727272727272727,
+          "localBonePoseSha256": "1bf7c1c52d5cd91696827b8ae9658aaba5230346c303c77494fb7c1caebc5315"
+        },
+        {
+          "time": 0.4090909090909091,
+          "localBonePoseSha256": "1782e785c8fb0dff253cd4ca1768613aa4acbe14ab2155c8a00ecef94fb9d955"
+        },
+        {
+          "time": 0.5454545454545454,
+          "localBonePoseSha256": "83b13e34f2ca49bea561ed16239825e4426984d560fd26b3beb3379bd870cb1c"
+        },
+        {
+          "time": 0.6818181818181818,
+          "localBonePoseSha256": "48acaa699d244346092fc4241752043d2d672d2583390c137842ef919930ecf4"
+        },
+        {
+          "time": 0.8181818181818182,
+          "localBonePoseSha256": "4e7900440960bc6cdf4ab1301657bf3084ab4fc80b001a2d236d3e8ca6634d1a"
+        },
+        {
+          "time": 0.9545454545454546,
+          "localBonePoseSha256": "38c538534cafcfeb278957c36a6916a28ccae6e530df971ae2dd583a8dfda9c9"
+        },
+        {
+          "time": 1.0909090909090908,
+          "localBonePoseSha256": "15ef90a36d3da4bd0e864117839f5e59829173a08c17bc8286acb7ca0b799e66"
+        },
+        {
+          "time": 1.2272727272727273,
+          "localBonePoseSha256": "3f194b67042ab96984df3db4bbbeb0d479b5f048bc0eba680ce0b9bd349c5667"
+        },
+        {
+          "time": 1.3636363636363635,
+          "localBonePoseSha256": "61a2371567a6ace968874f80398656185bddf6988c2d4c199b91ee1f008a5d8f"
+        },
+        {
+          "time": 1.4999999,
+          "localBonePoseSha256": "fe9d16bc4394ab77e5d463a5d433355b19b5c3b5ef9e620abc8cdc61b618e5bf"
+        }
+      ]
+    },
+    {
+      "clip": "Sword_Attack",
+      "direction": 7,
+      "samples": [
+        {
+          "time": 0,
+          "localBonePoseSha256": "9de7e9fb012d376374c2da784c05f7b2a0d9fa18bf4c918060569dfda93e599c"
+        },
+        {
+          "time": 0.13636363636363635,
+          "localBonePoseSha256": "4ca3348cbabac8af24be8d958e2831ef939ee6fd3979f7739fbf036435a915ee"
+        },
+        {
+          "time": 0.2727272727272727,
+          "localBonePoseSha256": "1bf7c1c52d5cd91696827b8ae9658aaba5230346c303c77494fb7c1caebc5315"
+        },
+        {
+          "time": 0.4090909090909091,
+          "localBonePoseSha256": "1782e785c8fb0dff253cd4ca1768613aa4acbe14ab2155c8a00ecef94fb9d955"
+        },
+        {
+          "time": 0.5454545454545454,
+          "localBonePoseSha256": "83b13e34f2ca49bea561ed16239825e4426984d560fd26b3beb3379bd870cb1c"
+        },
+        {
+          "time": 0.6818181818181818,
+          "localBonePoseSha256": "48acaa699d244346092fc4241752043d2d672d2583390c137842ef919930ecf4"
+        },
+        {
+          "time": 0.8181818181818182,
+          "localBonePoseSha256": "4e7900440960bc6cdf4ab1301657bf3084ab4fc80b001a2d236d3e8ca6634d1a"
+        },
+        {
+          "time": 0.9545454545454546,
+          "localBonePoseSha256": "38c538534cafcfeb278957c36a6916a28ccae6e530df971ae2dd583a8dfda9c9"
+        },
+        {
+          "time": 1.0909090909090908,
+          "localBonePoseSha256": "15ef90a36d3da4bd0e864117839f5e59829173a08c17bc8286acb7ca0b799e66"
+        },
+        {
+          "time": 1.2272727272727273,
+          "localBonePoseSha256": "3f194b67042ab96984df3db4bbbeb0d479b5f048bc0eba680ce0b9bd349c5667"
+        },
+        {
+          "time": 1.3636363636363635,
+          "localBonePoseSha256": "61a2371567a6ace968874f80398656185bddf6988c2d4c199b91ee1f008a5d8f"
+        },
+        {
+          "time": 1.4999999,
+          "localBonePoseSha256": "fe9d16bc4394ab77e5d463a5d433355b19b5c3b5ef9e620abc8cdc61b618e5bf"
+        }
+      ]
+    }
+  ]
+}

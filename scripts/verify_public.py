@@ -44,5 +44,14 @@ with sync_playwright() as pw:
   page.click('#reset');page.click('#reset-confirm');fight(page)
   assert not errors,errors
   page.screenshot(path='/tmp/elderfall-public-'+('study-' if entry else '')+version+'.png');context.close();print('PASS public play',version,'movement, dodge, five hits, victory and result',flush=True)
+ context=browser.new_context(viewport={'width':1024,'height':768})
+ context.route('https://ureka01-creator.github.io/**',route);page=context.new_page();resource_errors=[];page.on('pageerror',lambda e:resource_errors.append(str(e)))
+ page.goto(BASE+'motion-resources.html?release=1',wait_until='networkidle');page.wait_for_function('window.motionResources?.cards.length===4',timeout=60000)
+ result=page.evaluate('''()=>{
+ const r=motionResources;r.setTime(.05);const first=r.cards.map(c=>{const q=[];c.model.traverse(o=>{if(o.isBone)q.push(o.quaternion.clone())});return q});r.setTime(.45);
+ const result=r.cards.map((c,i)=>{let changed=0,n=0;c.model.traverse(o=>{if(o.isBone&&o.quaternion.angleTo(first[i][n++])>.02)changed++});if(changed<5)throw Error('Native animation is static '+c.name);return {clip:c.name,changedBones:changed};});
+ r.setClip(3,'Melee_1H_Attack_Slice_Horizontal');r.setTime(.4);r.setClip(3,'Melee_1H_Attack_Chop');r.setTime(.4);return result;
+ }''')
+ assert not resource_errors,resource_errors;page.screenshot(path='/tmp/elderfall-public-motion-resources.png');context.close();print('PASS public native walk/sword resource playback and clip selection',result,flush=True)
  browser.close()
-print(f'PASS {len(FILES)} exact HTTPS publication files, restored illustrated character at both 2.14 entries',flush=True)
+print(f'PASS {len(FILES)} exact HTTPS publication files, approved illustrated character at both 2.14 entries',flush=True)
