@@ -1,0 +1,36 @@
+{
+  "scope": "2D illustrated preview based on native poses, not a rigged 3D skin",
+  "clips": {
+    "walk": {
+      "duration": 1.3333333730697632,
+      "nativePoseSamples": 24,
+      "artFrames": 24
+    },
+    "attack": {
+      "duration": 1.5,
+      "nativePoseSamples": 24,
+      "artFrames": 24
+    }
+  },
+  "layouts": [
+    [
+      1024,
+      768
+    ],
+    [
+      768,
+      1024
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      605,
+      800
+    ]
+  ],
+  "nativeBoneMaxErrorVsOriginalViewer": 0,
+  "browserErrors": [],
+  "videoFrames": 136
+}

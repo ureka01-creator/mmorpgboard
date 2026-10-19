@@ -1,0 +1,209 @@
+{
+  "method": "Unmodified Quaternius GLTF animation keys. 24 uniform samples, same overhead camera. No IK or bone pose overrides.",
+  "clips": [
+    {
+      "clip": "Walk_Loop",
+      "duration": 1.3333333730697632,
+      "samples": [
+        {
+          "time": 0,
+          "poseSha256": "ede4c93cd62b32dd8111e84bec70a06816b518e00d96630fd6746037111d2505"
+        },
+        {
+          "time": 0.055555557211240135,
+          "poseSha256": "714e59ddfb4e86b2c58f8355da9c31349432cfe6470b17abe776abcb6d32c345"
+        },
+        {
+          "time": 0.11111111442248027,
+          "poseSha256": "4840cb2f620b8f4ca4ca02874791b161402fb0c0a7b2bb335a873097d9795ab6"
+        },
+        {
+          "time": 0.1666666716337204,
+          "poseSha256": "3f6ff1d4fd49d04521eb39595742c0c9072fc3ae57cfd71aa083d3de45fdae55"
+        },
+        {
+          "time": 0.22222222884496054,
+          "poseSha256": "4d98bddb81e4a32a2c1cb519b4d7f6856cf7bbbb3d0ce58d8a584db04440fdab"
+        },
+        {
+          "time": 0.2777777860562007,
+          "poseSha256": "078e7c558bc50df56576a730ca35b7fd36489868dfc6600360ec8454b59b75ec"
+        },
+        {
+          "time": 0.3333333432674408,
+          "poseSha256": "b121728c29e1aa601fab94a5c4c7d8d68b5aa2cda4fe5fae136281e408260308"
+        },
+        {
+          "time": 0.3888889004786809,
+          "poseSha256": "5fe2601ac2db2a8451a3cc5f51641162921c0e2e87e7fc5551e558e126884430"
+        },
+        {
+          "time": 0.4444444576899211,
+          "poseSha256": "5915c1b59db2f38f604948f822514bd689c29721649ef7515f2d10114ea19949"
+        },
+        {
+          "time": 0.5000000149011612,
+          "poseSha256": "bc16bcdd91d9e7409181e5755d915fb3b61132b6b84bccb3a61aa8efb70d91ed"
+        },
+        {
+          "time": 0.5555555721124014,
+          "poseSha256": "a22047a63247dd7bda72eca1cc2be75b77b30727a637a6b3c47bfb86b3512028"
+        },
+        {
+          "time": 0.6111111293236414,
+          "poseSha256": "ef78ba9ec258f04f165437f0568ee227b95f5db1596a67572a75c93050738052"
+        },
+        {
+          "time": 0.6666666865348816,
+          "poseSha256": "a8e43581d5342f6ff0f2fe748cde269e2de3a6b7999ec8d5927b7cac2cdaea8b"
+        },
+        {
+          "time": 0.7222222437461218,
+          "poseSha256": "dbf0a763d2608c2fd595b4862cc002fc8e722cc8d80c29ed37bd057622ca9515"
+        },
+        {
+          "time": 0.7777778009573618,
+          "poseSha256": "8c7fa89a8f07fa979118aba6ddb648e813869a3f3a072906874cde57908ab80c"
+        },
+        {
+          "time": 0.833333358168602,
+          "poseSha256": "280b1889e417a9c442ca96aada075765731a77df51ad1e2e683102f726ab1f6c"
+        },
+        {
+          "time": 0.8888889153798422,
+          "poseSha256": "ad91bf6cc74259158a80dff15a3e34267cb6b986b23b9888d957662becfeac39"
+        },
+        {
+          "time": 0.9444444725910822,
+          "poseSha256": "27145968f85c51db51d1b41e844ce44ead61051789ec241a47ca99f6a041b926"
+        },
+        {
+          "time": 1.0000000298023224,
+          "poseSha256": "d02a62f48d6cc213082016508d2e8944f448e2b189410137921186a588f94761"
+        },
+        {
+          "time": 1.0555555870135624,
+          "poseSha256": "6707870ae72018547262f0fda9314ed2e2a2ebc4ea3c6ddc0f25f69cde4952a5"
+        },
+        {
+          "time": 1.1111111442248027,
+          "poseSha256": "8a34d0455d1eb7e14e7d36c08e173e27d1ab13dabe5ab04492dac6e14bf175d5"
+        },
+        {
+          "time": 1.1666667014360428,
+          "poseSha256": "631572d1b735d2c4e05b58613a36648f88b71558207858fc18ea98954f0285dc"
+        },
+        {
+          "time": 1.2222222586472828,
+          "poseSha256": "331bec8dfb4d6d7179d952ad7887b816914a10a3f93e50d6dc617a2c818be6e3"
+        },
+        {
+          "time": 1.2777778158585231,
+          "poseSha256": "0232234423ceb64d4167df26a75370672b4d7f3f3fed05bf4c31d92df7959539"
+        }
+      ]
+    },
+    {
+      "clip": "Sword_Attack",
+      "duration": 1.5,
+      "samples": [
+        {
+          "time": 0,
+          "poseSha256": "7140e8d679e1621184895008dd411c1b1b1284c0b0af4baa5b0aa5ca2f8f94e3"
+        },
+        {
+          "time": 0.0625,
+          "poseSha256": "38651912f29bd647b537341e4a40dcd44fdcc8d43de0a197043baa52f8936dac"
+        },
+        {
+          "time": 0.125,
+          "poseSha256": "c618795fb489c245ab63b9b51994d1f05e87ad41a65183c612c1745c2f77b5ae"
+        },
+        {
+          "time": 0.1875,
+          "poseSha256": "9ae5d3704322339e0a049fd4027c2d30cea904335a2e66c32f8801beb6cbb4b6"
+        },
+        {
+          "time": 0.25,
+          "poseSha256": "94aa9d4be9770e9bbd6a57378c47127ffa7c40f52462e6f210a19fb4d87908b2"
+        },
+        {
+          "time": 0.3125,
+          "poseSha256": "948f204d1231d2c00462eefa0238165bff3ff0490c7a1cd9bbde95dd118bd563"
+        },
+        {
+          "time": 0.375,
+          "poseSha256": "d3e27f0b09cc82b1a2f91bd3a3e1a617a8380b40d394d9be47c17d62e21e8ef0"
+        },
+        {
+          "time": 0.4375,
+          "poseSha256": "d6f2f52482c8aefc77b026e04a3d0379add6d383fb2e8add9d6ffc55334ed760"
+        },
+        {
+          "time": 0.5,
+          "poseSha256": "cf6d11978c341bb8fd7bcb03bd01710e14a405fd1d2bc24ca5ca46476e4f6ed5"
+        },
+        {
+          "time": 0.5625,
+          "poseSha256": "0797358f896f728a5a768c4215dd21bcda4100bfd57627f0ad0fd0da4b21169b"
+        },
+        {
+          "time": 0.625,
+          "poseSha256": "f85f6266426b749fbda6840635c4327d72a5afe3bb9fb6ebde60bff5448ca258"
+        },
+        {
+          "time": 0.6875,
+          "poseSha256": "3b037ae71f60d891a8a1288ada7765c4e388cf9603287a96e62d81adc3b9567a"
+        },
+        {
+          "time": 0.75,
+          "poseSha256": "52109c06505cb3db9edb75ae29a20059ad3dca090f74fa9414d56b348b79af7a"
+        },
+        {
+          "time": 0.8125,
+          "poseSha256": "1b431b425a88d9a72c0e175b0b3f9b26e7d03b1f2270fe2ad11770755ca5df4c"
+        },
+        {
+          "time": 0.875,
+          "poseSha256": "8a44711ab12ab0b68e625aa4144923e268afc36ae4fddae23f623835ea3dfaf9"
+        },
+        {
+          "time": 0.9375,
+          "poseSha256": "a5b5d262bac6b8bcfa5820099fcecbb131211debad8bf5703a5341a1d6db12bc"
+        },
+        {
+          "time": 1,
+          "poseSha256": "23a56532469c32ffc2c7fb0a424141805dc05979d1901fb3881e245e7845516c"
+        },
+        {
+          "time": 1.0625,
+          "poseSha256": "c5cee93865ad2b5ea8e016a56898d8ff4c8ac7e53a735c8c5cb919378c3bb742"
+        },
+        {
+          "time": 1.125,
+          "poseSha256": "0d7b8a721ebed62d66fe52d35ad698c31533cecf60de9ec125635acd08086332"
+        },
+        {
+          "time": 1.1875,
+          "poseSha256": "86bb9e588bc015d890c228c395d12e5ec3c6cb11d150112e8020e963dec87584"
+        },
+        {
+          "time": 1.25,
+          "poseSha256": "847e4c4e2f93a9a4cc034e1e150e23f922bb5548d5ead7aab8e7aa1953fcd12f"
+        },
+        {
+          "time": 1.3125,
+          "poseSha256": "d5a028fa6bd5dda3d0db2e84c8b6985288147a25348a92d16dd1bb98602495d1"
+        },
+        {
+          "time": 1.375,
+          "poseSha256": "0c6e13e10fb9fd59584074c02d4a3f3c3e2b20d4d36e9bb6117ebad8e121568c"
+        },
+        {
+          "time": 1.4375,
+          "poseSha256": "9b5e93c747ff8323c46b98129dbdfeced5e4ec786c3fae9aa8506decd83404bf"
+        }
+      ]
+    }
+  ]
+}

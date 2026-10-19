@@ -53,5 +53,11 @@ with sync_playwright() as pw:
  r.setClip(3,'Melee_1H_Attack_Slice_Horizontal');r.setTime(.4);r.setClip(3,'Melee_1H_Attack_Chop');r.setTime(.4);return result;
  }''')
  assert not resource_errors,resource_errors;page.screenshot(path='/tmp/elderfall-public-motion-resources.png');context.close();print('PASS public native walk/sword resource playback and clip selection',result,flush=True)
+ context=browser.new_context(viewport={'width':1024,'height':768})
+ context.route('https://ureka01-creator.github.io/**',route);page=context.new_page();art_errors=[];page.on('pageerror',lambda e:art_errors.append(str(e)))
+ page.goto(BASE+'warrior-motion.html?release=1',wait_until='networkidle');page.wait_for_function('window.warriorMotion',timeout=60000)
+ page.click('#walk');page.evaluate('warriorMotion.setTime(.2)');assert page.evaluate('warriorMotion.manifest.clips.walk.frames===24')
+ page.click('#attack');page.evaluate('warriorMotion.setTime(.5)');assert page.evaluate('warriorMotion.clip==="attack"&&warriorMotion.manifest.clips.attack.frames===24')
+ assert not art_errors,art_errors;page.screenshot(path='/tmp/elderfall-public-warrior-motion.png');context.close();print('PASS public illustrated/native comparison, walk/attack selection and rendered poses',flush=True)
  browser.close()
 print(f'PASS {len(FILES)} exact HTTPS publication files, approved illustrated character at both 2.14 entries',flush=True)

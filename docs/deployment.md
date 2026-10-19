@@ -36,3 +36,5 @@ python scripts/verify_public.py
 2.14는 같은 33개 실행 파일로 배포하며, schema 3 변위장은 258개 연결이다. 검 공격 경로를 바꾸고 원본 캐릭터 아트와 게임 규칙은 유지한다. [원작 비교의 실제 범위](nox-attack-reference.md).
 
 원본 모션 리소스 비교 페이지는 `motion-resources.html`, `motion-resources.mjs`와 원본 자료/출처 7개 파일을 추가한다. 공개 파일은 `.nojekyll` 제외 42개다. 게임 실행 33개 파일은 이 추가 작업에서 변경하지 않는다. `verify_public.py`는 공개 원본 자료의 해시와 실제 모션 재생·클립 선택도 확인한다.
+
+기사 외형 모션 시안은 `warrior-motion.html`, `warrior-motion.mjs`와 `assets/sprites/native-motion/`의 5개 파일을 추가한다. 공개 파일 총 49개이며 기존 게임 캐릭터/동작은 변경하지 않는다.
