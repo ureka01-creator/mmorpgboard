@@ -5,7 +5,7 @@ import {gunzipSync} from 'node:zlib';
 import {motionSegment} from '../arena-sprite-motion.mjs';
 const read=p=>readFileSync(new URL('../'+p,import.meta.url)),hash=b=>createHash('sha256').update(b).digest('hex');
 const m=JSON.parse(read('assets/sprites/motion/flow.json')),compressed=read('assets/sprites/motion/flow.bin.gz'),raw=gunzipSync(compressed),[w,h]=m.grid;
-assert.equal(m.schema,1);assert.equal(hash(compressed),m.flowSha256);assert.equal(raw.length,m.pairs.length*w*h*8);
+assert.equal(m.schema,2);assert.equal(hash(compressed),m.flowSha256);assert.equal(raw.length,m.pairs.length*w*h*8);
 for(const [file,sha]of Object.entries(m.sources))assert.equal(hash(read(file)),sha);
 const keys=new Set(m.frames.map(f=>f.key)),pairs=new Set(m.pairs.map(p=>m.frames[p.a].key+'>'+m.frames[p.b].key));
 for(const f of m.frames){assert(f.transform.length===4&&f.transform.every(Number.isFinite));assert.equal(f.contour.length,f.rect[3]);if(f.sword){assert(Number.isFinite(f.sword.back)&&f.sword.back>=0&&f.sword.back<=1,'Unbounded weapon backing '+f.key);assert.equal(f.bodyFillRows?.length,f.rect[3]);assert(f.bodyFillRows.every(([lo,hi,x,y])=>lo>=0&&hi>=lo&&hi<=f.rect[2]&&x>=0&&x<f.rect[2]&&y>=0&&y<f.rect[3]));assert.equal(f.bladeRows?.length,f.rect[3]);assert(f.bladeRows.every(([lo,hi])=>lo>=0&&hi>=lo&&hi<=f.rect[2]));assert(f.sword.points.every(Number.isFinite));assert(f.sword.width>.015&&f.sword.width<.3);}}
@@ -52,3 +52,13 @@ for(const [max,mode,end]of [[40,'attack',.62],[50,'attack',.58],[50,'windup',.72
  for(let i=0;i<1000;i++){const s=motionSegment({mode,max,elapsed:end*i/1000},0,0);assert(s.t>=0&&s.t<=1);}
 }
 console.log('PASS eased guard start/recovery, unchanged exact contact and bounded interpolation');
+
+for(let d=0;d<8;d++){
+ for(let i=0;i<12;i++)assert(pairs.has(`${d}:idle:0>${d}:run:${i}`),'Missing rest transition');
+ for(const [mode,max,delay]of [['attack',40,.045],['windup',50,.06]]){
+  const guard=motionSegment({mode,max,elapsed:delay,entryDelay:delay},0,d);assert.equal(guard.a,`${d}:attack:0`);assert.equal(guard.t,0);
+  for(let i=0;i<181;i++){const p=motionSegment({mode,max,elapsed:i/180*.72,entryDelay:delay},0,d);assert(keys.has(p.a)&&keys.has(p.b)&&p.t>=0&&p.t<=1);}
+ }
+ assert.equal(motionSegment({mode:'attack',max:40,elapsed:.26,entryDelay:.045},0,d).a,`${d}:attack:4`);
+}
+console.log('PASS all 96 rest/gait bridges and movement-to-attack contact timing');

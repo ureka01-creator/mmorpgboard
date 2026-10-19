@@ -1,14 +1,14 @@
 import * as THREE from 'three';
-import {motionSegment} from './arena-sprite-motion.mjs?v=2.12';
+import {motionSegment} from './arena-sprite-motion.mjs?v=2.13';
 export {motionSegment};
 export async function loadFlowAssets(){
- const response=await fetch('./assets/sprites/motion/flow.json?v=2.12');if(!response.ok)throw Error('Motion manifest '+response.status);
- const manifest=await response.json();if(manifest.schema!==1||manifest.grid?.[0]!==56||manifest.grid?.[1]!==92||manifest.frames?.length!==160||manifest.pairs?.length!==152)throw Error('Invalid motion manifest');
- const data=await fetch('./assets/sprites/motion/flow.bin.gz?v=2.12');if(!data.ok)throw Error('Motion data '+data.status);
+ const response=await fetch('./assets/sprites/motion/flow.json?v=2.13');if(!response.ok)throw Error('Motion manifest '+response.status);
+ const manifest=await response.json();if(manifest.schema!==2||manifest.grid?.[0]!==56||manifest.grid?.[1]!==92||manifest.frames?.length!==160||manifest.pairs?.length!==240)throw Error('Invalid motion manifest');
+ const data=await fetch('./assets/sprites/motion/flow.bin.gz?v=2.13');if(!data.ok)throw Error('Motion data '+data.status);
  const compressed=await data.arrayBuffer();
  const digest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',compressed)),b=>b.toString(16).padStart(2,'0')).join('');if(digest!==manifest.flowSha256)throw Error('Motion checksum mismatch');
  const stream=new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'));
- const raw=new Int16Array(await new Response(stream).arrayBuffer()),[w,h]=manifest.grid,columns=8,rows=Math.ceil(manifest.pairs.length/columns),pixels=new Uint16Array(w*h*columns*rows*4);
+ const raw=new Int16Array(await new Response(stream).arrayBuffer()),[w,h]=manifest.grid,columns=12,rows=Math.ceil(manifest.pairs.length/columns),pixels=new Uint16Array(w*h*columns*rows*4);
  if(raw.length!==manifest.pairs.length*w*h*4)throw Error('Invalid motion field length');
  for(let p=0;p<manifest.pairs.length;p++)for(let y=0;y<h;y++)for(let x=0;x<w;x++)for(let c=0;c<4;c++)pixels[(((Math.floor(p/columns)*h+y)*w*columns+(p%columns)*w+x)*4+c)]=THREE.DataUtils.toHalfFloat(raw[((p*h+y)*w+x)*4+c]/32767);
  const flow=new THREE.DataTexture(pixels,w*columns,h*rows,THREE.RGBAFormat,THREE.HalfFloatType);flow.minFilter=flow.magFilter=THREE.LinearFilter;flow.needsUpdate=true;
@@ -24,10 +24,11 @@ export async function loadFlowAssets(){
 }
 export function enableFlow(actor,assets){
  for(const atlas of Object.values(actor.pack.atlases))if(assets.manifest.sources[atlas.file]!==atlas.sha256)throw Error('Motion/source artwork mismatch');
- const u={motionSwordBacks:{value:new THREE.Vector2()},motionGait:{value:0},motionNeighbors:{value:new THREE.Vector4()},motionHeadTransform:{value:new THREE.Vector4()},motionHeadRect:{value:new THREE.Vector4()},motionHeadPoints:{value:new THREE.Vector4()},motionHeadFrame:{value:new THREE.Vector2()},motionEnabled:{value:0},motionSwords:{value:0},motionSwordA:{value:new THREE.Vector4()},motionSwordB:{value:new THREE.Vector4()},motionSwordWidths:{value:new THREE.Vector2()},motionFill:{value:assets.fill},motionFlow:{value:assets.flow},motionMask:{value:assets.mask},motionMapA:{value:null},motionMapB:{value:null},motionTransformA:{value:new THREE.Vector4()},motionTransformB:{value:new THREE.Vector4()},motionRectA:{value:new THREE.Vector4()},motionRectB:{value:new THREE.Vector4()},motionFrames:{value:new THREE.Vector2()},motionHeights:{value:new THREE.Vector2()},motionPair:{value:new THREE.Vector2()},motionMix:{value:0}};
+ const u={motionLocomotion:{value:0},motionWalkWeight:{value:1},motionBridgePair:{value:new THREE.Vector2()},motionSwordBacks:{value:new THREE.Vector2()},motionGait:{value:0},motionNeighbors:{value:new THREE.Vector4()},motionHeadTransform:{value:new THREE.Vector4()},motionHeadRect:{value:new THREE.Vector4()},motionHeadPoints:{value:new THREE.Vector4()},motionHeadFrame:{value:new THREE.Vector2()},motionEnabled:{value:0},motionSwords:{value:0},motionSwordA:{value:new THREE.Vector4()},motionSwordB:{value:new THREE.Vector4()},motionSwordWidths:{value:new THREE.Vector2()},motionFill:{value:assets.fill},motionFlow:{value:assets.flow},motionMask:{value:assets.mask},motionMapA:{value:null},motionMapB:{value:null},motionTransformA:{value:new THREE.Vector4()},motionTransformB:{value:new THREE.Vector4()},motionRectA:{value:new THREE.Vector4()},motionRectB:{value:new THREE.Vector4()},motionFrames:{value:new THREE.Vector2()},motionHeights:{value:new THREE.Vector2()},motionPair:{value:new THREE.Vector2()},motionMix:{value:0}};
  const common=`
  uniform sampler2D motionFlow,motionMask,motionFill,motionMapA,motionMapB;
  uniform vec4 motionTransformA,motionTransformB,motionRectA,motionRectB;
+ uniform vec2 motionBridgePair;uniform float motionLocomotion,motionWalkWeight;
  uniform vec2 motionFrames,motionPair,motionHeights,motionSwordWidths,motionSwordBacks;
  uniform float motionMix,motionEnabled,motionSwords,motionBladePass,motionGait;
  uniform vec4 motionNeighbors;
@@ -49,6 +50,12 @@ export function enableFlow(actor,assets){
   float t2=t*t,t3=t2*t;
   return (t3-2.0*t2+t)*start+(-2.0*t3+3.0*t2)*delta+(t3-t2)*end;
  }
+ vec2 runShift(vec2 p){vec4 f=flowAt(p);return gaitShift(p,f);}
+ vec2 locomotionShift(vec2 p){
+  vec4 bridge=pairFlow(p,motionBridgePair);
+  if(motionWalkWeight<.5)return motionWalkWeight*(bridge.xy+runShift(p+bridge.xy));
+  return motionWalkWeight*runShift(p)+(1.0-motionWalkWeight)*bridge.zw;
+ }
  vec2 toWorld(vec2 p){return p*vec2(2.8,4.6)+vec2(-1.4,-1.4);}
  vec2 toUv(vec2 p){return (p-vec2(-1.4,-1.4))/vec2(2.8,4.6);}
  `;
@@ -62,6 +69,7 @@ export function enableFlow(actor,assets){
     if(motionEnabled>.5&&motionBladePass<.5){
      vec4 f=flowAt(vMotionUv);vec2 shift=motionMix<.5?motionMix*f.xy:(1.0-motionMix)*f.zw;
      if(motionGait>.5)shift=gaitShift(vMotionUv,f);
+     if(motionLocomotion>.5)shift=locomotionShift(vMotionUv);
      transformed.xy+=shift*vec2(2.8,4.6);
     }
    `);
@@ -88,6 +96,7 @@ export function enableFlow(actor,assets){
     }else{
      bool useA=motionMix<.5;
      vec4 body=useA?artAt(motionMapA,vMotionUv,motionTransformA,motionRectA,motionFrames.x,motionHeights.x):artAt(motionMapB,vMotionUv,motionTransformB,motionRectB,motionFrames.y,motionHeights.y);
+     if(motionLocomotion>.5&&motionWalkWeight<.5)body=artAt(motionMapA,vMotionUv,motionHeadTransform,motionHeadRect,motionHeadFrame.x,motionHeadFrame.y);
      if(motionBladePass>1.5){
       vec2 offset=toWorld(vMotionUv)-motionHeadPoints.zw;
       vec2 ellipse=(offset+vec2(0.0,.06))/vec2(.15,.25);
@@ -133,7 +142,7 @@ export function enableFlow(actor,assets){
     }
    `);
   };
-  material.customProgramCacheKey=()=> 'sprite-flow-gait-depth-2-'+bladePass;material.needsUpdate=true;
+  material.customProgramCacheKey=()=> 'sprite-flow-locomotion-depth-3-'+bladePass;material.needsUpdate=true;
  }
  const bladeMaterial=actor.sprite.material.clone();bladeMaterial.color=actor.sprite.material.color;const headMaterial=actor.sprite.material.clone();headMaterial.color=actor.sprite.material.color;
  configure(actor.sprite.material,0);configure(bladeMaterial,1);configure(headMaterial,2);
@@ -141,11 +150,17 @@ export function enableFlow(actor,assets){
  const head=new THREE.Mesh(new THREE.PlaneGeometry(4,5),headMaterial);head.position.set(0,1.1,0);head.renderOrder=-.01;head.frustumCulled=false;head.visible=false;head.onBeforeRender=actor.sprite.onBeforeRender;actor.group.add(head);
  actor.flow={assets,u,blade,head,geometry:new THREE.PlaneGeometry(4,5,80,100),active:false};
 }
-export function applyFlow(actor,body,phase,direction){
+export function applyFlow(actor,body,phase,direction,locomotion){
  const f=actor.flow;if(!f)return;
+ if(body.mode==='idle'&&locomotion?.weight>0){phase=locomotion.phase;direction=locomotion.direction;body={...body,mode:'walk'};}
  const segment=motionSegment(body,phase,direction);f.active=!!segment;f.u.motionEnabled.value=segment?1:0;f.blade.visible=f.head.visible=false;if(!segment)return;
  const {assets,u}=f,a=assets.frames.get(segment.a),b=assets.frames.get(segment.b);
- u.motionGait.value=body.mode==='walk'?1:0;
+ u.motionGait.value=body.mode==='walk'||Number.isFinite(body.dashPhase)?1:0;u.motionLocomotion.value=u.motionGait.value&&locomotion&&locomotion.weight<1?1:0;u.motionWalkWeight.value=locomotion?.weight??1;
+ if(u.motionLocomotion.value){
+  const chosen=segment.t<.5?segment.a:segment.b,bridge=assets.pairs.get(`${direction}:idle:0>`+chosen);
+  if(bridge===undefined)throw Error('Missing locomotion bridge '+chosen);
+  u.motionBridgePair.value.set(bridge%assets.columns,Math.floor(bridge/assets.columns));
+ }
  if(u.motionGait.value){
   const i=Number(segment.a.split(':')[2]),previous=assets.pairs.get(`${direction}:run:${(i+11)%12}>${direction}:run:${i}`),next=assets.pairs.get(`${direction}:run:${(i+1)%12}>${direction}:run:${(i+2)%12}`);
   u.motionNeighbors.value.set(previous%assets.columns,Math.floor(previous/assets.columns),next%assets.columns,Math.floor(next/assets.columns));

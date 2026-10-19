@@ -1,0 +1,5453 @@
+{
+  "version": "2.13",
+  "directions": [
+    {
+      "direction": 0,
+      "samples": [
+        {
+          "frame": 0,
+          "time": 0.016666666666666666,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 1,
+          "time": 0.03333333333333333,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 2,
+          "time": 0.05,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 3,
+          "time": 0.06666666666666667,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 4,
+          "time": 0.08333333333333333,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 5,
+          "time": 0.09999999999999999,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 6,
+          "time": 0.11666666666666665,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 7,
+          "time": 0.13333333333333333,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 8,
+          "time": 0.15,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 9,
+          "time": 0.16666666666666666,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 10,
+          "time": 0.18333333333333332,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 11,
+          "time": 0.19999999999999998,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 12,
+          "time": 0.21666666666666665,
+          "mode": "walk",
+          "phase": 0.02455357142857138,
+          "renderPhase": 0.02455357142857138,
+          "weight": 0.26424111765711533,
+          "entry": null
+        },
+        {
+          "frame": 13,
+          "time": 0.2333333333333333,
+          "mode": "walk",
+          "phase": 0.04910714285714276,
+          "renderPhase": 0.04910714285714276,
+          "weight": 0.5939941502901618,
+          "entry": null
+        },
+        {
+          "frame": 14,
+          "time": 0.24999999999999997,
+          "mode": "walk",
+          "phase": 0.07366071428571415,
+          "renderPhase": 0.07366071428571415,
+          "weight": 0.8008517265285441,
+          "entry": null
+        },
+        {
+          "frame": 15,
+          "time": 0.26666666666666666,
+          "mode": "walk",
+          "phase": 0.09821428571428552,
+          "renderPhase": 0.09821428571428552,
+          "weight": 0.9084218055563291,
+          "entry": null
+        },
+        {
+          "frame": 16,
+          "time": 0.2833333333333333,
+          "mode": "walk",
+          "phase": 0.12276785714285689,
+          "renderPhase": 0.12276785714285689,
+          "weight": 0.9595723180054871,
+          "entry": null
+        },
+        {
+          "frame": 17,
+          "time": 0.3,
+          "mode": "walk",
+          "phase": 0.14732142857142827,
+          "renderPhase": 0.14732142857142827,
+          "weight": 0.9826487347633355,
+          "entry": null
+        },
+        {
+          "frame": 18,
+          "time": 0.31666666666666665,
+          "mode": "walk",
+          "phase": 0.17187499999999964,
+          "renderPhase": 0.17187499999999964,
+          "weight": 0.9927049442755639,
+          "entry": null
+        },
+        {
+          "frame": 19,
+          "time": 0.3333333333333333,
+          "mode": "walk",
+          "phase": 0.196428571428571,
+          "renderPhase": 0.196428571428571,
+          "weight": 0.9969808363488774,
+          "entry": null
+        },
+        {
+          "frame": 20,
+          "time": 0.35,
+          "mode": "walk",
+          "phase": 0.22098214285714238,
+          "renderPhase": 0.22098214285714238,
+          "weight": 0.9987659019591332,
+          "entry": null
+        },
+        {
+          "frame": 21,
+          "time": 0.36666666666666664,
+          "mode": "walk",
+          "phase": 0.24553571428571377,
+          "renderPhase": 0.24553571428571377,
+          "weight": 0.9995006007726126,
+          "entry": null
+        },
+        {
+          "frame": 22,
+          "time": 0.3833333333333333,
+          "mode": "walk",
+          "phase": 0.27008928571428514,
+          "renderPhase": 0.27008928571428514,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 23,
+          "time": 0.39999999999999997,
+          "mode": "walk",
+          "phase": 0.29464285714285654,
+          "renderPhase": 0.29464285714285654,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 24,
+          "time": 0.41666666666666663,
+          "mode": "walk",
+          "phase": 0.31919642857142794,
+          "renderPhase": 0.31919642857142794,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 25,
+          "time": 0.4333333333333333,
+          "mode": "walk",
+          "phase": 0.3437499999999994,
+          "renderPhase": 0.3437499999999994,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 26,
+          "time": 0.44999999999999996,
+          "mode": "walk",
+          "phase": 0.36830357142857084,
+          "renderPhase": 0.36830357142857084,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 27,
+          "time": 0.4666666666666666,
+          "mode": "walk",
+          "phase": 0.3928571428571423,
+          "renderPhase": 0.3928571428571423,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 28,
+          "time": 0.4833333333333333,
+          "mode": "walk",
+          "phase": 0.41741071428571375,
+          "renderPhase": 0.41741071428571375,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 29,
+          "time": 0.49999999999999994,
+          "mode": "walk",
+          "phase": 0.4419642857142852,
+          "renderPhase": 0.4419642857142852,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 30,
+          "time": 0.5166666666666666,
+          "mode": "walk",
+          "phase": 0.46651785714285665,
+          "renderPhase": 0.46651785714285665,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 31,
+          "time": 0.5333333333333333,
+          "mode": "walk",
+          "phase": 0.49107142857142816,
+          "renderPhase": 0.49107142857142816,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 32,
+          "time": 0.55,
+          "mode": "walk",
+          "phase": 0.5156249999999997,
+          "renderPhase": 0.5156249999999997,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 33,
+          "time": 0.5666666666666668,
+          "mode": "walk",
+          "phase": 0.5401785714285712,
+          "renderPhase": 0.5401785714285712,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 34,
+          "time": 0.5833333333333335,
+          "mode": "walk",
+          "phase": 0.5647321428571427,
+          "renderPhase": 0.5647321428571427,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 35,
+          "time": 0.6000000000000002,
+          "mode": "walk",
+          "phase": 0.5892857142857142,
+          "renderPhase": 0.5892857142857142,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 36,
+          "time": 0.6166666666666669,
+          "mode": "walk",
+          "phase": 0.6138392857142857,
+          "renderPhase": 0.6138392857142857,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 37,
+          "time": 0.6333333333333336,
+          "mode": "walk",
+          "phase": 0.6383928571428572,
+          "renderPhase": 0.6383928571428572,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 38,
+          "time": 0.6500000000000004,
+          "mode": "walk",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 39,
+          "time": 0.6666666666666671,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.7357588823428834,
+          "entry": null
+        },
+        {
+          "frame": 40,
+          "time": 0.6833333333333338,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.40600584970983633,
+          "entry": null
+        },
+        {
+          "frame": 41,
+          "time": 0.7000000000000005,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.19914827347145433,
+          "entry": null
+        },
+        {
+          "frame": 42,
+          "time": 0.7166666666666672,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.09157819444366995,
+          "entry": null
+        },
+        {
+          "frame": 43,
+          "time": 0.733333333333334,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.04042768199451226,
+          "entry": null
+        },
+        {
+          "frame": 44,
+          "time": 0.7500000000000007,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.01735126523666422,
+          "entry": null
+        },
+        {
+          "frame": 45,
+          "time": 0.7666666666666674,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.007295055724435987,
+          "entry": null
+        },
+        {
+          "frame": 46,
+          "time": 0.7833333333333341,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.0030191636511225383,
+          "entry": null
+        },
+        {
+          "frame": 47,
+          "time": 0.8000000000000008,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.001234098040866764,
+          "entry": null
+        },
+        {
+          "frame": 48,
+          "time": 0.8166666666666675,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.0004993992273873191,
+          "entry": null
+        },
+        {
+          "frame": 49,
+          "time": 0.8333333333333343,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 50,
+          "time": 0.850000000000001,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 51,
+          "time": 0.8666666666666677,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 52,
+          "time": 0.8833333333333344,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 53,
+          "time": 0.9000000000000011,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 54,
+          "time": 0.9166666666666679,
+          "mode": "walk",
+          "phase": 0.6875000000000002,
+          "renderPhase": 0.6875000000000002,
+          "weight": 0.26424111765711655,
+          "entry": null
+        },
+        {
+          "frame": 55,
+          "time": 0.9333333333333346,
+          "mode": "walk",
+          "phase": 0.7120535714285717,
+          "renderPhase": 0.7120535714285717,
+          "weight": 0.5939941502901637,
+          "entry": null
+        },
+        {
+          "frame": 56,
+          "time": 0.9500000000000013,
+          "mode": "walk",
+          "phase": 0.7366071428571432,
+          "renderPhase": 0.7366071428571432,
+          "weight": 0.8008517265285456,
+          "entry": null
+        },
+        {
+          "frame": 57,
+          "time": 0.966666666666668,
+          "mode": "walk",
+          "phase": 0.7611607142857147,
+          "renderPhase": 0.7611607142857147,
+          "weight": 0.90842180555633,
+          "entry": null
+        },
+        {
+          "frame": 58,
+          "time": 0.9833333333333347,
+          "mode": "walk",
+          "phase": 0.7857142857142863,
+          "renderPhase": 0.7857142857142863,
+          "weight": 0.9595723180054877,
+          "entry": null
+        },
+        {
+          "frame": 59,
+          "time": 1.0000000000000013,
+          "mode": "walk",
+          "phase": 0.8102678571428578,
+          "renderPhase": 0.8102678571428578,
+          "weight": 0.9826487347633357,
+          "entry": null
+        },
+        {
+          "frame": 60,
+          "time": 1.016666666666668,
+          "mode": "walk",
+          "phase": 0.8348214285714292,
+          "renderPhase": 0.8348214285714292,
+          "weight": 0.992704944275564,
+          "entry": null
+        },
+        {
+          "frame": 61,
+          "time": 1.0333333333333345,
+          "mode": "walk",
+          "phase": 0.8593750000000006,
+          "renderPhase": 0.8593750000000006,
+          "weight": 0.9969808363488775,
+          "entry": null
+        },
+        {
+          "frame": 62,
+          "time": 1.0500000000000012,
+          "mode": "walk",
+          "phase": 0.883928571428572,
+          "renderPhase": 0.883928571428572,
+          "weight": 0.9987659019591333,
+          "entry": null
+        },
+        {
+          "frame": 63,
+          "time": 1.0666666666666678,
+          "mode": "walk",
+          "phase": 0.9084821428571433,
+          "renderPhase": 0.9084821428571433,
+          "weight": 0.9995006007726127,
+          "entry": null
+        },
+        {
+          "frame": 64,
+          "time": 1.0833333333333344,
+          "mode": "walk",
+          "phase": 0.9330357142857149,
+          "renderPhase": 0.9330357142857149,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 65,
+          "time": 1.100000000000001,
+          "mode": "walk",
+          "phase": 0.9575892857142864,
+          "renderPhase": 0.9575892857142864,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 66,
+          "time": 1.1166666666666676,
+          "mode": "walk",
+          "phase": 0.9821428571428579,
+          "renderPhase": 0.9821428571428579,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 67,
+          "time": 1.1333333333333342,
+          "mode": "walk",
+          "phase": 1.0066964285714293,
+          "renderPhase": 1.0066964285714293,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 68,
+          "time": 1.1500000000000008,
+          "mode": "walk",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 69,
+          "time": 1.1666666666666674,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 70,
+          "time": 1.183333333333334,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 71,
+          "time": 1.2000000000000006,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 72,
+          "time": 1.2166666666666672,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 73,
+          "time": 1.2333333333333338,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 74,
+          "time": 1.2500000000000004,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 75,
+          "time": 1.266666666666667,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 76,
+          "time": 1.2833333333333337,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 77,
+          "time": 1.3000000000000003,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 78,
+          "time": 1.3166666666666669,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 79,
+          "time": 1.3333333333333335,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 80,
+          "time": 1.35,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 81,
+          "time": 1.3666666666666667,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 82,
+          "time": 1.3833333333333333,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 83,
+          "time": 1.4,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 84,
+          "time": 1.4166666666666665,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 85,
+          "time": 1.4333333333333331,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 86,
+          "time": 1.4499999999999997,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 87,
+          "time": 1.4666666666666663,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 88,
+          "time": 1.483333333333333,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 89,
+          "time": 1.4999999999999996,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 90,
+          "time": 1.5166666666666662,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 91,
+          "time": 1.5333333333333328,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 92,
+          "time": 1.5499999999999994,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 93,
+          "time": 1.566666666666666,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 94,
+          "time": 1.5833333333333326,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 95,
+          "time": 1.5999999999999992,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 96,
+          "time": 1.6166666666666658,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 97,
+          "time": 1.6333333333333324,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 98,
+          "time": 1.649999999999999,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 99,
+          "time": 1.6666666666666656,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 100,
+          "time": 1.6833333333333322,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 101,
+          "time": 1.6999999999999988,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 102,
+          "time": 1.7166666666666655,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 103,
+          "time": 1.733333333333332,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 104,
+          "time": 1.7499999999999987,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 105,
+          "time": 1.7666666666666653,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 106,
+          "time": 1.7833333333333319,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 107,
+          "time": 1.7999999999999985,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 108,
+          "time": 1.816666666666665,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 109,
+          "time": 1.8333333333333317,
+          "mode": "idle",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 110,
+          "time": 1.8499999999999983,
+          "mode": "idle",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 111,
+          "time": 1.866666666666665,
+          "mode": "walk",
+          "phase": 1.055803571428572,
+          "renderPhase": 1.055803571428572,
+          "weight": 0.2642411176571141,
+          "entry": null
+        },
+        {
+          "frame": 112,
+          "time": 1.8833333333333315,
+          "mode": "walk",
+          "phase": 1.0803571428571435,
+          "renderPhase": 1.0803571428571435,
+          "weight": 0.59399415029016,
+          "entry": null
+        },
+        {
+          "frame": 113,
+          "time": 1.8999999999999981,
+          "mode": "walk",
+          "phase": 1.1049107142857149,
+          "renderPhase": 1.1049107142857149,
+          "weight": 0.8008517265285426,
+          "entry": null
+        },
+        {
+          "frame": 114,
+          "time": 1.9166666666666647,
+          "mode": "walk",
+          "phase": 1.1294642857142863,
+          "renderPhase": 1.1294642857142863,
+          "weight": 0.908421805556328,
+          "entry": null
+        },
+        {
+          "frame": 115,
+          "time": 1.9333333333333313,
+          "mode": "walk",
+          "phase": 1.1540178571428577,
+          "renderPhase": 1.1540178571428577,
+          "weight": 0.9595723180054866,
+          "entry": null
+        },
+        {
+          "frame": 116,
+          "time": 1.949999999999998,
+          "mode": "walk",
+          "phase": 1.178571428571429,
+          "renderPhase": 1.178571428571429,
+          "weight": 0.9826487347633351,
+          "entry": null
+        },
+        {
+          "frame": 117,
+          "time": 1.9666666666666646,
+          "mode": "walk",
+          "phase": 1.2031250000000004,
+          "renderPhase": 1.2031250000000004,
+          "weight": 0.9927049442755637,
+          "entry": null
+        },
+        {
+          "frame": 118,
+          "time": 1.9833333333333312,
+          "mode": "walk",
+          "phase": 1.2276785714285718,
+          "renderPhase": 1.2276785714285718,
+          "weight": 0.9969808363488772,
+          "entry": null
+        },
+        {
+          "frame": 119,
+          "time": 1.9999999999999978,
+          "mode": "walk",
+          "phase": 1.2522321428571432,
+          "renderPhase": 1.2522321428571432,
+          "weight": 0.9987659019591332,
+          "entry": null
+        },
+        {
+          "frame": 120,
+          "time": 2.0166666666666644,
+          "mode": "walk",
+          "phase": 1.2767857142857146,
+          "renderPhase": 1.2767857142857146,
+          "weight": 0.9995006007726127,
+          "entry": null
+        },
+        {
+          "frame": 121,
+          "time": 2.033333333333331,
+          "mode": "walk",
+          "phase": 1.301339285714286,
+          "renderPhase": 1.301339285714286,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 122,
+          "time": 2.0499999999999976,
+          "mode": "walk",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.3258928571428574,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 123,
+          "time": 2.066666666666664,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.3779761904761907,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 124,
+          "time": 2.083333333333331,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.4300595238095242,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 125,
+          "time": 2.0999999999999974,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.4821428571428574,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 126,
+          "time": 2.116666666666664,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.5342261904761907,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 127,
+          "time": 2.1333333333333306,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.5863095238095242,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 128,
+          "time": 2.1499999999999972,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.6383928571428574,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 129,
+          "time": 2.166666666666664,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.6904761904761907,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 130,
+          "time": 2.1833333333333305,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.7425595238095242,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 131,
+          "time": 2.199999999999997,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.7946428571428574,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 132,
+          "time": 2.2166666666666637,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.8467261904761907,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 133,
+          "time": 2.2333333333333303,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.8988095238095237,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 134,
+          "time": 2.249999999999997,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.950892857142857,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 135,
+          "time": 2.2666666666666635,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.00297619047619,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 136,
+          "time": 2.28333333333333,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.0550595238095233,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 137,
+          "time": 2.2999999999999967,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.1071428571428563,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 138,
+          "time": 2.3166666666666633,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.1592261904761894,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 139,
+          "time": 2.33333333333333,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.211309523809523,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 140,
+          "time": 2.3499999999999965,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.263392857142856,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 141,
+          "time": 2.366666666666663,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.315476190476189,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 142,
+          "time": 2.3833333333333298,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.3675595238095224,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 143,
+          "time": 2.3999999999999964,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.419642857142856,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 144,
+          "time": 2.416666666666663,
+          "mode": "walk",
+          "phase": 1.377976190476191,
+          "renderPhase": 2.47172619047619,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 145,
+          "time": 2.4333333333333296,
+          "mode": "walk",
+          "phase": 1.4025297619047623,
+          "renderPhase": 2.496279761904761,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 146,
+          "time": 2.449999999999996,
+          "mode": "walk",
+          "phase": 1.4270833333333337,
+          "renderPhase": 2.520833333333332,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 147,
+          "time": 2.466666666666663,
+          "mode": "walk",
+          "phase": 1.451636904761905,
+          "renderPhase": 2.5453869047619038,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 148,
+          "time": 2.4833333333333294,
+          "mode": "walk",
+          "phase": 1.4761904761904765,
+          "renderPhase": 2.5699404761904754,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 149,
+          "time": 2.499999999999996,
+          "mode": "walk",
+          "phase": 1.500744047619048,
+          "renderPhase": 2.5944940476190466,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 150,
+          "time": 2.5166666666666626,
+          "mode": "walk",
+          "phase": 1.5252976190476193,
+          "renderPhase": 2.6190476190476177,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 151,
+          "time": 2.533333333333329,
+          "mode": "walk",
+          "phase": 1.5498511904761907,
+          "renderPhase": 2.6436011904761894,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 152,
+          "time": 2.549999999999996,
+          "mode": "walk",
+          "phase": 1.574404761904762,
+          "renderPhase": 2.668154761904761,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 153,
+          "time": 2.5666666666666624,
+          "mode": "walk",
+          "phase": 1.5989583333333335,
+          "renderPhase": 2.692708333333332,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 154,
+          "time": 2.583333333333329,
+          "mode": "walk",
+          "phase": 1.6235119047619049,
+          "renderPhase": 2.7172619047619033,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 155,
+          "time": 2.5999999999999956,
+          "mode": "walk",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 156,
+          "time": 2.6166666666666623,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.7357588823428859,
+          "entry": null
+        },
+        {
+          "frame": 157,
+          "time": 2.633333333333329,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.40600584970983994,
+          "entry": null
+        },
+        {
+          "frame": 158,
+          "time": 2.6499999999999955,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.1991482734714573,
+          "entry": null
+        },
+        {
+          "frame": 159,
+          "time": 2.666666666666662,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.0915781944436719,
+          "entry": null
+        },
+        {
+          "frame": 160,
+          "time": 2.6833333333333287,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.04042768199451338,
+          "entry": null
+        },
+        {
+          "frame": 161,
+          "time": 2.6999999999999953,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.017351265236664817,
+          "entry": null
+        },
+        {
+          "frame": 162,
+          "time": 2.716666666666662,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.007295055724436285,
+          "entry": null
+        },
+        {
+          "frame": 163,
+          "time": 2.7333333333333285,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.0030191636511226814,
+          "entry": null
+        },
+        {
+          "frame": 164,
+          "time": 2.749999999999995,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.0012340980408668304,
+          "entry": null
+        },
+        {
+          "frame": 165,
+          "time": 2.7666666666666617,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.0004993992273873493,
+          "entry": null
+        },
+        {
+          "frame": 166,
+          "time": 2.7833333333333283,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 167,
+          "time": 2.799999999999995,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 168,
+          "time": 2.8166666666666615,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 169,
+          "time": 2.833333333333328,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 170,
+          "time": 2.8499999999999948,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 171,
+          "time": 2.8666666666666614,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 172,
+          "time": 2.883333333333328,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 173,
+          "time": 2.8999999999999946,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 174,
+          "time": 2.916666666666661,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 175,
+          "time": 2.933333333333328,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 176,
+          "time": 2.9499999999999944,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 177,
+          "time": 2.966666666666661,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 178,
+          "time": 2.9833333333333276,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 179,
+          "time": 2.9999999999999942,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        }
+      ],
+      "changes": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 623951,
+        "13": 710581,
+        "14": 380614,
+        "15": 228775,
+        "16": 425036,
+        "17": 523738,
+        "18": 179049,
+        "19": 487562,
+        "20": 619188,
+        "21": 517481,
+        "22": 121014,
+        "23": 361947,
+        "24": 337868,
+        "25": 350758,
+        "26": 433122,
+        "27": 492512,
+        "28": 243965,
+        "29": 646578,
+        "30": 811488,
+        "31": 687161,
+        "32": 139398,
+        "33": 642173,
+        "34": 731793,
+        "35": 607600,
+        "36": 540733,
+        "37": 529142,
+        "38": 316851,
+        "39": 253862,
+        "40": 490176,
+        "41": 253444,
+        "42": 142791,
+        "43": 68250,
+        "44": 31810,
+        "45": 15384,
+        "46": 8072,
+        "47": 1511,
+        "48": 1808,
+        "49": 10204,
+        "50": 0,
+        "51": 0,
+        "52": 0,
+        "53": 0,
+        "54": 301136,
+        "55": 526017,
+        "56": 551517,
+        "57": 550773,
+        "58": 612506,
+        "59": 594732,
+        "60": 430774,
+        "61": 239616,
+        "62": 471557,
+        "63": 394557,
+        "64": 285539,
+        "65": 324634,
+        "66": 471808,
+        "67": 256968,
+        "68": 499162,
+        "69": 0,
+        "70": 666402,
+        "71": 875529,
+        "72": 513827,
+        "73": 462247,
+        "74": 916633,
+        "75": 673702,
+        "76": 423803,
+        "77": 272051,
+        "78": 482815,
+        "79": 281862,
+        "80": 287735,
+        "81": 617113,
+        "82": 847091,
+        "83": 784240,
+        "84": 1129599,
+        "85": 958688,
+        "86": 0,
+        "87": 411839,
+        "88": 464252,
+        "89": 487647,
+        "90": 522091,
+        "91": 760926,
+        "92": 576875,
+        "93": 590440,
+        "94": 599193,
+        "95": 570106,
+        "96": 451690,
+        "97": 466039,
+        "98": 469917,
+        "99": 482243,
+        "100": 864741,
+        "101": 425206,
+        "102": 401451,
+        "103": 364576,
+        "104": 307211,
+        "105": 235045,
+        "106": 121062,
+        "107": 1897,
+        "108": 0,
+        "109": 10228,
+        "110": 0,
+        "111": 591268,
+        "112": 664620,
+        "113": 216582,
+        "114": 504019,
+        "115": 359624,
+        "116": 219616,
+        "117": 537446,
+        "118": 617478,
+        "119": 441009,
+        "120": 188532,
+        "121": 373446,
+        "122": 345760,
+        "123": 706760,
+        "124": 265151,
+        "125": 1041237,
+        "126": 457862,
+        "127": 944698,
+        "128": 799793,
+        "129": 208483,
+        "130": 751219,
+        "131": 802660,
+        "132": 616206,
+        "133": 639892,
+        "134": 522863,
+        "135": 579956,
+        "136": 760362,
+        "137": 640573,
+        "138": 691444,
+        "139": 702601,
+        "140": 668741,
+        "141": 514894,
+        "142": 619956,
+        "143": 585989,
+        "144": 1032007,
+        "145": 623253,
+        "146": 366728,
+        "147": 697388,
+        "148": 692465,
+        "149": 581443,
+        "150": 538842,
+        "151": 509412,
+        "152": 246190,
+        "153": 290317,
+        "154": 501591,
+        "155": 511576,
+        "156": 411140,
+        "157": 557545,
+        "158": 374576,
+        "159": 232555,
+        "160": 122237,
+        "161": 56636,
+        "162": 25451,
+        "163": 11188,
+        "164": 6829,
+        "165": 1224,
+        "166": 10193,
+        "167": 0,
+        "168": 0,
+        "169": 0,
+        "170": 0,
+        "171": 0,
+        "172": 0,
+        "173": 0,
+        "174": 0,
+        "175": 0,
+        "176": 0,
+        "177": 0,
+        "178": 0,
+        "179": 0
+      }
+    },
+    {
+      "direction": 1,
+      "samples": [
+        {
+          "frame": 38,
+          "time": 0.6500000000000004,
+          "mode": "walk",
+          "phase": 0.6629464285714282,
+          "renderPhase": 0.6629464285714282,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 39,
+          "time": 0.6666666666666671,
+          "mode": "idle",
+          "phase": 0.6629464285714282,
+          "renderPhase": 0.6629464285714282,
+          "weight": 0.7357588823428834,
+          "entry": null
+        },
+        {
+          "frame": 40,
+          "time": 0.6833333333333338,
+          "mode": "idle",
+          "phase": 0.6629464285714282,
+          "renderPhase": 0.6629464285714282,
+          "weight": 0.40600584970983633,
+          "entry": null
+        },
+        {
+          "frame": 41,
+          "time": 0.7000000000000005,
+          "mode": "idle",
+          "phase": 0.6629464285714282,
+          "renderPhase": 0.6629464285714282,
+          "weight": 0.19914827347145433,
+          "entry": null
+        },
+        {
+          "frame": 42,
+          "time": 0.7166666666666672,
+          "mode": "idle",
+          "phase": 0.6629464285714282,
+          "renderPhase": 0.6629464285714282,
+          "weight": 0.09157819444366995,
+          "entry": null
+        },
+        {
+          "frame": 53,
+          "time": 0.9000000000000011,
+          "mode": "idle",
+          "phase": 0.6629464285714282,
+          "renderPhase": 0.6629464285714282,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 54,
+          "time": 0.9166666666666679,
+          "mode": "walk",
+          "phase": 0.6874999999999997,
+          "renderPhase": 0.6874999999999997,
+          "weight": 0.26424111765711655,
+          "entry": null
+        },
+        {
+          "frame": 68,
+          "time": 1.1500000000000008,
+          "mode": "walk",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 69,
+          "time": 1.1666666666666674,
+          "mode": "attack",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 70,
+          "time": 1.183333333333334,
+          "mode": "attack",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 71,
+          "time": 1.2000000000000006,
+          "mode": "attack",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 72,
+          "time": 1.2166666666666672,
+          "mode": "attack",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 73,
+          "time": 1.2333333333333338,
+          "mode": "attack",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 74,
+          "time": 1.2500000000000004,
+          "mode": "attack",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 75,
+          "time": 1.266666666666667,
+          "mode": "attack",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 110,
+          "time": 1.8499999999999983,
+          "mode": "idle",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 111,
+          "time": 1.866666666666665,
+          "mode": "walk",
+          "phase": 1.0558035714285718,
+          "renderPhase": 1.0558035714285718,
+          "weight": 0.2642411176571141,
+          "entry": null
+        },
+        {
+          "frame": 112,
+          "time": 1.8833333333333315,
+          "mode": "walk",
+          "phase": 1.0803571428571432,
+          "renderPhase": 1.0803571428571432,
+          "weight": 0.59399415029016,
+          "entry": null
+        },
+        {
+          "frame": 122,
+          "time": 2.0499999999999976,
+          "mode": "walk",
+          "phase": 1.3258928571428572,
+          "renderPhase": 1.3258928571428572,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 123,
+          "time": 2.066666666666664,
+          "mode": "dodge",
+          "phase": 1.3258928571428572,
+          "renderPhase": 1.3779761904761905,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 124,
+          "time": 2.083333333333331,
+          "mode": "dodge",
+          "phase": 1.3258928571428572,
+          "renderPhase": 1.430059523809524,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 143,
+          "time": 2.3999999999999964,
+          "mode": "dodge",
+          "phase": 1.3258928571428572,
+          "renderPhase": 2.419642857142855,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 144,
+          "time": 2.416666666666663,
+          "mode": "walk",
+          "phase": 1.3779761904761902,
+          "renderPhase": 2.471726190476188,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 145,
+          "time": 2.4333333333333296,
+          "mode": "walk",
+          "phase": 1.4025297619047616,
+          "renderPhase": 2.4962797619047596,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 155,
+          "time": 2.5999999999999956,
+          "mode": "walk",
+          "phase": 1.6480654761904756,
+          "renderPhase": 2.7418154761904736,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 156,
+          "time": 2.6166666666666623,
+          "mode": "idle",
+          "phase": 1.6480654761904756,
+          "renderPhase": 2.7418154761904736,
+          "weight": 0.7357588823428859,
+          "entry": null
+        },
+        {
+          "frame": 157,
+          "time": 2.633333333333329,
+          "mode": "idle",
+          "phase": 1.6480654761904756,
+          "renderPhase": 2.7418154761904736,
+          "weight": 0.40600584970983994,
+          "entry": null
+        },
+        {
+          "frame": 160,
+          "time": 2.6833333333333287,
+          "mode": "idle",
+          "phase": 1.6480654761904756,
+          "renderPhase": 2.7418154761904736,
+          "weight": 0.04042768199451338,
+          "entry": null
+        },
+        {
+          "frame": 170,
+          "time": 2.8499999999999948,
+          "mode": "idle",
+          "phase": 1.6480654761904756,
+          "renderPhase": 2.7418154761904736,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 179,
+          "time": 2.9999999999999942,
+          "mode": "idle",
+          "phase": 1.6480654761904756,
+          "renderPhase": 2.7418154761904736,
+          "weight": 0,
+          "entry": null
+        }
+      ],
+      "changes": {
+        "39": 447713,
+        "40": 674489,
+        "41": 428429,
+        "42": 264778,
+        "53": 227662,
+        "54": 510460,
+        "68": 1022137,
+        "69": 0,
+        "70": 616087,
+        "71": 837371,
+        "72": 506364,
+        "73": 448180,
+        "74": 741761,
+        "75": 546654,
+        "110": 866286,
+        "111": 679701,
+        "112": 700387,
+        "122": 830761,
+        "123": 504998,
+        "124": 423550,
+        "143": 192777,
+        "144": 697623,
+        "145": 326977,
+        "155": 555967,
+        "156": 607813,
+        "157": 804586,
+        "160": 702019,
+        "170": 157549,
+        "179": 0
+      }
+    },
+    {
+      "direction": 2,
+      "samples": [
+        {
+          "frame": 0,
+          "time": 0.016666666666666666,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 1,
+          "time": 0.03333333333333333,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 2,
+          "time": 0.05,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 3,
+          "time": 0.06666666666666667,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 4,
+          "time": 0.08333333333333333,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 5,
+          "time": 0.09999999999999999,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 6,
+          "time": 0.11666666666666665,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 7,
+          "time": 0.13333333333333333,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 8,
+          "time": 0.15,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 9,
+          "time": 0.16666666666666666,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 10,
+          "time": 0.18333333333333332,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 11,
+          "time": 0.19999999999999998,
+          "mode": "idle",
+          "phase": 0,
+          "renderPhase": 0,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 12,
+          "time": 0.21666666666666665,
+          "mode": "walk",
+          "phase": 0.02455357142857138,
+          "renderPhase": 0.02455357142857138,
+          "weight": 0.26424111765711533,
+          "entry": null
+        },
+        {
+          "frame": 13,
+          "time": 0.2333333333333333,
+          "mode": "walk",
+          "phase": 0.04910714285714276,
+          "renderPhase": 0.04910714285714276,
+          "weight": 0.5939941502901618,
+          "entry": null
+        },
+        {
+          "frame": 14,
+          "time": 0.24999999999999997,
+          "mode": "walk",
+          "phase": 0.07366071428571415,
+          "renderPhase": 0.07366071428571415,
+          "weight": 0.8008517265285441,
+          "entry": null
+        },
+        {
+          "frame": 15,
+          "time": 0.26666666666666666,
+          "mode": "walk",
+          "phase": 0.09821428571428552,
+          "renderPhase": 0.09821428571428552,
+          "weight": 0.9084218055563291,
+          "entry": null
+        },
+        {
+          "frame": 16,
+          "time": 0.2833333333333333,
+          "mode": "walk",
+          "phase": 0.12276785714285689,
+          "renderPhase": 0.12276785714285689,
+          "weight": 0.9595723180054871,
+          "entry": null
+        },
+        {
+          "frame": 17,
+          "time": 0.3,
+          "mode": "walk",
+          "phase": 0.14732142857142827,
+          "renderPhase": 0.14732142857142827,
+          "weight": 0.9826487347633355,
+          "entry": null
+        },
+        {
+          "frame": 18,
+          "time": 0.31666666666666665,
+          "mode": "walk",
+          "phase": 0.17187499999999964,
+          "renderPhase": 0.17187499999999964,
+          "weight": 0.9927049442755639,
+          "entry": null
+        },
+        {
+          "frame": 19,
+          "time": 0.3333333333333333,
+          "mode": "walk",
+          "phase": 0.196428571428571,
+          "renderPhase": 0.196428571428571,
+          "weight": 0.9969808363488774,
+          "entry": null
+        },
+        {
+          "frame": 20,
+          "time": 0.35,
+          "mode": "walk",
+          "phase": 0.22098214285714238,
+          "renderPhase": 0.22098214285714238,
+          "weight": 0.9987659019591332,
+          "entry": null
+        },
+        {
+          "frame": 21,
+          "time": 0.36666666666666664,
+          "mode": "walk",
+          "phase": 0.24553571428571377,
+          "renderPhase": 0.24553571428571377,
+          "weight": 0.9995006007726126,
+          "entry": null
+        },
+        {
+          "frame": 22,
+          "time": 0.3833333333333333,
+          "mode": "walk",
+          "phase": 0.27008928571428514,
+          "renderPhase": 0.27008928571428514,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 23,
+          "time": 0.39999999999999997,
+          "mode": "walk",
+          "phase": 0.29464285714285654,
+          "renderPhase": 0.29464285714285654,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 24,
+          "time": 0.41666666666666663,
+          "mode": "walk",
+          "phase": 0.31919642857142794,
+          "renderPhase": 0.31919642857142794,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 25,
+          "time": 0.4333333333333333,
+          "mode": "walk",
+          "phase": 0.3437499999999994,
+          "renderPhase": 0.3437499999999994,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 26,
+          "time": 0.44999999999999996,
+          "mode": "walk",
+          "phase": 0.36830357142857084,
+          "renderPhase": 0.36830357142857084,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 27,
+          "time": 0.4666666666666666,
+          "mode": "walk",
+          "phase": 0.3928571428571423,
+          "renderPhase": 0.3928571428571423,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 28,
+          "time": 0.4833333333333333,
+          "mode": "walk",
+          "phase": 0.41741071428571375,
+          "renderPhase": 0.41741071428571375,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 29,
+          "time": 0.49999999999999994,
+          "mode": "walk",
+          "phase": 0.4419642857142852,
+          "renderPhase": 0.4419642857142852,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 30,
+          "time": 0.5166666666666666,
+          "mode": "walk",
+          "phase": 0.46651785714285665,
+          "renderPhase": 0.46651785714285665,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 31,
+          "time": 0.5333333333333333,
+          "mode": "walk",
+          "phase": 0.49107142857142816,
+          "renderPhase": 0.49107142857142816,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 32,
+          "time": 0.55,
+          "mode": "walk",
+          "phase": 0.5156249999999997,
+          "renderPhase": 0.5156249999999997,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 33,
+          "time": 0.5666666666666668,
+          "mode": "walk",
+          "phase": 0.5401785714285712,
+          "renderPhase": 0.5401785714285712,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 34,
+          "time": 0.5833333333333335,
+          "mode": "walk",
+          "phase": 0.5647321428571427,
+          "renderPhase": 0.5647321428571427,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 35,
+          "time": 0.6000000000000002,
+          "mode": "walk",
+          "phase": 0.5892857142857142,
+          "renderPhase": 0.5892857142857142,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 36,
+          "time": 0.6166666666666669,
+          "mode": "walk",
+          "phase": 0.6138392857142857,
+          "renderPhase": 0.6138392857142857,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 37,
+          "time": 0.6333333333333336,
+          "mode": "walk",
+          "phase": 0.6383928571428572,
+          "renderPhase": 0.6383928571428572,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 38,
+          "time": 0.6500000000000004,
+          "mode": "walk",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 39,
+          "time": 0.6666666666666671,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.7357588823428834,
+          "entry": null
+        },
+        {
+          "frame": 40,
+          "time": 0.6833333333333338,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.40600584970983633,
+          "entry": null
+        },
+        {
+          "frame": 41,
+          "time": 0.7000000000000005,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.19914827347145433,
+          "entry": null
+        },
+        {
+          "frame": 42,
+          "time": 0.7166666666666672,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.09157819444366995,
+          "entry": null
+        },
+        {
+          "frame": 43,
+          "time": 0.733333333333334,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.04042768199451226,
+          "entry": null
+        },
+        {
+          "frame": 44,
+          "time": 0.7500000000000007,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.01735126523666422,
+          "entry": null
+        },
+        {
+          "frame": 45,
+          "time": 0.7666666666666674,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.007295055724435987,
+          "entry": null
+        },
+        {
+          "frame": 46,
+          "time": 0.7833333333333341,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.0030191636511225383,
+          "entry": null
+        },
+        {
+          "frame": 47,
+          "time": 0.8000000000000008,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.001234098040866764,
+          "entry": null
+        },
+        {
+          "frame": 48,
+          "time": 0.8166666666666675,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.0004993992273873191,
+          "entry": null
+        },
+        {
+          "frame": 49,
+          "time": 0.8333333333333343,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 50,
+          "time": 0.850000000000001,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 51,
+          "time": 0.8666666666666677,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 52,
+          "time": 0.8833333333333344,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 53,
+          "time": 0.9000000000000011,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 54,
+          "time": 0.9166666666666679,
+          "mode": "walk",
+          "phase": 0.6875000000000002,
+          "renderPhase": 0.6875000000000002,
+          "weight": 0.26424111765711655,
+          "entry": null
+        },
+        {
+          "frame": 55,
+          "time": 0.9333333333333346,
+          "mode": "walk",
+          "phase": 0.7120535714285717,
+          "renderPhase": 0.7120535714285717,
+          "weight": 0.5939941502901637,
+          "entry": null
+        },
+        {
+          "frame": 56,
+          "time": 0.9500000000000013,
+          "mode": "walk",
+          "phase": 0.7366071428571432,
+          "renderPhase": 0.7366071428571432,
+          "weight": 0.8008517265285456,
+          "entry": null
+        },
+        {
+          "frame": 57,
+          "time": 0.966666666666668,
+          "mode": "walk",
+          "phase": 0.7611607142857147,
+          "renderPhase": 0.7611607142857147,
+          "weight": 0.90842180555633,
+          "entry": null
+        },
+        {
+          "frame": 58,
+          "time": 0.9833333333333347,
+          "mode": "walk",
+          "phase": 0.7857142857142863,
+          "renderPhase": 0.7857142857142863,
+          "weight": 0.9595723180054877,
+          "entry": null
+        },
+        {
+          "frame": 59,
+          "time": 1.0000000000000013,
+          "mode": "walk",
+          "phase": 0.8102678571428578,
+          "renderPhase": 0.8102678571428578,
+          "weight": 0.9826487347633357,
+          "entry": null
+        },
+        {
+          "frame": 60,
+          "time": 1.016666666666668,
+          "mode": "walk",
+          "phase": 0.8348214285714292,
+          "renderPhase": 0.8348214285714292,
+          "weight": 0.992704944275564,
+          "entry": null
+        },
+        {
+          "frame": 61,
+          "time": 1.0333333333333345,
+          "mode": "walk",
+          "phase": 0.8593750000000006,
+          "renderPhase": 0.8593750000000006,
+          "weight": 0.9969808363488775,
+          "entry": null
+        },
+        {
+          "frame": 62,
+          "time": 1.0500000000000012,
+          "mode": "walk",
+          "phase": 0.883928571428572,
+          "renderPhase": 0.883928571428572,
+          "weight": 0.9987659019591333,
+          "entry": null
+        },
+        {
+          "frame": 63,
+          "time": 1.0666666666666678,
+          "mode": "walk",
+          "phase": 0.9084821428571433,
+          "renderPhase": 0.9084821428571433,
+          "weight": 0.9995006007726127,
+          "entry": null
+        },
+        {
+          "frame": 64,
+          "time": 1.0833333333333344,
+          "mode": "walk",
+          "phase": 0.9330357142857149,
+          "renderPhase": 0.9330357142857149,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 65,
+          "time": 1.100000000000001,
+          "mode": "walk",
+          "phase": 0.9575892857142864,
+          "renderPhase": 0.9575892857142864,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 66,
+          "time": 1.1166666666666676,
+          "mode": "walk",
+          "phase": 0.9821428571428579,
+          "renderPhase": 0.9821428571428579,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 67,
+          "time": 1.1333333333333342,
+          "mode": "walk",
+          "phase": 1.0066964285714293,
+          "renderPhase": 1.0066964285714293,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 68,
+          "time": 1.1500000000000008,
+          "mode": "walk",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 69,
+          "time": 1.1666666666666674,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 70,
+          "time": 1.183333333333334,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 71,
+          "time": 1.2000000000000006,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 72,
+          "time": 1.2166666666666672,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 73,
+          "time": 1.2333333333333338,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 74,
+          "time": 1.2500000000000004,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 75,
+          "time": 1.266666666666667,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 76,
+          "time": 1.2833333333333337,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 77,
+          "time": 1.3000000000000003,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 78,
+          "time": 1.3166666666666669,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 79,
+          "time": 1.3333333333333335,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 80,
+          "time": 1.35,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 81,
+          "time": 1.3666666666666667,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 82,
+          "time": 1.3833333333333333,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 83,
+          "time": 1.4,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 84,
+          "time": 1.4166666666666665,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 85,
+          "time": 1.4333333333333331,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 86,
+          "time": 1.4499999999999997,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 87,
+          "time": 1.4666666666666663,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 88,
+          "time": 1.483333333333333,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 89,
+          "time": 1.4999999999999996,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 90,
+          "time": 1.5166666666666662,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 91,
+          "time": 1.5333333333333328,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 92,
+          "time": 1.5499999999999994,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 93,
+          "time": 1.566666666666666,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 94,
+          "time": 1.5833333333333326,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 95,
+          "time": 1.5999999999999992,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 96,
+          "time": 1.6166666666666658,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 97,
+          "time": 1.6333333333333324,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 98,
+          "time": 1.649999999999999,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 99,
+          "time": 1.6666666666666656,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 100,
+          "time": 1.6833333333333322,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 101,
+          "time": 1.6999999999999988,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 102,
+          "time": 1.7166666666666655,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 103,
+          "time": 1.733333333333332,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 104,
+          "time": 1.7499999999999987,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 105,
+          "time": 1.7666666666666653,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 106,
+          "time": 1.7833333333333319,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 107,
+          "time": 1.7999999999999985,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 108,
+          "time": 1.816666666666665,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 109,
+          "time": 1.8333333333333317,
+          "mode": "idle",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 110,
+          "time": 1.8499999999999983,
+          "mode": "idle",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 111,
+          "time": 1.866666666666665,
+          "mode": "walk",
+          "phase": 1.055803571428572,
+          "renderPhase": 1.055803571428572,
+          "weight": 0.2642411176571141,
+          "entry": null
+        },
+        {
+          "frame": 112,
+          "time": 1.8833333333333315,
+          "mode": "walk",
+          "phase": 1.0803571428571435,
+          "renderPhase": 1.0803571428571435,
+          "weight": 0.59399415029016,
+          "entry": null
+        },
+        {
+          "frame": 113,
+          "time": 1.8999999999999981,
+          "mode": "walk",
+          "phase": 1.1049107142857149,
+          "renderPhase": 1.1049107142857149,
+          "weight": 0.8008517265285426,
+          "entry": null
+        },
+        {
+          "frame": 114,
+          "time": 1.9166666666666647,
+          "mode": "walk",
+          "phase": 1.1294642857142863,
+          "renderPhase": 1.1294642857142863,
+          "weight": 0.908421805556328,
+          "entry": null
+        },
+        {
+          "frame": 115,
+          "time": 1.9333333333333313,
+          "mode": "walk",
+          "phase": 1.1540178571428577,
+          "renderPhase": 1.1540178571428577,
+          "weight": 0.9595723180054866,
+          "entry": null
+        },
+        {
+          "frame": 116,
+          "time": 1.949999999999998,
+          "mode": "walk",
+          "phase": 1.178571428571429,
+          "renderPhase": 1.178571428571429,
+          "weight": 0.9826487347633351,
+          "entry": null
+        },
+        {
+          "frame": 117,
+          "time": 1.9666666666666646,
+          "mode": "walk",
+          "phase": 1.2031250000000004,
+          "renderPhase": 1.2031250000000004,
+          "weight": 0.9927049442755637,
+          "entry": null
+        },
+        {
+          "frame": 118,
+          "time": 1.9833333333333312,
+          "mode": "walk",
+          "phase": 1.2276785714285718,
+          "renderPhase": 1.2276785714285718,
+          "weight": 0.9969808363488772,
+          "entry": null
+        },
+        {
+          "frame": 119,
+          "time": 1.9999999999999978,
+          "mode": "walk",
+          "phase": 1.2522321428571432,
+          "renderPhase": 1.2522321428571432,
+          "weight": 0.9987659019591332,
+          "entry": null
+        },
+        {
+          "frame": 120,
+          "time": 2.0166666666666644,
+          "mode": "walk",
+          "phase": 1.2767857142857146,
+          "renderPhase": 1.2767857142857146,
+          "weight": 0.9995006007726127,
+          "entry": null
+        },
+        {
+          "frame": 121,
+          "time": 2.033333333333331,
+          "mode": "walk",
+          "phase": 1.301339285714286,
+          "renderPhase": 1.301339285714286,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 122,
+          "time": 2.0499999999999976,
+          "mode": "walk",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.3258928571428574,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 123,
+          "time": 2.066666666666664,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.3779761904761907,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 124,
+          "time": 2.083333333333331,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.4300595238095242,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 125,
+          "time": 2.0999999999999974,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.4821428571428574,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 126,
+          "time": 2.116666666666664,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.5342261904761907,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 127,
+          "time": 2.1333333333333306,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.5863095238095242,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 128,
+          "time": 2.1499999999999972,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.6383928571428574,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 129,
+          "time": 2.166666666666664,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.6904761904761907,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 130,
+          "time": 2.1833333333333305,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.7425595238095242,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 131,
+          "time": 2.199999999999997,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.7946428571428574,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 132,
+          "time": 2.2166666666666637,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.8467261904761907,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 133,
+          "time": 2.2333333333333303,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.8988095238095237,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 134,
+          "time": 2.249999999999997,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.950892857142857,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 135,
+          "time": 2.2666666666666635,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.00297619047619,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 136,
+          "time": 2.28333333333333,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.0550595238095233,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 137,
+          "time": 2.2999999999999967,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.1071428571428563,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 138,
+          "time": 2.3166666666666633,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.1592261904761894,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 139,
+          "time": 2.33333333333333,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.211309523809523,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 140,
+          "time": 2.3499999999999965,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.263392857142856,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 141,
+          "time": 2.366666666666663,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.315476190476189,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 142,
+          "time": 2.3833333333333298,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.3675595238095224,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 143,
+          "time": 2.3999999999999964,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.419642857142856,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 144,
+          "time": 2.416666666666663,
+          "mode": "walk",
+          "phase": 1.377976190476191,
+          "renderPhase": 2.47172619047619,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 145,
+          "time": 2.4333333333333296,
+          "mode": "walk",
+          "phase": 1.4025297619047623,
+          "renderPhase": 2.496279761904761,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 146,
+          "time": 2.449999999999996,
+          "mode": "walk",
+          "phase": 1.4270833333333337,
+          "renderPhase": 2.520833333333332,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 147,
+          "time": 2.466666666666663,
+          "mode": "walk",
+          "phase": 1.451636904761905,
+          "renderPhase": 2.5453869047619038,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 148,
+          "time": 2.4833333333333294,
+          "mode": "walk",
+          "phase": 1.4761904761904765,
+          "renderPhase": 2.5699404761904754,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 149,
+          "time": 2.499999999999996,
+          "mode": "walk",
+          "phase": 1.500744047619048,
+          "renderPhase": 2.5944940476190466,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 150,
+          "time": 2.5166666666666626,
+          "mode": "walk",
+          "phase": 1.5252976190476193,
+          "renderPhase": 2.6190476190476177,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 151,
+          "time": 2.533333333333329,
+          "mode": "walk",
+          "phase": 1.5498511904761907,
+          "renderPhase": 2.6436011904761894,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 152,
+          "time": 2.549999999999996,
+          "mode": "walk",
+          "phase": 1.574404761904762,
+          "renderPhase": 2.668154761904761,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 153,
+          "time": 2.5666666666666624,
+          "mode": "walk",
+          "phase": 1.5989583333333335,
+          "renderPhase": 2.692708333333332,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 154,
+          "time": 2.583333333333329,
+          "mode": "walk",
+          "phase": 1.6235119047619049,
+          "renderPhase": 2.7172619047619033,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 155,
+          "time": 2.5999999999999956,
+          "mode": "walk",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 156,
+          "time": 2.6166666666666623,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.7357588823428859,
+          "entry": null
+        },
+        {
+          "frame": 157,
+          "time": 2.633333333333329,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.40600584970983994,
+          "entry": null
+        },
+        {
+          "frame": 158,
+          "time": 2.6499999999999955,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.1991482734714573,
+          "entry": null
+        },
+        {
+          "frame": 159,
+          "time": 2.666666666666662,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.0915781944436719,
+          "entry": null
+        },
+        {
+          "frame": 160,
+          "time": 2.6833333333333287,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.04042768199451338,
+          "entry": null
+        },
+        {
+          "frame": 161,
+          "time": 2.6999999999999953,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.017351265236664817,
+          "entry": null
+        },
+        {
+          "frame": 162,
+          "time": 2.716666666666662,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.007295055724436285,
+          "entry": null
+        },
+        {
+          "frame": 163,
+          "time": 2.7333333333333285,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.0030191636511226814,
+          "entry": null
+        },
+        {
+          "frame": 164,
+          "time": 2.749999999999995,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.0012340980408668304,
+          "entry": null
+        },
+        {
+          "frame": 165,
+          "time": 2.7666666666666617,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0.0004993992273873493,
+          "entry": null
+        },
+        {
+          "frame": 166,
+          "time": 2.7833333333333283,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 167,
+          "time": 2.799999999999995,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 168,
+          "time": 2.8166666666666615,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 169,
+          "time": 2.833333333333328,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 170,
+          "time": 2.8499999999999948,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 171,
+          "time": 2.8666666666666614,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 172,
+          "time": 2.883333333333328,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 173,
+          "time": 2.8999999999999946,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 174,
+          "time": 2.916666666666661,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 175,
+          "time": 2.933333333333328,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 176,
+          "time": 2.9499999999999944,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 177,
+          "time": 2.966666666666661,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 178,
+          "time": 2.9833333333333276,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 179,
+          "time": 2.9999999999999942,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.741815476190475,
+          "weight": 0,
+          "entry": null
+        }
+      ],
+      "changes": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 485759,
+        "13": 567288,
+        "14": 295317,
+        "15": 195494,
+        "16": 176976,
+        "17": 268287,
+        "18": 172715,
+        "19": 305073,
+        "20": 409827,
+        "21": 267870,
+        "22": 441024,
+        "23": 640386,
+        "24": 578487,
+        "25": 133155,
+        "26": 576671,
+        "27": 652601,
+        "28": 519833,
+        "29": 158524,
+        "30": 322816,
+        "31": 171864,
+        "32": 177799,
+        "33": 247134,
+        "34": 374240,
+        "35": 259737,
+        "36": 380829,
+        "37": 423624,
+        "38": 268486,
+        "39": 384841,
+        "40": 485819,
+        "41": 327965,
+        "42": 199583,
+        "43": 103137,
+        "44": 48881,
+        "45": 21518,
+        "46": 10726,
+        "47": 5164,
+        "48": 1536,
+        "49": 6298,
+        "50": 0,
+        "51": 0,
+        "52": 0,
+        "53": 0,
+        "54": 372621,
+        "55": 447907,
+        "56": 408160,
+        "57": 297892,
+        "58": 250419,
+        "59": 405040,
+        "60": 251974,
+        "61": 165631,
+        "62": 309123,
+        "63": 253120,
+        "64": 330501,
+        "65": 439535,
+        "66": 478233,
+        "67": 273048,
+        "68": 209168,
+        "69": 0,
+        "70": 575194,
+        "71": 788251,
+        "72": 328772,
+        "73": 239854,
+        "74": 316940,
+        "75": 193378,
+        "76": 109185,
+        "77": 151022,
+        "78": 502141,
+        "79": 320986,
+        "80": 362547,
+        "81": 345143,
+        "82": 669906,
+        "83": 485319,
+        "84": 638047,
+        "85": 432379,
+        "86": 0,
+        "87": 217615,
+        "88": 227029,
+        "89": 221532,
+        "90": 216581,
+        "91": 345310,
+        "92": 169286,
+        "93": 169546,
+        "94": 166953,
+        "95": 144542,
+        "96": 264581,
+        "97": 281282,
+        "98": 292084,
+        "99": 300525,
+        "100": 578397,
+        "101": 343154,
+        "102": 326020,
+        "103": 297025,
+        "104": 260760,
+        "105": 204115,
+        "106": 114801,
+        "107": 2354,
+        "108": 0,
+        "109": 5816,
+        "110": 0,
+        "111": 425131,
+        "112": 495976,
+        "113": 312104,
+        "114": 296823,
+        "115": 145265,
+        "116": 188394,
+        "117": 323456,
+        "118": 403816,
+        "119": 192254,
+        "120": 542076,
+        "121": 642319,
+        "122": 524250,
+        "123": 746950,
+        "124": 710191,
+        "125": 401030,
+        "126": 337284,
+        "127": 494165,
+        "128": 584160,
+        "129": 193049,
+        "130": 666383,
+        "131": 438557,
+        "132": 423684,
+        "133": 429860,
+        "134": 565678,
+        "135": 614232,
+        "136": 534776,
+        "137": 383869,
+        "138": 378192,
+        "139": 519696,
+        "140": 276078,
+        "141": 827698,
+        "142": 540607,
+        "143": 816877,
+        "144": 413548,
+        "145": 165092,
+        "146": 199259,
+        "147": 371012,
+        "148": 248725,
+        "149": 280527,
+        "150": 396354,
+        "151": 413236,
+        "152": 213065,
+        "153": 289584,
+        "154": 501092,
+        "155": 440496,
+        "156": 362398,
+        "157": 498417,
+        "158": 276330,
+        "159": 165944,
+        "160": 85938,
+        "161": 40993,
+        "162": 17639,
+        "163": 7692,
+        "164": 4429,
+        "165": 1880,
+        "166": 5848,
+        "167": 0,
+        "168": 0,
+        "169": 0,
+        "170": 0,
+        "171": 0,
+        "172": 0,
+        "173": 0,
+        "174": 0,
+        "175": 0,
+        "176": 0,
+        "177": 0,
+        "178": 0,
+        "179": 0
+      }
+    },
+    {
+      "direction": 3,
+      "samples": [
+        {
+          "frame": 38,
+          "time": 0.6500000000000004,
+          "mode": "walk",
+          "phase": 0.6629464285714282,
+          "renderPhase": 0.6629464285714282,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 39,
+          "time": 0.6666666666666671,
+          "mode": "idle",
+          "phase": 0.6629464285714282,
+          "renderPhase": 0.6629464285714282,
+          "weight": 0.7357588823428834,
+          "entry": null
+        },
+        {
+          "frame": 40,
+          "time": 0.6833333333333338,
+          "mode": "idle",
+          "phase": 0.6629464285714282,
+          "renderPhase": 0.6629464285714282,
+          "weight": 0.40600584970983633,
+          "entry": null
+        },
+        {
+          "frame": 41,
+          "time": 0.7000000000000005,
+          "mode": "idle",
+          "phase": 0.6629464285714282,
+          "renderPhase": 0.6629464285714282,
+          "weight": 0.19914827347145433,
+          "entry": null
+        },
+        {
+          "frame": 42,
+          "time": 0.7166666666666672,
+          "mode": "idle",
+          "phase": 0.6629464285714282,
+          "renderPhase": 0.6629464285714282,
+          "weight": 0.09157819444366995,
+          "entry": null
+        },
+        {
+          "frame": 53,
+          "time": 0.9000000000000011,
+          "mode": "idle",
+          "phase": 0.6629464285714282,
+          "renderPhase": 0.6629464285714282,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 54,
+          "time": 0.9166666666666679,
+          "mode": "walk",
+          "phase": 0.6874999999999997,
+          "renderPhase": 0.6874999999999997,
+          "weight": 0.26424111765711655,
+          "entry": null
+        },
+        {
+          "frame": 68,
+          "time": 1.1500000000000008,
+          "mode": "walk",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 69,
+          "time": 1.1666666666666674,
+          "mode": "attack",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 70,
+          "time": 1.183333333333334,
+          "mode": "attack",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 71,
+          "time": 1.2000000000000006,
+          "mode": "attack",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 72,
+          "time": 1.2166666666666672,
+          "mode": "attack",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 73,
+          "time": 1.2333333333333338,
+          "mode": "attack",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 74,
+          "time": 1.2500000000000004,
+          "mode": "attack",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 75,
+          "time": 1.266666666666667,
+          "mode": "attack",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 110,
+          "time": 1.8499999999999983,
+          "mode": "idle",
+          "phase": 1.0312500000000004,
+          "renderPhase": 1.0312500000000004,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 111,
+          "time": 1.866666666666665,
+          "mode": "walk",
+          "phase": 1.0558035714285718,
+          "renderPhase": 1.0558035714285718,
+          "weight": 0.2642411176571141,
+          "entry": null
+        },
+        {
+          "frame": 112,
+          "time": 1.8833333333333315,
+          "mode": "walk",
+          "phase": 1.0803571428571432,
+          "renderPhase": 1.0803571428571432,
+          "weight": 0.59399415029016,
+          "entry": null
+        },
+        {
+          "frame": 122,
+          "time": 2.0499999999999976,
+          "mode": "walk",
+          "phase": 1.3258928571428572,
+          "renderPhase": 1.3258928571428572,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 123,
+          "time": 2.066666666666664,
+          "mode": "dodge",
+          "phase": 1.3258928571428572,
+          "renderPhase": 1.3779761904761905,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 124,
+          "time": 2.083333333333331,
+          "mode": "dodge",
+          "phase": 1.3258928571428572,
+          "renderPhase": 1.430059523809524,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 143,
+          "time": 2.3999999999999964,
+          "mode": "dodge",
+          "phase": 1.3258928571428572,
+          "renderPhase": 2.419642857142855,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 144,
+          "time": 2.416666666666663,
+          "mode": "walk",
+          "phase": 1.3779761904761902,
+          "renderPhase": 2.471726190476188,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 145,
+          "time": 2.4333333333333296,
+          "mode": "walk",
+          "phase": 1.4025297619047616,
+          "renderPhase": 2.4962797619047596,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 155,
+          "time": 2.5999999999999956,
+          "mode": "walk",
+          "phase": 1.6480654761904756,
+          "renderPhase": 2.7418154761904736,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 156,
+          "time": 2.6166666666666623,
+          "mode": "idle",
+          "phase": 1.6480654761904756,
+          "renderPhase": 2.7418154761904736,
+          "weight": 0.7357588823428859,
+          "entry": null
+        },
+        {
+          "frame": 157,
+          "time": 2.633333333333329,
+          "mode": "idle",
+          "phase": 1.6480654761904756,
+          "renderPhase": 2.7418154761904736,
+          "weight": 0.40600584970983994,
+          "entry": null
+        },
+        {
+          "frame": 160,
+          "time": 2.6833333333333287,
+          "mode": "idle",
+          "phase": 1.6480654761904756,
+          "renderPhase": 2.7418154761904736,
+          "weight": 0.04042768199451338,
+          "entry": null
+        },
+        {
+          "frame": 170,
+          "time": 2.8499999999999948,
+          "mode": "idle",
+          "phase": 1.6480654761904756,
+          "renderPhase": 2.7418154761904736,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 179,
+          "time": 2.9999999999999942,
+          "mode": "idle",
+          "phase": 1.6480654761904756,
+          "renderPhase": 2.7418154761904736,
+          "weight": 0,
+          "entry": null
+        }
+      ],
+      "changes": {
+        "39": 369552,
+        "40": 437299,
+        "41": 313005,
+        "42": 197320,
+        "53": 174316,
+        "54": 351658,
+        "68": 679918,
+        "69": 0,
+        "70": 423539,
+        "71": 576417,
+        "72": 221970,
+        "73": 240784,
+        "74": 373398,
+        "75": 328748,
+        "110": 518024,
+        "111": 340776,
+        "112": 516517,
+        "122": 548827,
+        "123": 537519,
+        "124": 477869,
+        "143": 149136,
+        "144": 499024,
+        "145": 205190,
+        "155": 835601,
+        "156": 379150,
+        "157": 486131,
+        "160": 425536,
+        "170": 76420,
+        "179": 0
+      }
+    },
+    {
+      "direction": 4,
+      "samples": [
+        {
+          "frame": 38,
+          "time": 0.6500000000000004,
+          "mode": "walk",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 39,
+          "time": 0.6666666666666671,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.7357588823428834,
+          "entry": null
+        },
+        {
+          "frame": 40,
+          "time": 0.6833333333333338,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.40600584970983633,
+          "entry": null
+        },
+        {
+          "frame": 41,
+          "time": 0.7000000000000005,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.19914827347145433,
+          "entry": null
+        },
+        {
+          "frame": 42,
+          "time": 0.7166666666666672,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.09157819444366995,
+          "entry": null
+        },
+        {
+          "frame": 53,
+          "time": 0.9000000000000011,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 54,
+          "time": 0.9166666666666679,
+          "mode": "walk",
+          "phase": 0.6875000000000002,
+          "renderPhase": 0.6875000000000002,
+          "weight": 0.26424111765711655,
+          "entry": null
+        },
+        {
+          "frame": 68,
+          "time": 1.1500000000000008,
+          "mode": "walk",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 69,
+          "time": 1.1666666666666674,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 70,
+          "time": 1.183333333333334,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 71,
+          "time": 1.2000000000000006,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 72,
+          "time": 1.2166666666666672,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 73,
+          "time": 1.2333333333333338,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 74,
+          "time": 1.2500000000000004,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 75,
+          "time": 1.266666666666667,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 110,
+          "time": 1.8499999999999983,
+          "mode": "idle",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 111,
+          "time": 1.866666666666665,
+          "mode": "walk",
+          "phase": 1.055803571428572,
+          "renderPhase": 1.055803571428572,
+          "weight": 0.2642411176571141,
+          "entry": null
+        },
+        {
+          "frame": 112,
+          "time": 1.8833333333333315,
+          "mode": "walk",
+          "phase": 1.0803571428571435,
+          "renderPhase": 1.0803571428571435,
+          "weight": 0.59399415029016,
+          "entry": null
+        },
+        {
+          "frame": 122,
+          "time": 2.0499999999999976,
+          "mode": "walk",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.3258928571428574,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 123,
+          "time": 2.066666666666664,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.3779761904761907,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 124,
+          "time": 2.083333333333331,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.4300595238095242,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 143,
+          "time": 2.3999999999999964,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.419642857142856,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 144,
+          "time": 2.416666666666663,
+          "mode": "walk",
+          "phase": 1.377976190476191,
+          "renderPhase": 2.471726190476189,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 145,
+          "time": 2.4333333333333296,
+          "mode": "walk",
+          "phase": 1.4025297619047623,
+          "renderPhase": 2.4962797619047605,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 155,
+          "time": 2.5999999999999956,
+          "mode": "walk",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.7418154761904745,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 156,
+          "time": 2.6166666666666623,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.7418154761904745,
+          "weight": 0.7357588823428859,
+          "entry": null
+        },
+        {
+          "frame": 157,
+          "time": 2.633333333333329,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.7418154761904745,
+          "weight": 0.40600584970983994,
+          "entry": null
+        },
+        {
+          "frame": 160,
+          "time": 2.6833333333333287,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.7418154761904745,
+          "weight": 0.04042768199451338,
+          "entry": null
+        },
+        {
+          "frame": 170,
+          "time": 2.8499999999999948,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.7418154761904745,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 179,
+          "time": 2.9999999999999942,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.7418154761904745,
+          "weight": 0,
+          "entry": null
+        }
+      ],
+      "changes": {
+        "39": 334920,
+        "40": 400216,
+        "41": 273125,
+        "42": 163315,
+        "53": 139769,
+        "54": 301408,
+        "68": 572541,
+        "69": 0,
+        "70": 218287,
+        "71": 409916,
+        "72": 131960,
+        "73": 277690,
+        "74": 430155,
+        "75": 360010,
+        "110": 627037,
+        "111": 152858,
+        "112": 405784,
+        "122": 626971,
+        "123": 536226,
+        "124": 426394,
+        "143": 139773,
+        "144": 582054,
+        "145": 244155,
+        "155": 577664,
+        "156": 174090,
+        "157": 320033,
+        "160": 221290,
+        "170": 30712,
+        "179": 0
+      }
+    },
+    {
+      "direction": 5,
+      "samples": [
+        {
+          "frame": 38,
+          "time": 0.6500000000000004,
+          "mode": "walk",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 39,
+          "time": 0.6666666666666671,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.7357588823428834,
+          "entry": null
+        },
+        {
+          "frame": 40,
+          "time": 0.6833333333333338,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.40600584970983633,
+          "entry": null
+        },
+        {
+          "frame": 41,
+          "time": 0.7000000000000005,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.19914827347145433,
+          "entry": null
+        },
+        {
+          "frame": 42,
+          "time": 0.7166666666666672,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.09157819444366995,
+          "entry": null
+        },
+        {
+          "frame": 53,
+          "time": 0.9000000000000011,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 54,
+          "time": 0.9166666666666679,
+          "mode": "walk",
+          "phase": 0.6875000000000002,
+          "renderPhase": 0.6875000000000002,
+          "weight": 0.26424111765711655,
+          "entry": null
+        },
+        {
+          "frame": 68,
+          "time": 1.1500000000000008,
+          "mode": "walk",
+          "phase": 1.0312500000000009,
+          "renderPhase": 1.0312500000000009,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 69,
+          "time": 1.1666666666666674,
+          "mode": "attack",
+          "phase": 1.0312500000000009,
+          "renderPhase": 1.0312500000000009,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 70,
+          "time": 1.183333333333334,
+          "mode": "attack",
+          "phase": 1.0312500000000009,
+          "renderPhase": 1.0312500000000009,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 71,
+          "time": 1.2000000000000006,
+          "mode": "attack",
+          "phase": 1.0312500000000009,
+          "renderPhase": 1.0312500000000009,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 72,
+          "time": 1.2166666666666672,
+          "mode": "attack",
+          "phase": 1.0312500000000009,
+          "renderPhase": 1.0312500000000009,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 73,
+          "time": 1.2333333333333338,
+          "mode": "attack",
+          "phase": 1.0312500000000009,
+          "renderPhase": 1.0312500000000009,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 74,
+          "time": 1.2500000000000004,
+          "mode": "attack",
+          "phase": 1.0312500000000009,
+          "renderPhase": 1.0312500000000009,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 75,
+          "time": 1.266666666666667,
+          "mode": "attack",
+          "phase": 1.0312500000000009,
+          "renderPhase": 1.0312500000000009,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 110,
+          "time": 1.8499999999999983,
+          "mode": "idle",
+          "phase": 1.0312500000000009,
+          "renderPhase": 1.0312500000000009,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 111,
+          "time": 1.866666666666665,
+          "mode": "walk",
+          "phase": 1.0558035714285723,
+          "renderPhase": 1.0558035714285723,
+          "weight": 0.2642411176571141,
+          "entry": null
+        },
+        {
+          "frame": 112,
+          "time": 1.8833333333333315,
+          "mode": "walk",
+          "phase": 1.0803571428571437,
+          "renderPhase": 1.0803571428571437,
+          "weight": 0.59399415029016,
+          "entry": null
+        },
+        {
+          "frame": 122,
+          "time": 2.0499999999999976,
+          "mode": "walk",
+          "phase": 1.3258928571428577,
+          "renderPhase": 1.3258928571428577,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 123,
+          "time": 2.066666666666664,
+          "mode": "dodge",
+          "phase": 1.3258928571428577,
+          "renderPhase": 1.377976190476191,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 124,
+          "time": 2.083333333333331,
+          "mode": "dodge",
+          "phase": 1.3258928571428577,
+          "renderPhase": 1.4300595238095244,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 143,
+          "time": 2.3999999999999964,
+          "mode": "dodge",
+          "phase": 1.3258928571428577,
+          "renderPhase": 2.419642857142856,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 144,
+          "time": 2.416666666666663,
+          "mode": "walk",
+          "phase": 1.3779761904761907,
+          "renderPhase": 2.471726190476189,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 145,
+          "time": 2.4333333333333296,
+          "mode": "walk",
+          "phase": 1.402529761904762,
+          "renderPhase": 2.49627976190476,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 155,
+          "time": 2.5999999999999956,
+          "mode": "walk",
+          "phase": 1.648065476190476,
+          "renderPhase": 2.741815476190474,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 156,
+          "time": 2.6166666666666623,
+          "mode": "idle",
+          "phase": 1.648065476190476,
+          "renderPhase": 2.741815476190474,
+          "weight": 0.7357588823428859,
+          "entry": null
+        },
+        {
+          "frame": 157,
+          "time": 2.633333333333329,
+          "mode": "idle",
+          "phase": 1.648065476190476,
+          "renderPhase": 2.741815476190474,
+          "weight": 0.40600584970983994,
+          "entry": null
+        },
+        {
+          "frame": 160,
+          "time": 2.6833333333333287,
+          "mode": "idle",
+          "phase": 1.648065476190476,
+          "renderPhase": 2.741815476190474,
+          "weight": 0.04042768199451338,
+          "entry": null
+        },
+        {
+          "frame": 170,
+          "time": 2.8499999999999948,
+          "mode": "idle",
+          "phase": 1.648065476190476,
+          "renderPhase": 2.741815476190474,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 179,
+          "time": 2.9999999999999942,
+          "mode": "idle",
+          "phase": 1.648065476190476,
+          "renderPhase": 2.741815476190474,
+          "weight": 0,
+          "entry": null
+        }
+      ],
+      "changes": {
+        "39": 436576,
+        "40": 560882,
+        "41": 370509,
+        "42": 232611,
+        "53": 204890,
+        "54": 373206,
+        "68": 806837,
+        "69": 0,
+        "70": 406644,
+        "71": 607034,
+        "72": 307524,
+        "73": 320367,
+        "74": 534586,
+        "75": 325840,
+        "110": 626204,
+        "111": 371539,
+        "112": 543953,
+        "122": 591557,
+        "123": 553175,
+        "124": 406525,
+        "143": 127741,
+        "144": 538050,
+        "145": 206752,
+        "155": 575295,
+        "156": 324321,
+        "157": 460828,
+        "160": 407439,
+        "170": 63805,
+        "179": 0
+      }
+    },
+    {
+      "direction": 6,
+      "samples": [
+        {
+          "frame": 38,
+          "time": 0.6500000000000004,
+          "mode": "walk",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 39,
+          "time": 0.6666666666666671,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.7357588823428834,
+          "entry": null
+        },
+        {
+          "frame": 40,
+          "time": 0.6833333333333338,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.40600584970983633,
+          "entry": null
+        },
+        {
+          "frame": 41,
+          "time": 0.7000000000000005,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.19914827347145433,
+          "entry": null
+        },
+        {
+          "frame": 42,
+          "time": 0.7166666666666672,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0.09157819444366995,
+          "entry": null
+        },
+        {
+          "frame": 53,
+          "time": 0.9000000000000011,
+          "mode": "idle",
+          "phase": 0.6629464285714287,
+          "renderPhase": 0.6629464285714287,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 54,
+          "time": 0.9166666666666679,
+          "mode": "walk",
+          "phase": 0.6875000000000002,
+          "renderPhase": 0.6875000000000002,
+          "weight": 0.26424111765711655,
+          "entry": null
+        },
+        {
+          "frame": 68,
+          "time": 1.1500000000000008,
+          "mode": "walk",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 69,
+          "time": 1.1666666666666674,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 70,
+          "time": 1.183333333333334,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 71,
+          "time": 1.2000000000000006,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 72,
+          "time": 1.2166666666666672,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 73,
+          "time": 1.2333333333333338,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 74,
+          "time": 1.2500000000000004,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 75,
+          "time": 1.266666666666667,
+          "mode": "attack",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 110,
+          "time": 1.8499999999999983,
+          "mode": "idle",
+          "phase": 1.0312500000000007,
+          "renderPhase": 1.0312500000000007,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 111,
+          "time": 1.866666666666665,
+          "mode": "walk",
+          "phase": 1.055803571428572,
+          "renderPhase": 1.055803571428572,
+          "weight": 0.2642411176571141,
+          "entry": null
+        },
+        {
+          "frame": 112,
+          "time": 1.8833333333333315,
+          "mode": "walk",
+          "phase": 1.0803571428571435,
+          "renderPhase": 1.0803571428571435,
+          "weight": 0.59399415029016,
+          "entry": null
+        },
+        {
+          "frame": 122,
+          "time": 2.0499999999999976,
+          "mode": "walk",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.3258928571428574,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 123,
+          "time": 2.066666666666664,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.3779761904761907,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 124,
+          "time": 2.083333333333331,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 1.4300595238095242,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 143,
+          "time": 2.3999999999999964,
+          "mode": "dodge",
+          "phase": 1.3258928571428574,
+          "renderPhase": 2.4196428571428563,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 144,
+          "time": 2.416666666666663,
+          "mode": "walk",
+          "phase": 1.377976190476191,
+          "renderPhase": 2.47172619047619,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 145,
+          "time": 2.4333333333333296,
+          "mode": "walk",
+          "phase": 1.4025297619047623,
+          "renderPhase": 2.496279761904761,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 155,
+          "time": 2.5999999999999956,
+          "mode": "walk",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.7418154761904754,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 156,
+          "time": 2.6166666666666623,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.7418154761904754,
+          "weight": 0.7357588823428859,
+          "entry": null
+        },
+        {
+          "frame": 157,
+          "time": 2.633333333333329,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.7418154761904754,
+          "weight": 0.40600584970983994,
+          "entry": null
+        },
+        {
+          "frame": 160,
+          "time": 2.6833333333333287,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.7418154761904754,
+          "weight": 0.04042768199451338,
+          "entry": null
+        },
+        {
+          "frame": 170,
+          "time": 2.8499999999999948,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.7418154761904754,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 179,
+          "time": 2.9999999999999942,
+          "mode": "idle",
+          "phase": 1.6480654761904763,
+          "renderPhase": 2.7418154761904754,
+          "weight": 0,
+          "entry": null
+        }
+      ],
+      "changes": {
+        "39": 239662,
+        "40": 315321,
+        "41": 196114,
+        "42": 117049,
+        "53": 101789,
+        "54": 239690,
+        "68": 680815,
+        "69": 0,
+        "70": 378755,
+        "71": 577205,
+        "72": 204817,
+        "73": 313557,
+        "74": 537918,
+        "75": 506330,
+        "110": 713551,
+        "111": 240858,
+        "112": 452702,
+        "122": 637906,
+        "123": 447538,
+        "124": 427276,
+        "143": 164698,
+        "144": 625434,
+        "145": 379045,
+        "155": 684024,
+        "156": 327524,
+        "157": 456750,
+        "160": 401010,
+        "170": 67217,
+        "179": 0
+      }
+    },
+    {
+      "direction": 7,
+      "samples": [
+        {
+          "frame": 38,
+          "time": 0.6500000000000004,
+          "mode": "walk",
+          "phase": 0.6629464285714275,
+          "renderPhase": 0.6629464285714275,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 39,
+          "time": 0.6666666666666671,
+          "mode": "idle",
+          "phase": 0.6629464285714275,
+          "renderPhase": 0.6629464285714275,
+          "weight": 0.7357588823428834,
+          "entry": null
+        },
+        {
+          "frame": 40,
+          "time": 0.6833333333333338,
+          "mode": "idle",
+          "phase": 0.6629464285714275,
+          "renderPhase": 0.6629464285714275,
+          "weight": 0.40600584970983633,
+          "entry": null
+        },
+        {
+          "frame": 41,
+          "time": 0.7000000000000005,
+          "mode": "idle",
+          "phase": 0.6629464285714275,
+          "renderPhase": 0.6629464285714275,
+          "weight": 0.19914827347145433,
+          "entry": null
+        },
+        {
+          "frame": 42,
+          "time": 0.7166666666666672,
+          "mode": "idle",
+          "phase": 0.6629464285714275,
+          "renderPhase": 0.6629464285714275,
+          "weight": 0.09157819444366995,
+          "entry": null
+        },
+        {
+          "frame": 53,
+          "time": 0.9000000000000011,
+          "mode": "idle",
+          "phase": 0.6629464285714275,
+          "renderPhase": 0.6629464285714275,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 54,
+          "time": 0.9166666666666679,
+          "mode": "walk",
+          "phase": 0.6874999999999989,
+          "renderPhase": 0.6874999999999989,
+          "weight": 0.26424111765711655,
+          "entry": null
+        },
+        {
+          "frame": 68,
+          "time": 1.1500000000000008,
+          "mode": "walk",
+          "phase": 1.031249999999999,
+          "renderPhase": 1.031249999999999,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 69,
+          "time": 1.1666666666666674,
+          "mode": "attack",
+          "phase": 1.031249999999999,
+          "renderPhase": 1.031249999999999,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 70,
+          "time": 1.183333333333334,
+          "mode": "attack",
+          "phase": 1.031249999999999,
+          "renderPhase": 1.031249999999999,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 71,
+          "time": 1.2000000000000006,
+          "mode": "attack",
+          "phase": 1.031249999999999,
+          "renderPhase": 1.031249999999999,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 72,
+          "time": 1.2166666666666672,
+          "mode": "attack",
+          "phase": 1.031249999999999,
+          "renderPhase": 1.031249999999999,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 73,
+          "time": 1.2333333333333338,
+          "mode": "attack",
+          "phase": 1.031249999999999,
+          "renderPhase": 1.031249999999999,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 74,
+          "time": 1.2500000000000004,
+          "mode": "attack",
+          "phase": 1.031249999999999,
+          "renderPhase": 1.031249999999999,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 75,
+          "time": 1.266666666666667,
+          "mode": "attack",
+          "phase": 1.031249999999999,
+          "renderPhase": 1.031249999999999,
+          "weight": null,
+          "entry": 0.045
+        },
+        {
+          "frame": 110,
+          "time": 1.8499999999999983,
+          "mode": "idle",
+          "phase": 1.031249999999999,
+          "renderPhase": 1.031249999999999,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 111,
+          "time": 1.866666666666665,
+          "mode": "walk",
+          "phase": 1.0558035714285703,
+          "renderPhase": 1.0558035714285703,
+          "weight": 0.2642411176571141,
+          "entry": null
+        },
+        {
+          "frame": 112,
+          "time": 1.8833333333333315,
+          "mode": "walk",
+          "phase": 1.0803571428571417,
+          "renderPhase": 1.0803571428571417,
+          "weight": 0.59399415029016,
+          "entry": null
+        },
+        {
+          "frame": 122,
+          "time": 2.0499999999999976,
+          "mode": "walk",
+          "phase": 1.3258928571428557,
+          "renderPhase": 1.3258928571428557,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 123,
+          "time": 2.066666666666664,
+          "mode": "dodge",
+          "phase": 1.3258928571428557,
+          "renderPhase": 1.377976190476189,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 124,
+          "time": 2.083333333333331,
+          "mode": "dodge",
+          "phase": 1.3258928571428557,
+          "renderPhase": 1.4300595238095224,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 143,
+          "time": 2.3999999999999964,
+          "mode": "dodge",
+          "phase": 1.3258928571428557,
+          "renderPhase": 2.419642857142853,
+          "weight": null,
+          "entry": null
+        },
+        {
+          "frame": 144,
+          "time": 2.416666666666663,
+          "mode": "walk",
+          "phase": 1.3779761904761887,
+          "renderPhase": 2.4717261904761862,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 145,
+          "time": 2.4333333333333296,
+          "mode": "walk",
+          "phase": 1.40252976190476,
+          "renderPhase": 2.496279761904758,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 155,
+          "time": 2.5999999999999956,
+          "mode": "walk",
+          "phase": 1.648065476190474,
+          "renderPhase": 2.741815476190472,
+          "weight": 1,
+          "entry": null
+        },
+        {
+          "frame": 156,
+          "time": 2.6166666666666623,
+          "mode": "idle",
+          "phase": 1.648065476190474,
+          "renderPhase": 2.741815476190472,
+          "weight": 0.7357588823428859,
+          "entry": null
+        },
+        {
+          "frame": 157,
+          "time": 2.633333333333329,
+          "mode": "idle",
+          "phase": 1.648065476190474,
+          "renderPhase": 2.741815476190472,
+          "weight": 0.40600584970983994,
+          "entry": null
+        },
+        {
+          "frame": 160,
+          "time": 2.6833333333333287,
+          "mode": "idle",
+          "phase": 1.648065476190474,
+          "renderPhase": 2.741815476190472,
+          "weight": 0.04042768199451338,
+          "entry": null
+        },
+        {
+          "frame": 170,
+          "time": 2.8499999999999948,
+          "mode": "idle",
+          "phase": 1.648065476190474,
+          "renderPhase": 2.741815476190472,
+          "weight": 0,
+          "entry": null
+        },
+        {
+          "frame": 179,
+          "time": 2.9999999999999942,
+          "mode": "idle",
+          "phase": 1.648065476190474,
+          "renderPhase": 2.741815476190472,
+          "weight": 0,
+          "entry": null
+        }
+      ],
+      "changes": {
+        "39": 418924,
+        "40": 565765,
+        "41": 427519,
+        "42": 271354,
+        "53": 242979,
+        "54": 509980,
+        "68": 805755,
+        "69": 0,
+        "70": 499500,
+        "71": 704347,
+        "72": 397659,
+        "73": 505849,
+        "74": 718936,
+        "75": 580774,
+        "110": 911086,
+        "111": 520905,
+        "112": 597955,
+        "122": 744481,
+        "123": 297186,
+        "124": 380616,
+        "143": 246294,
+        "144": 767709,
+        "145": 444506,
+        "155": 738146,
+        "156": 419338,
+        "157": 521147,
+        "160": 542470,
+        "170": 107699,
+        "179": 0
+      }
+    }
+  ]
+}

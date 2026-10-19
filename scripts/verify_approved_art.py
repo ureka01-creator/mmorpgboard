@@ -4,7 +4,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 from verify_arena_browser import ARGS
 ROOT=Path(__file__).resolve().parents[1]
-BASE=os.environ.get('ARENA_ORIGIN','http://127.0.0.1:8036/')
+BASE=os.environ.get('ARENA_ORIGIN',os.environ.get('ARENA_BASE','http://127.0.0.1:8020/'))
 files=['assets/sprites/warrior.json',*[str(p.relative_to(ROOT)) for p in sorted((ROOT/'assets/sprites/refined').glob('*.png'))],'assets/sprites/warrior/dodge-front.png','assets/sprites/warrior/dodge-back.png']
 for name in files:
  approved=subprocess.check_output(['git','show','4f9244c:'+name],cwd=ROOT)
@@ -20,7 +20,7 @@ with sync_playwright() as pw:
   assert not any('.glb' in url or 'arena-study-actors' in url for url in requests),requests
   # Same original idle image at both positions; only a bounded tint changes.
   result=page.evaluate('''async()=>{
-   const {animateActor}=await import('./arena-sprites.mjs?v=2.12'),a=arena.hero;
+   const {animateActor}=await import('./arena-sprites.mjs?v=2.13'),a=arena.hero;
    const b={x:0,z:0,yaw:0,mode:'idle',elapsed:0,travel:0};animateActor(a,b,0);
    const center=a.sprite.material.color.clone(),frame=a.motion.frame,atlas=a.motion.atlas;
    b.x=-4;b.z=-2;animateActor(a,b,1);const near=a.sprite.material.color.clone();

@@ -6,8 +6,9 @@ with sync_playwright() as pw:
  page.on('pageerror',lambda e:errors.append(str(e)));page.on('console',lambda m:errors.append(m.text)if m.type=='error'else None)
  load(page)
  result=page.evaluate('''async()=>{
- const T=await import('three'),{createActor,animateActor,loadSpriteAssets}=await import('./arena-sprites.mjs?v=2.12'),assets=await loadSpriteAssets();
+ const T=await import('three'),{createActor,animateActor,loadSpriteAssets}=await import('./arena-sprites.mjs?v=2.13'),assets=await loadSpriteAssets();
  const scene=new T.Scene(),actor=createActor(scene,true,assets),legacy=createActor(scene,true,{...assets,flow:null});actor.shadow.visible=legacy.shadow.visible=false;
+ if(actor.flow.assets.flow.image.width>2048||actor.flow.assets.flow.image.height>2048)throw Error('Motion data exceeds 2K texture support');
  const renderer=arena.renderer,target=new T.WebGLRenderTarget(128,128),camera=new T.OrthographicCamera(-1.7,1.7,1.7,-1.7,.1,80);camera.position.set(4.8,15.8,8.7);camera.lookAt(0,1,0);
  let time=10;const pixels=()=>{renderer.setRenderTarget(target);renderer.setClearColor(0,0);renderer.render(scene,camera);const p=new Uint8Array(128*128*4);renderer.readRenderTargetPixels(target,0,0,128,128,p);return p;};
  const diff=(a,b)=>a.reduce((s,v,i)=>s+Math.abs(v-b[i]),0),ratios=[],keyErrors=[];
@@ -18,6 +19,8 @@ with sync_playwright() as pw:
    const a=frame(i),b=frame(i+1),before=frame(i+.499),after=frame(i+.501);ratios.push(diff(before,after)/Math.max(1,diff(a,b)));
    actor.group.visible=false;legacy.group.visible=true;legacy.motion=undefined;animateActor(legacy,body,time+=.01);legacy.motion.phase=i/12;animateActor(legacy,body,time+=.01);const old=pixels();keyErrors.push(diff(a,old)/Math.max(1,a.reduce((x,y)=>x+y,0)));
   }
+  // Static-key fidelity is separate from the intentional run-to-attack lead-in.
+  actor.motion=legacy.motion=undefined;
   for(const elapsed of [0,.105,.19,.235,.26,.43,.62]){
    body.mode='attack';body.elapsed=elapsed;actor.group.visible=true;legacy.group.visible=false;animateActor(actor,body,time+=.01);const current=pixels();
    actor.group.visible=false;legacy.group.visible=true;animateActor(legacy,body,time+=.01);const approved=pixels();keyErrors.push(diff(current,approved)/Math.max(1,approved.reduce((x,y)=>x+y,0)));

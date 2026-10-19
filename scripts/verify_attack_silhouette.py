@@ -8,7 +8,7 @@ from verify_arena_browser import ARGS,load_review as load
 with sync_playwright()as p:
  b=p.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS);page=b.new_page();load(page)
  result=page.evaluate('''async()=>{
- const T=await import('three'),{createActor,animateActor,loadSpriteAssets}=await import('./arena-sprites.mjs?v=2.12'),assets=await loadSpriteAssets();
+ const T=await import('three'),{createActor,animateActor,loadSpriteAssets}=await import('./arena-sprites.mjs?v=2.13'),assets=await loadSpriteAssets();
  const scene=new T.Scene(),a=createActor(scene,true,assets);a.shadow.visible=false;const r=arena.renderer,target=new T.WebGLRenderTarget(192,192),c=new T.OrthographicCamera(-1.7,1.7,1.7,-1.7,.1,80);c.position.set(4.8,15.8,8.7);c.lookAt(0,1,0);let time=10;
  const pix=()=>{r.setRenderTarget(target);r.setClearColor(0,0);r.render(scene,c);const p=new Uint8Array(192*192*4);r.readRenderTargetPixels(target,0,0,192,192,p);return p;};
  function fragments(image){const seen=new Uint8Array(192*192),sizes=[];for(let i=0;i<seen.length;i++)if(!seen[i]&&image[i*4+3]>100){const q=[i];seen[i]=1;let size=0;while(q.length){const at=q.pop();size++;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const x=at%192+dx,y=Math.floor(at/192)+dy,n=y*192+x;if(x>=0&&x<192&&y>=0&&y<192&&!seen[n]&&image[n*4+3]>100){seen[n]=1;q.push(n);}}}sizes.push(size);}sizes.sort((a,b)=>b-a);return sizes.slice(1).reduce((a,b)=>a+b,0);}

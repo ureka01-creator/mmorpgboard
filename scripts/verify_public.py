@@ -9,7 +9,7 @@ from publication_files import publication_files
 FILES=publication_files(ROOT)
 verified={};content_types={}
 for name in FILES:
- url=BASE+('' if name=='index.html' else name)+'?release=2.12'
+ url=BASE+('' if name=='index.html' else name)+'?release=2.13'
  for attempt in range(4):
   try:
    with urllib.request.urlopen(url,timeout=40) as response:
@@ -26,7 +26,7 @@ for name in FILES:
 # No TLS verification is disabled to work around the cloud browser's proxy certificate store.
 with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS)
- for entry,version,render_type in [('', '2.12','directional-sprite'),('study.html','2.12','directional-sprite')]:
+ for entry,version,render_type in [('', '2.13','directional-sprite'),('study.html','2.13','directional-sprite')]:
   context=browser.new_context(viewport={'width':1024,'height':768},has_touch=True,is_mobile=True)
   def route(req):
    name=unquote(urlparse(req.request.url).path).removeprefix('/mmorpgboard/')or'index.html'
@@ -45,4 +45,4 @@ with sync_playwright() as pw:
   assert not errors,errors
   page.screenshot(path='/tmp/elderfall-public-'+('study-' if entry else '')+version+'.png');context.close();print('PASS public play',version,'movement, dodge, five hits, victory and result',flush=True)
  browser.close()
-print(f'PASS {len(FILES)} exact HTTPS publication files, restored illustrated character at both 2.12 entries',flush=True)
+print(f'PASS {len(FILES)} exact HTTPS publication files, restored illustrated character at both 2.13 entries',flush=True)

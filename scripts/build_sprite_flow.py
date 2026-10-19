@@ -120,7 +120,7 @@ for d in range(8):
  edges=[(f'{d}:run:{i}',f'{d}:run:{(i+1)%12}') for i in range(12)]
  edges += [(f'{d}:attack:{i}',f'{d}:attack:{i+1}')for i in range(6)]
  # Stop/start use corresponding art without changing the character design.
- edges += [(f'{d}:idle:0',f'{d}:run:0')]
+ edges += [(f'{d}:idle:0',f'{d}:run:{i}')for i in range(12)]
  for ka,kb in edges:
   a,b=lookup[ka],lookup[kb];f=flow.calc(canvases[a],canvases[b],None);g=flow.calc(canvases[b],canvases[a],None)
   # The separately rendered weapon must not determine the body's correspondence.
@@ -168,5 +168,5 @@ for d in range(8):
   pairs.append({'a':a,'b':b})
  print('measured original-art direction',d,flush=True)
 data=np.stack(fields).tobytes();compressed=gzip.compress(data,mtime=0);(OUT/'flow.bin.gz').write_bytes(compressed)
-manifest={'schema':1,'generator':'OpenCV DIS medium, original artwork unchanged','grid':[GW,GH],'min':MIN,'size':SIZE,'pairs':pairs,'frames':frames,'flowSha256':hashlib.sha256(compressed).hexdigest(),'sources':{a['file']:a['sha256']for a in pack['atlases'].values()}}
+manifest={'schema':2,'generator':'OpenCV DIS medium, original artwork unchanged','grid':[GW,GH],'min':MIN,'size':SIZE,'pairs':pairs,'frames':frames,'flowSha256':hashlib.sha256(compressed).hexdigest(),'sources':{a['file']:a['sha256']for a in pack['atlases'].values()}}
 (OUT/'flow.json').write_text(json.dumps(manifest,separators=(',',':'))+'\n');print(len(pairs),'pairs',len(compressed),'bytes',flush=True)

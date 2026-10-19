@@ -5,7 +5,7 @@ with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS)
  context=browser.new_context(viewport={'width':1024,'height':768});page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));load(page);page.click('#pause')
  result=page.evaluate('''async()=>{
- const {animateActor}=await import('./arena-sprites.mjs?v=2.12'),a=arena.hero,b=arena.enemy,view=Math.atan2(4.8,8.7),THREE=await import('three');
+ const {animateActor}=await import('./arena-sprites.mjs?v=2.13'),a=arena.hero,b=arena.enemy,view=Math.atan2(4.8,8.7),THREE=await import('three');
  if(a.renderType!=='directional-sprite'||!a.sprite.material.depthTest||a.sprite.material.depthWrite)throw Error('Invalid sprite rendering');
  let time=1,frames=0;const seen=new Set();
  const c=document.createElement('canvas');c.width=1536;c.height=1024;const ctx=c.getContext('2d');
@@ -26,7 +26,7 @@ with sync_playwright() as pw:
   }
   const before=JSON.stringify(a.motion);animateActor(a,body,time);if(JSON.stringify(a.motion)!==before)throw Error('Pause changed pose');
   for(const [t,f]of [[0,0],[.09,1],[.18,2],[.23,3],[.26,4],[.40,5],[.56,6],[.62,0]]){body.mode='attack';body.elapsed=t;animateActor(a,body,time+=.01);if(a.motion.clip!==(t>=.62?'idle':'attack')||a.motion.frame!==f)throw Error('Attack frame/contact');}
-  for(let f=0;f<4;f++){body.mode='dodge';body.elapsed=f*.085+.001;animateActor(a,body,time+=.01);if(a.motion.clip!=='roll'||a.motion.frame!==f)throw Error('Dodge frame');}
+  for(let f=0;f<4;f++){body.mode='dodge';body.elapsed=f*.085+.001;animateActor(a,body,time+=.01);if(a.flow){if(a.motion.clip!=='run'||!a.flow.active)throw Error('Evasion lost approved character gait');}else if(a.motion.clip!=='roll'||a.motion.frame!==f)throw Error('Legacy dodge frame');}
  }
  // The guardian retains the pose already established during windup.
  for(let d=0;d<8;d++){
@@ -69,6 +69,6 @@ with sync_playwright() as pw:
  renderer.setRenderTarget(null);target.dispose();
  return {directions:8,runFrames:seen.size,atlases:Object.keys(a.maps).length,groundChecks};
 }''')
- assert result=={'directions':8,'runFrames':96,'atlases':10,'groundChecks':32};assert not errors,errors;print('PASS sprite GPU output, 32 floor-depth poses, column occlusion, alpha, 96 run poses, 56 attack/32 dodge poses, foot anchors, independent UV, uniform travel phase, enemy windup continuity, damage-aligned cut, lethal follow-through, pause and reset',flush=True)
+ assert result=={'directions':8,'runFrames':96,'atlases':10,'groundChecks':32};assert not errors,errors;print('PASS sprite GPU output, 32 floor-depth poses, column occlusion, alpha, 96 run poses, 56 attack states/approved-art evasion, foot anchors, independent UV, uniform travel phase, enemy windup continuity, damage-aligned cut, lethal follow-through, pause and reset',flush=True)
  context.close()
  c=browser.new_context();c.route('**/assets/sprites/warrior.json*',lambda route:route.fulfill(status=503,body='unavailable'));p=c.new_page();p.goto(BASE);p.wait_for_function('document.getElementById("enter").textContent==="다시 불러오기"',timeout=60000);assert p.locator('#enter').is_visible();assert p.locator('#load-copy').inner_text().startswith('3D 성역을 불러오지 못했습니다.');print('PASS missing sprite pack shows retry UI',flush=True);browser.close()
