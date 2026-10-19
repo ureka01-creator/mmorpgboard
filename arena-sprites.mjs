@@ -1,6 +1,6 @@
-import {enableFlow,applyFlow} from './arena-sprite-flow.mjs?v=2.12';
+import {enableFlow,applyFlow} from './arena-sprite-flow.mjs?v=2.13';
 import * as THREE from 'three';
-import {facing,spritePose} from './arena-sprite-motion.mjs?v=2.12';
+import {facing,spritePose,settleLocomotion} from './arena-sprite-motion.mjs?v=2.13';
 const VIEW_YAW=Math.atan2(4.8,8.7),VIEW_COS=Math.hypot(4.8,8.7)/Math.hypot(4.8,14.7,8.7),FLOOR=.025;
 let pending,shadowTexture;
 const poseGeometry=new WeakMap();
@@ -59,17 +59,22 @@ export function createActor(scene,isHero,assets){
 }
 export function animateActor(actor,body,time,reduced=false){
  const fresh=actor.motion?.body!==body||time<actor.motion.time;
- if(fresh)actor.motion={body,time,phase:0,travel:body.travel||0,yaw:body.yaw,footsteps:0};
+ if(fresh)actor.motion={body,time,phase:0,travel:body.gaitTravel??body.travel??0,yaw:body.yaw,footsteps:0,rawTravel:body.travel||0,dashTravel:0};
  const m=actor.motion;if(!fresh&&time===m.time)return;
- const travel=Math.max(0,(body.travel||0)-m.travel),moving=body.mode==='walk'||body.mode==='attack';
- if(moving){const old=Math.floor(m.phase*2);m.phase+=travel/2.24;if(body.mode==='walk')m.footsteps+=Math.max(0,Math.floor(m.phase*2)-old);}
+ const travel=Math.max(0,(body.gaitTravel??body.travel??0)-m.travel),moving=body.gaitTravel!==undefined||body.mode==='walk'||body.mode==='attack';
+ if(moving)m.phase+=travel/2.24;
+ const rawDelta=Math.max(0,(body.travel||0)-m.rawTravel);
+ if(actor.flow)m.dashTravel+=body.gaitTravel!==undefined?Math.max(0,rawDelta-travel):body.mode==='dodge'?rawDelta:0;
+ const renderPhase=m.phase+(m.dashTravel||0)/2.24;
+ if(body.mode==='walk')m.footsteps+=Math.max(0,Math.floor(renderPhase*2)-Math.floor((m.renderPhase??renderPhase)*2));
  m.direction=facing(body.yaw,VIEW_YAW,fresh?undefined:m.direction);
  // The simulation enters victory on the lethal hit and resets elapsed to zero.
  // Finish that committed cut visually without changing damage or accepting input.
  if(!fresh&&actor.isHero&&m.bodyMode==='attack'&&body.mode==='idle'&&body.hit&&(body.hits||0)>(m.hits||0))m.finishUntil=time+.40;
  if(body.mode!=='idle'||time>=m.finishUntil)m.finishUntil=undefined;
- const visualBody=m.finishUntil?{...body,mode:'attack',elapsed:Math.max(.26,.66-(m.finishUntil-time))}:body;
- const pose=spritePose(visualBody,m.phase,time,m.direction,actor.pack.refined),frame=actor.pack.frames[pose.clip][m.direction][pose.frame],atlas=actor.pack.atlases[frame.atlas],map=actor.maps[frame.atlas];
+ let visualBody=m.finishUntil?{...body,mode:'attack',elapsed:Math.max(.26,.66-(m.finishUntil-time))}:body;
+ if(actor.flow&&visualBody.mode==='dodge')visualBody={...visualBody,dashPhase:renderPhase};
+ const pose=spritePose(visualBody,actor.flow?renderPhase:m.phase,time,m.direction,actor.pack.refined),frame=actor.pack.frames[pose.clip][m.direction][pose.frame],atlas=actor.pack.atlases[frame.atlas],map=actor.maps[frame.atlas];
  map.repeat.set(frame.rect[2]/atlas.width,frame.rect[3]/atlas.height);map.offset.set(frame.rect[0]/atlas.width,1-(frame.rect[1]+frame.rect[3])/atlas.height);
  actor.sprite.geometry=geometryFor(frame)||actor.planeGeometry;
  if(actor.sprite.material.map!==map){actor.sprite.material.map=map;actor.sprite.material.needsUpdate=true;}
@@ -77,7 +82,21 @@ export function animateActor(actor,body,time,reduced=false){
  actor.sprite.position.set((.5-frame.pivot[0])*width,FLOOR+(frame.pivot[1]-.5)*height,0);
  // Apply numerical motion to the approved pixels, then a restrained
  // environment tint that preserves the painted highlights.
- applyFlow(actor,visualBody,m.phase,m.direction);
+ if(['attack','windup'].includes(visualBody.mode)){
+  if(m.bodyMode!==visualBody.mode){const previous=m.locomotion||(m.bodyMode==='dodge'?{weight:1,phase:renderPhase,direction:m.direction}:undefined);m.attackEntry=previous?.weight>.05&&previous.direction===m.direction?{...previous,duration:visualBody.mode==='windup'?.06:.045}:undefined;}
+ }else m.attackEntry=undefined;
+ if(actor.flow&&['walk','idle'].includes(visualBody.mode)){
+  m.locomotion??={weight:(fresh?visualBody.mode==='walk':m.bodyMode==='dodge')?1:0,velocity:0,phase:renderPhase,direction:m.direction};
+  settleLocomotion(m.locomotion,visualBody.mode==='walk'?1:0,Math.max(0,time-m.time));
+  if(visualBody.mode==='walk'){m.locomotion.phase=renderPhase;m.locomotion.direction=m.direction;}
+ }else m.locomotion=undefined;
+ let flowBody=visualBody,locomotion=m.locomotion;
+ if(m.attackEntry){
+  const entry=m.attackEntry,t=Math.min(1,Math.max(0,(visualBody.elapsed||0)/entry.duration));
+  if(t<1){flowBody={...visualBody,mode:'idle'};locomotion={...entry,weight:entry.weight*(1-t*t*(3-2*t))};}
+  else flowBody={...visualBody,entryDelay:entry.duration};
+ }
+ applyFlow(actor,flowBody,actor.flow?renderPhase:m.phase,m.direction,locomotion);
  const tint=actor.environmentTint.setRGB(.94,.96,1);
  let warmth=0;
  for(const light of actor.warmLights)if(light.visible){
@@ -90,7 +109,7 @@ export function animateActor(actor,body,time,reduced=false){
  actor.group.position.set(body.x,0,body.z);actor.pose=body.mode;actor.sprite.material.opacity=body.mode==='hurt'?.65+.35*Math.min(1,(body.elapsed||0)/.30):1;
  if(body.mode==='dead'){m.deadAt??=time;actor.sprite.material.opacity=Math.max(0,1-(time-m.deadAt)/.8);actor.shadow.material.opacity=.26*actor.sprite.material.opacity;}else{m.deadAt=null;actor.shadow.material.opacity=body.mode==='dodge'?.16:.26;}
  if(actor.flow){actor.flow.blade.material.opacity=actor.flow.head.material.opacity=actor.sprite.material.opacity;}
- Object.assign(m,{time,travel:body.travel||0,yaw:body.yaw,bodyMode:body.mode,hits:body.hits||0,clip:pose.clip,frame:pose.frame,atlas:frame.atlas});
+ Object.assign(m,{time,renderPhase,rawTravel:body.travel||0,travel:body.gaitTravel??body.travel??0,yaw:body.yaw,bodyMode:body.mode,hits:body.hits||0,clip:pose.clip,frame:pose.frame,atlas:frame.atlas});
 }
 export function spritePortrait(actor){
  const f=actor.pack.frames.idle[0][0],image=actor.maps[f.atlas].image,b=f.bbox;

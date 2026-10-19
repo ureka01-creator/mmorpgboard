@@ -1,16 +1,24 @@
 import * as THREE from 'three';
+import {Presentation} from './arena-presentation.mjs?v=2.13';
 import * as R from './arena-engine.mjs?v=2.8';
 import {createArtWorld,portrait} from './arena-art.mjs?v=2.8';
-import {createActor,animateActor,loadSpriteAssets} from './arena-sprites.mjs?v=2.12';
+import {createActor,animateActor,loadSpriteAssets} from './arena-sprites.mjs?v=2.13';
 async function setup(){
 const $=id=>document.getElementById(id),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const renderer=new THREE.WebGLRenderer({canvas:$('scene'),antialias:true,powerPreference:'high-performance'});
 let resolution=Math.min(devicePixelRatio,1.25);renderer.setPixelRatio(resolution);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
 const motionPack=await loadSpriteAssets();
-if(new URLSearchParams(location.search).get('motion')!=='legacy'){const {loadFlowAssets}=await import('./arena-sprite-flow.mjs?v=2.12');motionPack.flow=await loadFlowAssets();}
+if(new URLSearchParams(location.search).get('motion')!=='legacy'){const {loadFlowAssets}=await import('./arena-sprite-flow.mjs?v=2.13');motionPack.flow=await loadFlowAssets();}
 const art=createArtWorld(renderer),scene=art.scene,hero=createActor(scene,true,motionPack),enemy=createActor(scene,false,motionPack),camera=new THREE.PerspectiveCamera(39,innerWidth/innerHeight,.1,80),clock=new THREE.Clock();
+// Warm the actual actor textures after both actors have created their clones.
+function prepareActorTextures(){for(const actor of [hero,enemy])for(const texture of Object.values(actor.maps))renderer.initTexture(texture);}
+prepareActorTextures();
+// Architecture and the sun are stationary; moving sprites use their own ground shadows.
+art.sun.shadow.autoUpdate=false;art.sun.shadow.needsUpdate=true;
+renderer.domElement.addEventListener('webglcontextlost',()=>pause(true));
+renderer.domElement.addEventListener('webglcontextrestored',()=>{art.sun.shadow.needsUpdate=true;prepareActorTextures();renderer.compile(scene,camera);});
 const offset=new THREE.Vector3(4.8,14.7,8.7),cameraTarget=new THREE.Vector3(),raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2(),groundPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0),sparks=[],floaters=[],keys=new Set(),yaw=Math.atan2(offset.x,offset.z);
-let state=R.create(),started=false,paused=false,accumulator=0,attackHeld=false,attackQueued=false,dodgeQueued=false,joystick={x:0,y:0,id:null},destination=null,route=[],lastEvent=0,muted=false,audioContext,noticeTimer,resetWasPaused=false,lastFootstep=0,slowAverage=.016,lastResolutionChange=0,visualTime=0,pendingResultAt=null;
+let state=R.create(),presentation=new Presentation(state),started=false,paused=false,accumulator=0,attackHeld=false,attackQueued=false,dodgeQueued=false,joystick={x:0,y:0,id:null},destination=null,route=[],lastEvent=0,muted=false,audioContext,noticeTimer,resetWasPaused=false,lastFootstep=0,slowAverage=.016,lastResolutionChange=0,visualTime=0,pendingResultAt=null;
 function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();}resize();window.addEventListener('resize',resize);
 function notify(text){clearTimeout(noticeTimer);$('notice').hidden=false;$('notice').textContent=text;noticeTimer=setTimeout(()=>$('notice').hidden=true,2800);}
 function project(position){camera.updateMatrixWorld();const p=position.clone().project(camera);return {x:(p.x*.5+.5)*innerWidth,y:(-.5*p.y+.5)*innerHeight,visible:Math.abs(p.x)<1.1&&Math.abs(p.y)<1.1&&p.z>-1&&p.z<1};}
@@ -21,7 +29,7 @@ function input(){let x=joystick.x+(keys.has('d')||keys.has('arrowright')?1:0)-(k
 }
 function clearInput(){keys.clear();attackHeld=attackQueued=dodgeQueued=false;joystick={x:0,y:0,id:null};$('joystick-thumb').style.transform='';destination=null;route=[];art.target.visible=false;}
 function pause(value){if(!started||state.status!=='playing')return;paused=value;clearInput();$('paused').hidden=!value;$('pause').textContent=value?'▶':'Ⅱ';$('pause').setAttribute('aria-label',value?'계속하기':'일시 정지');}
-function reset(){state=R.create();lastEvent=0;lastFootstep=0;paused=false;accumulator=0;visualTime=0;pendingResultAt=null;clearInput();art.warning.visible=false;$('paused').hidden=$('result').hidden=true;$('pause').textContent='Ⅱ';$('pause').setAttribute('aria-label','일시 정지');$('hint').textContent='바닥 탭으로 이동 · 적의 준비 동작을 보고 거리를 벌리세요';for(const f of floaters)f.el.remove();floaters.length=0;for(const spark of sparks){scene.remove(spark.mesh);spark.mesh.geometry.dispose();spark.mesh.material.dispose();}sparks.length=0;animateActor(hero,state.hero,0,reduced);animateActor(enemy,state.enemy,0,reduced);cameraTarget.set(state.hero.x*.55,0,state.hero.z*.55);camera.position.copy(cameraTarget).add(offset);camera.lookAt(cameraTarget);updateHUD();}
+function reset(){state=R.create();presentation=new Presentation(state);lastEvent=0;lastFootstep=0;paused=false;accumulator=0;visualTime=0;pendingResultAt=null;clearInput();art.warning.visible=false;$('paused').hidden=$('result').hidden=true;$('pause').textContent='Ⅱ';$('pause').setAttribute('aria-label','일시 정지');$('hint').textContent='바닥 탭으로 이동 · 적의 준비 동작을 보고 거리를 벌리세요';for(const f of floaters)f.el.remove();floaters.length=0;for(const spark of sparks){scene.remove(spark.mesh);spark.mesh.geometry.dispose();spark.mesh.material.dispose();}sparks.length=0;const initial=presentation.sample(1);animateActor(hero,initial.hero,0,reduced);animateActor(enemy,initial.enemy,0,reduced);cameraTarget.set(state.hero.x*.55,0,state.hero.z*.55);camera.position.copy(cameraTarget).add(offset);camera.lookAt(cameraTarget);updateHUD();}
 function updateHUD(){const h=state.hero,e=state.enemy;$('hero-health').style.width=h.hp/h.max*100+'%';$('hero-hp').textContent=`${h.hp} / ${h.max}`;$('enemy-health').style.width=e.hp/e.max*100+'%';$('enemy-hp').textContent=`${e.hp} / ${e.max}`;$('attack-cooldown').style.height=h.cooldown/.72*100+'%';$('dodge-cooldown').style.height=h.dodgeCooldown/1.45*100+'%';$('attack').disabled=$('dodge').disabled=state.status!=='playing'||paused;}
 function initSound(){try{audioContext??=new (window.AudioContext||window.webkitAudioContext)();audioContext.resume().catch(()=>{});}catch{}}
 function sound(type){if(muted||!audioContext||audioContext.state!=='running')return;const t=audioContext.currentTime,g=audioContext.createGain(),o=audioContext.createOscillator();g.connect(audioContext.destination);o.connect(g);o.type=type==='hit'?'triangle':'sine';o.frequency.setValueAtTime(type==='hit'?480:type==='step'?80:210,t);o.frequency.exponentialRampToValueAtTime(45,t+.14);g.gain.setValueAtTime(type==='step'?.018:.05,t);g.gain.exponentialRampToValueAtTime(.001,t+.17);o.start(t);o.stop(t+.19);}
@@ -30,10 +38,12 @@ function hitEffect(who,amount){const body=state[who],actor=who==='hero'?hero:ene
 }
 function events(){for(const event of state.events){if(event.id<=lastEvent)continue;lastEvent=event.id;if(event.type==='hit'){hitEffect(event.who,event.amount);sound('hit');}if(event.type==='swing')sound('swing');if(event.type==='warning')$('hint').textContent='수호병이 검을 들었습니다. 움직이거나 회피하세요.';if(event.type==='evade')$('hint').textContent='공격을 피했습니다. 빈틈을 노리세요.';if(event.type==='miss')$('hint').textContent='검이 닿지 않았습니다. 직접 다가가 공격하세요.';if(event.type==='won'||event.type==='lost'){pendingResultAt=visualTime+(event.type==='won'?.40:0);$('result-caption').textContent=event.type==='won'?'SANCTUARY CLEARED':'FALLEN KNIGHT';$('result-title').textContent=event.type==='won'?'성역이 잠잠해졌다':'다시 검을 들 시간';$('result-copy').textContent=event.type==='won'?`검격 ${state.hero.swings}회 · 명중 ${state.hero.hits}회 · 남은 체력 ${state.hero.hp}`:'적이 검을 들면 공격 범위에서 벗어나거나 회피하세요.';clearInput();}}}
 function frame(){requestAnimationFrame(frame);const raw=clock.getDelta(),dt=Math.min(raw,.25),time=clock.elapsedTime;
- // Select sprite poses at the same fixed 60Hz as movement and combat.
- if(started&&!paused){accumulator+=dt;while(accumulator>=1/60){if(state.status==='playing')R.step(state,input(),1/60);visualTime+=1/60;animateActor(hero,state.hero,visualTime,reduced);animateActor(enemy,state.enemy,visualTime,reduced);accumulator-=1/60;}events();}
+ // Combat stays at 60 Hz; presentation samples every display frame.
+ if(started&&!paused){accumulator+=dt;while(accumulator>=1/60){if(state.status==='playing')R.step(state,input(),1/60);presentation.capture(state);visualTime+=1/60;accumulator-=1/60;}events();}
+ const bodies=presentation.sample(accumulator*60),renderTime=Math.max(0,visualTime-1/60+accumulator);
+ animateActor(hero,bodies.hero,renderTime,reduced);animateActor(enemy,bodies.enemy,renderTime,reduced);
  if(pendingResultAt!==null&&visualTime>=pendingResultAt){$('result').hidden=false;pendingResultAt=null;}
- const goal=new THREE.Vector3(state.hero.x*.72,0,state.hero.z*.72),shift=goal.clone().sub(cameraTarget).multiplyScalar(reduced?1:1-Math.exp(-dt*4));cameraTarget.add(shift);camera.position.copy(cameraTarget).add(offset);camera.lookAt(cameraTarget);camera.updateMatrixWorld();
+ const goal=new THREE.Vector3(bodies.hero.x*.72,0,bodies.hero.z*.72),shift=goal.clone().sub(cameraTarget).multiplyScalar(reduced?1:1-Math.exp(-dt*4));cameraTarget.add(shift);camera.position.copy(cameraTarget).add(offset);camera.lookAt(cameraTarget);camera.updateMatrixWorld();
  for(const torch of art.torches){const flicker=reduced?1:1+Math.sin(time*7+torch.seed)*.055;torch.flame.scale.set(.56*flicker,.8*flicker,1);}
  art.warning.visible=started&&state.enemy.mode==='windup'&&state.status==='playing';art.warning.position.set(state.enemy.x,.019,state.enemy.z);art.warning.rotation.z=state.enemy.yaw-Math.PI/2-Math.PI/3;art.warning.material.opacity=.10+Math.min(1,state.enemy.elapsed/.72)*.22;
  const enemyPos=project(enemy.group.position.clone().add(new THREE.Vector3(0,2.50,0)));$('enemy-label').hidden=!started||state.enemy.hp<=0||!enemyPos.visible;$('enemy-label').style.left=enemyPos.x+'px';$('enemy-label').style.top=enemyPos.y+'px';
