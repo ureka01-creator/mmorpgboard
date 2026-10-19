@@ -32,3 +32,11 @@ ARENA_BASE=http://127.0.0.1:8044/ python scripts/verify_warrior_native_art.py
 ```
 
 원본 애니메이션은 CC0이며 라이선스는 `assets/animation-resources/quaternius/LICENSE`에 있다. 새 원화의 제작 정보는 `assets/sprites/native-motion/LICENSE.txt`에 있다. Nox의 원본 그림이나 리소스는 포함하지 않는다.
+
+## 공개 배포 확인
+
+- 소스: `b3afcd1`
+- Pages: `0b22375157248c1b74e78f534150067b5d71950f`
+- [배포 작업 39264517070](https://github.com/ureka01-creator/mmorpgboard/actions/runs/39264517070): 성공
+- 공개 HTTPS 파일 49개 바이트 일치. 기존 2.14의 두 게임 진입점에서 이동·회피·공격 5회·승리·결과 검사 통과. 원본 리소스 비교 페이지 재생과 새 기사 시안의 걷기·공격 전환 및 렌더 검사 통과.
+- 기존 승인 원화와 게임의 캐릭터 동작 파일은 이번 작업에서 변경하지 않음.
