@@ -38,3 +38,11 @@ Quaternius 원본 Walk_Loop와 Sword_Attack의 12시점×8방향 자세표를 �
 ARENA_BASE=http://127.0.0.1:8020/ python scripts/verify_animation_resources.py
 ARENA_BASE=http://127.0.0.1:8020/ python scripts/render_animation_resources.py
 ```
+
+## 공개 배포 확인
+
+- 소스 커밋: `81c5cf1`
+- Pages 커밋: `3ac87313b3aecc4817e464a2df2b96ea74d0e705`
+- [배포 작업 39241054135](https://github.com/ureka01-creator/mmorpgboard/actions/runs/39241054135): 성공
+- `python scripts/verify_public.py`: 공개 HTTPS 파일 42개 바이트 일치. 기존 2.14 두 게임 진입점의 이동·회피·공격 5회·승리·결과 검사 통과. 새 원본 모션 페이지의 네 동작 재생 및 공격 클립 전환 통과.
+- 원본 동작 12개, 세 화면 크기, DPR 2 렌더 크기 검사 통과. 8방향 192개 자세 캡처의 같은 시각 로컬 뼈대 해시 일치. 승인된 원화 PNG와 `warrior.json`은 `4f9244c` 기준 변경 없음.
