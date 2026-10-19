@@ -1,10 +1,10 @@
 import * as THREE from 'three';
-import {motionSegment} from './arena-sprite-motion.mjs?v=2.13';
+import {motionSegment} from './arena-sprite-motion.mjs?v=2.14';
 export {motionSegment};
 export async function loadFlowAssets(){
- const response=await fetch('./assets/sprites/motion/flow.json?v=2.13');if(!response.ok)throw Error('Motion manifest '+response.status);
- const manifest=await response.json();if(manifest.schema!==2||manifest.grid?.[0]!==56||manifest.grid?.[1]!==92||manifest.frames?.length!==160||manifest.pairs?.length!==240)throw Error('Invalid motion manifest');
- const data=await fetch('./assets/sprites/motion/flow.bin.gz?v=2.13');if(!data.ok)throw Error('Motion data '+data.status);
+ const response=await fetch('./assets/sprites/motion/flow.json?v=2.14');if(!response.ok)throw Error('Motion manifest '+response.status);
+ const manifest=await response.json();if(manifest.schema!==3||manifest.grid?.[0]!==56||manifest.grid?.[1]!==92||manifest.frames?.length!==160||manifest.pairs?.length!==258)throw Error('Invalid motion manifest');
+ const data=await fetch('./assets/sprites/motion/flow.bin.gz?v=2.14');if(!data.ok)throw Error('Motion data '+data.status);
  const compressed=await data.arrayBuffer();
  const digest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',compressed)),b=>b.toString(16).padStart(2,'0')).join('');if(digest!==manifest.flowSha256)throw Error('Motion checksum mismatch');
  const stream=new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'));
