@@ -50,3 +50,11 @@ ARENA_SEQUENCE_BASELINE=docs/motion-review-v2.13/baseline-2.12.json ARENA_SEQUEN
 ## 한계
 
 망토는 승인된 원화 사이를 연결하는 방식이며 독립적인 천 물리 시뮬레이션은 아니다. 원화의 가림·자세 차이는 남아 있고 이 반복 검사가 모든 시각적 결함의 부재를 증명하지 않는다. Nox와 동등한 완성도나 게임 전체의 완벽함, 실제 iPad Safari 성능을 이 환경의 검사만으로 확정하지 않는다.
+
+## 배포
+
+실행 소스: `17b862b`. 공개 파일 커밋: `0bdb88faaa4728dd591a3d9d0caa075bee535676`. [Pages 작업 39193950095](https://github.com/ureka01-creator/mmorpgboard/actions/runs/39193950095)은 성공했다.
+
+공개 주소: https://ureka01-creator.github.io/mmorpgboard/?release=2.13
+
+`verify_public.py`로 실제 HTTPS 공개 파일 33개의 SHA256/모듈 MIME을 확인하고, `/`와 `/study.html` 각각에서 이동·회피·5회 명중·승리 결과 표시를 통과했다. 시스템 인증서 검증을 유지했다.
