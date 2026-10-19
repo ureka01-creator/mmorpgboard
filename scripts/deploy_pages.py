@@ -16,7 +16,7 @@ with tempfile.TemporaryDirectory(prefix='elderfall-deploy-') as tmp:
  env=dict(os.environ,GIT_INDEX_FILE=tmp+'/index')
  git('read-tree','--empty',env=env);git('add','--',*FILES,env=env)
  tree=git('write-tree',env=env)
- commit=git('commit-tree',tree,'-p',parent,'-m','Smooth display timing and approved warrior action transitions 2.13')
+ commit=git('commit-tree',tree,'-p',parent,'-m','Use one coherent approved-warrior sword cut 2.14')
 # Push the new child commit directly; no force push or local branch/checkout replacement.
 subprocess.run(['git','push','origin',commit+':refs/heads/gh-pages'],check=True)
 print('Published gh-pages commit '+commit,flush=True)

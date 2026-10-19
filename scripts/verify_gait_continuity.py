@@ -4,7 +4,7 @@ from verify_arena_browser import ARGS,load_review as load
 with sync_playwright()as p:
  b=p.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS);page=b.new_page();load(page)
  result=page.evaluate('''async()=>{
- const T=await import('three'),{createActor,animateActor,loadSpriteAssets}=await import('./arena-sprites.mjs?v=2.13'),assets=await loadSpriteAssets();
+ const T=await import('three'),{createActor,animateActor,loadSpriteAssets}=await import('./arena-sprites.mjs?v=2.14'),assets=await loadSpriteAssets();
  const scene=new T.Scene(),a=createActor(scene,true,assets);a.shadow.visible=false;const r=arena.renderer,target=new T.WebGLRenderTarget(192,192),c=new T.OrthographicCamera(-1.7,1.7,1.7,-1.7,.1,80);c.position.set(4.8,15.8,8.7);c.lookAt(0,1,0);let time=10;
  const pix=()=>{r.setRenderTarget(target);r.setClearColor(0,0);r.render(scene,c);const p=new Uint8Array(192*192*4);r.readRenderTargetPixels(target,0,0,192,192,p);return p;};
  const results=[];

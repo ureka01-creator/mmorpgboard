@@ -1,6 +1,6 @@
-import {enableFlow,applyFlow} from './arena-sprite-flow.mjs?v=2.13';
+import {enableFlow,applyFlow} from './arena-sprite-flow.mjs?v=2.14';
 import * as THREE from 'three';
-import {facing,spritePose,settleLocomotion} from './arena-sprite-motion.mjs?v=2.13';
+import {facing,spritePose,settleLocomotion} from './arena-sprite-motion.mjs?v=2.14';
 const VIEW_YAW=Math.atan2(4.8,8.7),VIEW_COS=Math.hypot(4.8,8.7)/Math.hypot(4.8,14.7,8.7),FLOOR=.025;
 let pending,shadowTexture;
 const poseGeometry=new WeakMap();

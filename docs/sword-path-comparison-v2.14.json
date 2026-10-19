@@ -1,0 +1,95 @@
+{
+  "baseline": "4128535",
+  "unit": "degrees of total projected blade direction travel",
+  "isNoxSimilarityScore": false,
+  "directions": [
+    {
+      "direction": 0,
+      "preparation": {
+        "before": 157.27,
+        "after": 157.27
+      },
+      "recovery": {
+        "before": 96.39,
+        "after": 15.58
+      }
+    },
+    {
+      "direction": 1,
+      "preparation": {
+        "before": 133.68,
+        "after": 133.68
+      },
+      "recovery": {
+        "before": 98.48,
+        "after": 9.17
+      }
+    },
+    {
+      "direction": 2,
+      "preparation": {
+        "before": 295.95,
+        "after": 63.21
+      },
+      "recovery": {
+        "before": 145.98,
+        "after": 38.42
+      }
+    },
+    {
+      "direction": 3,
+      "preparation": {
+        "before": 123.61,
+        "after": 123.61
+      },
+      "recovery": {
+        "before": 205.25,
+        "after": 35.07
+      }
+    },
+    {
+      "direction": 4,
+      "preparation": {
+        "before": 148.71,
+        "after": 19.07
+      },
+      "recovery": {
+        "before": 133.37,
+        "after": 28.64
+      }
+    },
+    {
+      "direction": 5,
+      "preparation": {
+        "before": 75.99,
+        "after": 75.99
+      },
+      "recovery": {
+        "before": 178.72,
+        "after": 6.07
+      }
+    },
+    {
+      "direction": 6,
+      "preparation": {
+        "before": 114.59,
+        "after": 114.59
+      },
+      "recovery": {
+        "before": 125.61,
+        "after": 9
+      }
+    },
+    {
+      "direction": 7,
+      "preparation": {
+        "before": 134.59,
+        "after": 134.59
+      },
+      "recovery": {
+        "before": 100.7,
+        "after": 9.16
+      }
+    }
+  ]
+}

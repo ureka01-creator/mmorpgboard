@@ -119,6 +119,9 @@ flow=cv2.DISOpticalFlow_create(cv2.DISOPTICAL_FLOW_PRESET_MEDIUM);flow.setUseSpa
 for d in range(8):
  edges=[(f'{d}:run:{i}',f'{d}:run:{(i+1)%12}') for i in range(12)]
  edges += [(f'{d}:attack:{i}',f'{d}:attack:{i+1}')for i in range(6)]
+ # A single cut bypasses the unrelated thrust and second lift in the old sheet.
+ edges += [(f'{d}:attack:2',f'{d}:attack:4'),(f'{d}:attack:4',f'{d}:attack:6')]
+ if d in [2,4]:edges += [(f'{d}:attack:0',f'{d}:attack:2')]
  # Stop/start use corresponding art without changing the character design.
  edges += [(f'{d}:idle:0',f'{d}:run:{i}')for i in range(12)]
  for ka,kb in edges:
@@ -168,5 +171,5 @@ for d in range(8):
   pairs.append({'a':a,'b':b})
  print('measured original-art direction',d,flush=True)
 data=np.stack(fields).tobytes();compressed=gzip.compress(data,mtime=0);(OUT/'flow.bin.gz').write_bytes(compressed)
-manifest={'schema':2,'generator':'OpenCV DIS medium, original artwork unchanged','grid':[GW,GH],'min':MIN,'size':SIZE,'pairs':pairs,'frames':frames,'flowSha256':hashlib.sha256(compressed).hexdigest(),'sources':{a['file']:a['sha256']for a in pack['atlases'].values()}}
+manifest={'schema':3,'generator':'OpenCV DIS medium, original artwork unchanged','grid':[GW,GH],'min':MIN,'size':SIZE,'pairs':pairs,'frames':frames,'flowSha256':hashlib.sha256(compressed).hexdigest(),'sources':{a['file']:a['sha256']for a in pack['atlases'].values()}}
 (OUT/'flow.json').write_text(json.dumps(manifest,separators=(',',':'))+'\n');print(len(pairs),'pairs',len(compressed),'bytes',flush=True)

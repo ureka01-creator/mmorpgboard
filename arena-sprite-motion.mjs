@@ -42,7 +42,8 @@ export function spritePose(body,phase,time,direction=0,refined=false){
  return {clip:'idle',frame:Math.floor(time/1.2)%4};
 }
 
-// Continuous correspondence timeline; contact remains synchronized to engine damage.
+// One committed cut: draw back, raise, cut, recover. The old thrust (3) and
+// second raised-blade pose (5) are excluded. Damage remains on the engine clock.
 export function motionSegment(body,phase,direction){
  const key=(clip,i)=>`${direction}:${clip}:${i}`;
  if(body.mode==='walk'||body.mode==='dodge'&&Number.isFinite(body.dashPhase)){
@@ -52,16 +53,18 @@ export function motionSegment(body,phase,direction){
  if(body.mode!=='attack'&&body.mode!=='windup')return null;
  const enemy=body.max===50,t=Math.max(0,body.elapsed||0);
  let keys;
- if(body.mode==='windup')keys=[[0,0],[.28,1],[.72,2]];
- else if(enemy)keys=[[0,2],[.09,3],[.18,4],[.205,4],[.35,5],[.58,6]];
- else keys=[[0,0],[.105,1],[.19,2],[.235,3],[.26,4],[.285,4],[.43,5],[.62,6]];
+ const directRaise=direction===2||direction===4;
+ // These two projected preparation drawings reverse the blade before raising it.
+ if(body.mode==='windup')keys=directRaise?[[0,0],[.72,2]]:[[0,0],[.28,1],[.72,2]];
+ else if(enemy)keys=[[0,2],[.18,4],[.205,4],[.52,6]];
+ else keys=directRaise?[[0,0],[.19,2],[.26,4],[.285,4],[.56,6]]:[[0,0],[.105,1],[.19,2],[.26,4],[.285,4],[.56,6]];
  if(body.entryDelay>0&&keys[0][1]===0)keys.splice(1,0,[Math.min(body.entryDelay,.08),0]);
  let j=1;while(j<keys.length&&t>=keys[j][0])j++;
  if(j>=keys.length)return {a:key('attack',keys.at(-1)[1]),b:key('attack',keys.at(-1)[1]),t:0};
  const [start,a]=keys[j-1],[end,b]=keys[j];let mix=(t-start)/(end-start);
  // Leave the resting guard at zero speed and settle into it without a hard
  // stop. Interior strike segments and the engine's exact contact stay intact.
- if(a===0&&b===1&&(body.mode==='windup'||!enemy))mix=mix*mix*(2-mix);
+ if(a===0&&(b===1||b===2)&&(body.mode==='windup'||!enemy))mix=mix*mix*(2-mix);
  if(j===keys.length-1&&body.mode==='attack')mix=mix+mix*mix-mix*mix*mix;
  return {a:key('attack',a),b:key('attack',b),t:mix};
 }

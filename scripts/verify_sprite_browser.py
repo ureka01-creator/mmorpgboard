@@ -5,7 +5,7 @@ with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS)
  context=browser.new_context(viewport={'width':1024,'height':768});page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));load(page);page.click('#pause')
  result=page.evaluate('''async()=>{
- const {animateActor}=await import('./arena-sprites.mjs?v=2.13'),a=arena.hero,b=arena.enemy,view=Math.atan2(4.8,8.7),THREE=await import('three');
+ const {animateActor}=await import('./arena-sprites.mjs?v=2.14'),a=arena.hero,b=arena.enemy,view=Math.atan2(4.8,8.7),THREE=await import('three');
  if(a.renderType!=='directional-sprite'||!a.sprite.material.depthTest||a.sprite.material.depthWrite)throw Error('Invalid sprite rendering');
  let time=1,frames=0;const seen=new Set();
  const c=document.createElement('canvas');c.width=1536;c.height=1024;const ctx=c.getContext('2d');

@@ -1,14 +1,14 @@
 import * as THREE from 'three';
-import {Presentation} from './arena-presentation.mjs?v=2.13';
+import {Presentation} from './arena-presentation.mjs?v=2.14';
 import * as R from './arena-engine.mjs?v=2.8';
 import {createArtWorld,portrait} from './arena-art.mjs?v=2.8';
-import {createActor,animateActor,loadSpriteAssets} from './arena-sprites.mjs?v=2.13';
+import {createActor,animateActor,loadSpriteAssets} from './arena-sprites.mjs?v=2.14';
 async function setup(){
 const $=id=>document.getElementById(id),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const renderer=new THREE.WebGLRenderer({canvas:$('scene'),antialias:true,powerPreference:'high-performance'});
 let resolution=Math.min(devicePixelRatio,1.25);renderer.setPixelRatio(resolution);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
 const motionPack=await loadSpriteAssets();
-if(new URLSearchParams(location.search).get('motion')!=='legacy'){const {loadFlowAssets}=await import('./arena-sprite-flow.mjs?v=2.13');motionPack.flow=await loadFlowAssets();}
+if(new URLSearchParams(location.search).get('motion')!=='legacy'){const {loadFlowAssets}=await import('./arena-sprite-flow.mjs?v=2.14');motionPack.flow=await loadFlowAssets();}
 const art=createArtWorld(renderer),scene=art.scene,hero=createActor(scene,true,motionPack),enemy=createActor(scene,false,motionPack),camera=new THREE.PerspectiveCamera(39,innerWidth/innerHeight,.1,80),clock=new THREE.Clock();
 // Warm the actual actor textures after both actors have created their clones.
 function prepareActorTextures(){for(const actor of [hero,enemy])for(const texture of Object.values(actor.maps))renderer.initTexture(texture);}

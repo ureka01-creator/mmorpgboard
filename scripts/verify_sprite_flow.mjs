@@ -5,7 +5,7 @@ import {gunzipSync} from 'node:zlib';
 import {motionSegment} from '../arena-sprite-motion.mjs';
 const read=p=>readFileSync(new URL('../'+p,import.meta.url)),hash=b=>createHash('sha256').update(b).digest('hex');
 const m=JSON.parse(read('assets/sprites/motion/flow.json')),compressed=read('assets/sprites/motion/flow.bin.gz'),raw=gunzipSync(compressed),[w,h]=m.grid;
-assert.equal(m.schema,2);assert.equal(hash(compressed),m.flowSha256);assert.equal(raw.length,m.pairs.length*w*h*8);
+assert.equal(m.schema,3);assert.equal(hash(compressed),m.flowSha256);assert.equal(raw.length,m.pairs.length*w*h*8);
 for(const [file,sha]of Object.entries(m.sources))assert.equal(hash(read(file)),sha);
 const keys=new Set(m.frames.map(f=>f.key)),pairs=new Set(m.pairs.map(p=>m.frames[p.a].key+'>'+m.frames[p.b].key));
 for(const f of m.frames){assert(f.transform.length===4&&f.transform.every(Number.isFinite));assert.equal(f.contour.length,f.rect[3]);if(f.sword){assert(Number.isFinite(f.sword.back)&&f.sword.back>=0&&f.sword.back<=1,'Unbounded weapon backing '+f.key);assert.equal(f.bodyFillRows?.length,f.rect[3]);assert(f.bodyFillRows.every(([lo,hi,x,y])=>lo>=0&&hi>=lo&&hi<=f.rect[2]&&x>=0&&x<f.rect[2]&&y>=0&&y<f.rect[3]));assert.equal(f.bladeRows?.length,f.rect[3]);assert(f.bladeRows.every(([lo,hi])=>lo>=0&&hi>=lo&&hi<=f.rect[2]));assert(f.sword.points.every(Number.isFinite));assert(f.sword.width>.015&&f.sword.width<.3);}}
@@ -45,7 +45,7 @@ for(let d=0;d<8;d++){
 console.log('PASS source hashes, compressed field checksum/length, all 8-direction timelines, real damage contacts, enemy continuity and measured hand attachment', {pairs:m.pairs.length,worstHandError:worstHand,worstHeadError:worstHead});
 
 // Rest starts without a velocity kick; recovery reaches guard without a hard stop.
-for(const [max,mode,end]of [[40,'attack',.62],[50,'attack',.58],[50,'windup',.72]]){
+for(const [max,mode,end]of [[40,'attack',.56],[50,'attack',.52],[50,'windup',.72]]){
  const epsilon=1e-5;
  if(mode==='windup'||max===40)assert(motionSegment({mode,max,elapsed:epsilon},0,0).t<1e-6);
  if(mode==='attack')assert(1-motionSegment({mode,max,elapsed:end-epsilon},0,0).t<1e-6);
@@ -62,3 +62,20 @@ for(let d=0;d<8;d++){
  assert.equal(motionSegment({mode:'attack',max:40,elapsed:.26,entryDelay:.045},0,d).a,`${d}:attack:4`);
 }
 console.log('PASS all 96 rest/gait bridges and movement-to-attack contact timing');
+
+// A single cut must never revisit the thrust/second-lift poses, including attack entry.
+for(let d=0;d<8;d++)for(const max of [40,50])for(let i=0;i<=720;i++){
+ const s=motionSegment({mode:'attack',max,elapsed:i/1000},0,d);
+ for(const key of [s.a,s.b])assert(![3,5].includes(Number(key.split(':')[2])),'Unrelated thrust or second blade lift reintroduced');
+}
+console.log('PASS all 8-direction attacks use one cut, preserve exact contact and settle directly into the original guard');
+
+// Measured blade travel catches the old East preparation's near full turn.
+const wrap=a=>Math.atan2(Math.sin(a),Math.cos(a)),angles=new Map(m.frames.filter(f=>f.sword).map(f=>[f.key,Math.atan2(f.sword.points[3]-f.sword.points[1],f.sword.points[2]-f.sword.points[0])]));
+const preparation=[];
+for(let d=0;d<8;d++){
+ let previous,total=0;
+ for(let i=0;i<=190;i++){const p=motionSegment({mode:'attack',max:40,elapsed:i/1000},0,d),a=angles.get(p.a),angle=a+wrap(angles.get(p.b)-a)*p.t;if(previous!==undefined)total+=Math.abs(wrap(angle-previous));previous=angle;}
+ const degrees=total*180/Math.PI;assert(degrees<165,'Excessive preparation blade rotation '+d+' '+degrees);preparation.push(Math.round(degrees*100)/100);
+}
+console.log('PASS bounded preparation blade travel in 8 directions (degrees)',preparation);

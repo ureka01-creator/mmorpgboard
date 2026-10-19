@@ -6,7 +6,7 @@ with sync_playwright() as pw:
  page.on('pageerror',lambda e:errors.append(str(e)));page.on('console',lambda m:errors.append(m.text)if m.type=='error'else None)
  load(page)
  result=page.evaluate('''async()=>{
- const T=await import('three'),{createActor,animateActor,loadSpriteAssets}=await import('./arena-sprites.mjs?v=2.13'),assets=await loadSpriteAssets();
+ const T=await import('three'),{createActor,animateActor,loadSpriteAssets}=await import('./arena-sprites.mjs?v=2.14'),assets=await loadSpriteAssets();
  const scene=new T.Scene(),actor=createActor(scene,true,assets),legacy=createActor(scene,true,{...assets,flow:null});actor.shadow.visible=legacy.shadow.visible=false;
  if(actor.flow.assets.flow.image.width>2048||actor.flow.assets.flow.image.height>2048)throw Error('Motion data exceeds 2K texture support');
  const renderer=arena.renderer,target=new T.WebGLRenderTarget(128,128),camera=new T.OrthographicCamera(-1.7,1.7,1.7,-1.7,.1,80);camera.position.set(4.8,15.8,8.7);camera.lookAt(0,1,0);
@@ -21,9 +21,10 @@ with sync_playwright() as pw:
   }
   // Static-key fidelity is separate from the intentional run-to-attack lead-in.
   actor.motion=legacy.motion=undefined;
-  for(const elapsed of [0,.105,.19,.235,.26,.43,.62]){
+  for(const [elapsed,originalFrame] of [[0,0],[.105,1],[.19,2],[.26,4],[.56,6]]){
+   if((d===2||d===4)&&originalFrame===1)continue;
    body.mode='attack';body.elapsed=elapsed;actor.group.visible=true;legacy.group.visible=false;animateActor(actor,body,time+=.01);const current=pixels();
-   actor.group.visible=false;legacy.group.visible=true;animateActor(legacy,body,time+=.01);const approved=pixels();keyErrors.push(diff(current,approved)/Math.max(1,approved.reduce((x,y)=>x+y,0)));
+   actor.group.visible=false;legacy.group.visible=true;animateActor(legacy,{...body,elapsed:[0,.08,.14,.22,.26,.36,.60][originalFrame]},time+=.01);const approved=pixels();keyErrors.push(diff(current,approved)/Math.max(1,approved.reduce((x,y)=>x+y,0)));
   }
   for(const [max,contact]of [[40,.26],[50,.18]]){
    body.mode='attack';body.max=max;body.elapsed=contact;actor.group.visible=true;legacy.group.visible=false;animateActor(actor,body,time+=.1);

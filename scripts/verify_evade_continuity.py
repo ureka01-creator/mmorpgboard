@@ -4,7 +4,7 @@ from verify_arena_browser import ARGS,load_review
 with sync_playwright()as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS);page=browser.new_page();load_review(page)
  result=page.evaluate('''async()=>{
- const T=await import('three'),R=await import('./arena-engine.mjs'),{Presentation}=await import('./arena-presentation.mjs?v=2.13'),A=await import('./arena-sprites.mjs?v=2.13'),assets=await A.loadSpriteAssets(),scene=new T.Scene(),a=A.createActor(scene,true,assets);let checks=0,resumptions=0,blocked=0;
+ const T=await import('three'),R=await import('./arena-engine.mjs'),{Presentation}=await import('./arena-presentation.mjs?v=2.14'),A=await import('./arena-sprites.mjs?v=2.14'),assets=await A.loadSpriteAssets(),scene=new T.Scene(),a=A.createActor(scene,true,assets);let checks=0,resumptions=0,blocked=0;
  for(let d=0;d<9;d++){
   const state=R.create(),yaw=Math.atan2(4.8,8.7)+d*Math.PI/4,dx=d===8?0:Math.sin(yaw),dz=d===8?1:Math.cos(yaw);Object.assign(state.hero,d===8?{x:-4,z:2.8,yaw:0}:{x:0,z:0,yaw});state.enemy.hp=0;
   const view=new Presentation(state);A.animateActor(a,view.sample(1).hero,0);let wasDodge=false;

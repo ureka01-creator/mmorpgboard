@@ -5,7 +5,7 @@ with sync_playwright()as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS);page=browser.new_page();errors=[]
  page.on('pageerror',lambda e:errors.append(str(e)));page.on('console',lambda m:errors.append(m.text)if m.type=='error'else None);load_review(page)
  result=page.evaluate('''async()=>{
- const T=await import('three'),R=await import('./arena-engine.mjs'),{Presentation}=await import('./arena-presentation.mjs?v=2.13'),A=await import('./arena-sprites.mjs?v=2.13'),assets=await A.loadSpriteAssets();
+ const T=await import('three'),R=await import('./arena-engine.mjs'),{Presentation}=await import('./arena-presentation.mjs?v=2.14'),A=await import('./arena-sprites.mjs?v=2.14'),assets=await A.loadSpriteAssets();
  const scene=new T.Scene(),hero=A.createActor(scene,true,assets),enemy=A.createActor(scene,false,assets),renderer=new T.WebGLRenderer({alpha:true,antialias:true});renderer.setSize(192,192);renderer.setClearColor(0,0);hero.shadow.visible=enemy.shadow.visible=false;
  const camera=new T.OrthographicCamera(-1.7,1.7,1.7,-1.7,.1,80),offset=new T.Vector3(4.8,14.7,8.7),directions=new Set(),modes=new Set();let ticks=0,resets=0,won=0,lost=0,pauses=0,worstFragments=0;
  function fragments(p){const seen=new Uint8Array(192*192),sizes=[];for(let i=0;i<seen.length;i++)if(!seen[i]&&p[i*4+3]>100){const stack=[i];seen[i]=1;let count=0;while(stack.length){const at=stack.pop();count++;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const x=at%192+dx,y=Math.floor(at/192)+dy,n=y*192+x;if(x>=0&&x<192&&y>=0&&y<192&&!seen[n]&&p[n*4+3]>100){seen[n]=1;stack.push(n);}}}sizes.push(count);}sizes.sort((a,b)=>b-a);return {main:sizes[0]||0,extra:sizes.slice(1).reduce((a,b)=>a+b,0)};}

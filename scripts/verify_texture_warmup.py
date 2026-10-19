@@ -4,7 +4,7 @@ from verify_arena_browser import ARGS,load_review
 with sync_playwright()as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS);page=browser.new_page();load_review(page)
  result=page.evaluate('''async()=>{
- const T=await import('three'),A=await import('./arena-sprites.mjs?v=2.13'),scene=arena.hero.group.parent,a=arena.hero,renderer=arena.renderer,gl=renderer.getContext();
+ const T=await import('three'),A=await import('./arena-sprites.mjs?v=2.14'),scene=arena.hero.group.parent,a=arena.hero,renderer=arena.renderer,gl=renderer.getContext();
  const programsBefore=renderer.info.programs.length;let uploads=0;const methods={};for(const name of ['texImage2D','texSubImage2D']){methods[name]=gl[name];gl[name]=function(...args){if(args.some(x=>x instanceof HTMLImageElement&&x.naturalWidth===1536))uploads++;return methods[name].apply(this,args);};}
  const camera=arena.camera;let time=0;renderer.setRenderTarget(null);renderer.setSize(64,64,false);
  for(let d=0;d<8;d++)for(const mode of ['idle','walk','attack','dodge']){

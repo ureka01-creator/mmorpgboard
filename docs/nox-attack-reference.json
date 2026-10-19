@@ -1,0 +1,24 @@
+{
+  "source": "https://github.com/Carter54git/OpenNox-WASM",
+  "commit": "5aea117b78b36c81442e47e14251d5bf313cff81",
+  "method": "Decoded PlayerDraw animation states and reference-only layered sprite frames; not a captured in-game sword attack.",
+  "sha256": {
+    "thing.bin": "436f6545169e07abc3eb143b0b8909e67061ceebe13b5eaa45396d3cd5a78768",
+    "video.idx": "7be29b0fc856913bbac637882d5618d11011e2e56b82b437c6a388042ee0beb1"
+  },
+  "states": {
+    "SWORD_STRIKE": {
+      "framesPerDirection": 6,
+      "directions": 8,
+      "kind": "Slave"
+    },
+    "LONG_SWORD_STRIKE": {
+      "framesPerDirection": 8,
+      "directions": 8,
+      "kind": "Slave"
+    }
+  },
+  "runtimeCopiesOfOriginalNoxSprites": 0,
+  "exactNoxTimingMeasured": false,
+  "exactPoseParity": false
+}
