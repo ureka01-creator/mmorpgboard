@@ -51,3 +51,9 @@ Nox 웹 포트의 메뉴와 캐릭터 선택은 실행했다. 공격 플레이 �
 - 양쪽 진입점에서 PNG 원본 10개와 자세 JSON이 승인된 2.8과 동일하며 GLB 교체가 없음을 확인했다. 손상된 수치 데이터는 게임 생성 전에 거부하고 재시도 UI를 표시했다.
 
 이 결과는 수정한 경로의 회귀 검사다. 위에 기록한 원작 전신 자세/실제 속도 대조의 미완료 상태를 바꾸지 않는다.
+
+## 배포 확인
+
+실행 소스 `8a23d45`, 공개 파일 커밋 `88c6299a8a71a37e15c467e6a314f89d9ae8b9fd`. [Pages 작업 39199948993](https://github.com/ureka01-creator/mmorpgboard/actions/runs/39199948993)은 성공했다. 공개 HTTPS 파일 33개가 소스와 일치하며 `/`와 `/study.html` 각각에서 이동·회피·5회 명중·승리 결과 표시를 통과했다. TLS 검증을 유지했다.
+
+플레이 주소: https://ureka01-creator.github.io/mmorpgboard/?release=2.14
