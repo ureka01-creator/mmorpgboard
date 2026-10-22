@@ -1,11 +1,12 @@
 import * as T from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {createEquipment} from './warrior-equipment.mjs?v=2';
 const status=document.getElementById('status'),play=document.getElementById('play'),slider=document.getElementById('time'),clock=document.getElementById('clock');
 try{
- const base='./assets/sprites/native-motion/',manifest=await fetch(base+'manifest.json').then(r=>{if(!r.ok)throw Error('Manifest HTTP '+r.status);return r.json();});
+ const base='./assets/sprites/native-motion/',manifest=await fetch(base+'manifest.json?v=2').then(r=>{if(!r.ok)throw Error('Manifest HTTP '+r.status);return r.json();});
  const asset=await new GLTFLoader().loadAsync('./assets/animation-resources/quaternius/AnimationLibrary_Godot_Standard.gltf'),textures={};
- await Promise.all(Object.entries(manifest.clips).map(async([key,c])=>{const t=await new T.TextureLoader().loadAsync(base+c.file);t.colorSpace=T.SRGBColorSpace;t.minFilter=T.LinearFilter;t.magFilter=T.LinearFilter;t.generateMipmaps=false;textures[key]=t;}));
- const response=await fetch(base+manifest.flow.file);if(!response.ok)throw Error('Flow HTTP '+response.status);const bytes=await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer(),raw=new Int16Array(bytes),[fw,fh]=manifest.flow.grid,cols=manifest.flow.columns,rows=manifest.flow.rows;
+ await Promise.all(Object.entries(manifest.clips).map(async([key,c])=>{const t=await new T.TextureLoader().loadAsync(base+c.file+'?v=2');t.colorSpace=T.SRGBColorSpace;t.minFilter=T.LinearFilter;t.magFilter=T.LinearFilter;t.generateMipmaps=false;textures[key]=t;}));
+ const response=await fetch(base+manifest.flow.file+'?v=2');if(!response.ok)throw Error('Flow HTTP '+response.status);const bytes=await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer(),raw=new Int16Array(bytes),[fw,fh]=manifest.flow.grid,cols=manifest.flow.columns,rows=manifest.flow.rows;
  if(raw.length!==48*fw*fh*4)throw Error('Invalid flow field length');
  const pixels=new Uint16Array(cols*fw*rows*fh*4);for(let p=0;p<48;p++)for(let y=0;y<fh;y++)for(let x=0;x<fw;x++)for(let k=0;k<4;k++)pixels[(((Math.floor(p/cols)*fh+y)*cols*fw+(p%cols)*fw+x)*4+k)]=T.DataUtils.toHalfFloat(raw[((p*fh+y)*fw+x)*4+k]/32767*.5);
  const flow=new T.DataTexture(pixels,cols*fw,rows*fh,T.RGBAFormat,T.HalfFloatType);flow.minFilter=flow.magFilter=T.LinearFilter;flow.needsUpdate=true;
@@ -25,12 +26,13 @@ try{
  gl_FragColor=body;
  #include <colorspace_fragment>
  }`});
+ const equipment=await createEquipment(artScene,model,textures.walk);
  const art=new T.Mesh(new T.PlaneGeometry(3.4,3.4),material);artScene.add(art);
  const mixer=new T.AnimationMixer(model),clips=new Map(asset.animations.map(c=>[c.name,c]));let active='walk',action,elapsed=0,playing=true,speed=1,last=performance.now(),dirty=true;
  const renderSize=new T.Vector2();
- function setClip(name){if(!manifest.clips[name])throw Error('Unknown clip '+name);active=name;elapsed=0;mixer.stopAllAction();action=mixer.clipAction(clips.get(manifest.clips[name].sourceClip));action.reset().setLoop(T.LoopRepeat,Infinity).play();u.atlas.value=textures[name];art.scale.setScalar(manifest.clips[name].displayScale);prop.visible=name==='attack';document.getElementById('walk').setAttribute('aria-pressed',String(name==='walk'));document.getElementById('attack').setAttribute('aria-pressed',String(name==='attack'));document.getElementById('native-info').textContent=manifest.clips[name].sourceClip+' · '+manifest.clips[name].duration.toFixed(3)+'초';dirty=true;}
+ function setClip(name){if(!manifest.clips[name])throw Error('Unknown clip '+name);active=name;elapsed=0;mixer.stopAllAction();action=mixer.clipAction(clips.get(manifest.clips[name].sourceClip));action.reset().setLoop(T.LoopRepeat,Infinity).play();u.atlas.value=textures[name];art.scale.setScalar(manifest.clips[name].displayScale);prop.visible=name==='attack';art.visible=name==='attack';document.getElementById('walk').setAttribute('aria-pressed',String(name==='walk'));document.getElementById('attack').setAttribute('aria-pressed',String(name==='attack'));document.getElementById('native-info').textContent=manifest.clips[name].sourceClip+' · '+manifest.clips[name].duration.toFixed(3)+'초';dirty=true;}
  function render(){const w=Math.round(canvas.clientWidth),h=Math.round(canvas.clientHeight);if(!w||!h)return;renderer.getSize(renderSize);if(renderSize.x!==w||renderSize.y!==h)renderer.setSize(w,h,false);const stacked=matchMedia('(max-width:600px), (max-width:900px) and (orientation:portrait)').matches,cw=stacked?w:w/2,ch=stacked?h/2:h,clip=manifest.clips[active],t=((elapsed%clip.duration)+clip.duration)%clip.duration,phase=t/clip.duration,step=phase*24,a=Math.floor(step),b=(a+1)%24;
-  action.reset().setLoop(T.LoopRepeat,Infinity).play();mixer.setTime(t);u.frameA.value.set(a%6,3-Math.floor(a/6));u.frameB.value.set(b%6,3-Math.floor(b/6));u.indices.value.set(clip.flowOffset+a,clip.flowOffset+b);const pairIndex=clip.flowOffset+a;u.pair.value.set(pairIndex%cols,Math.floor(pairIndex/cols));u.amount.value=step-a;
+  action.reset().setLoop(T.LoopRepeat,Infinity).play();mixer.setTime(t);equipment.update(active,phase);u.frameA.value.set(a%6,3-Math.floor(a/6));u.frameB.value.set(b%6,3-Math.floor(b/6));u.indices.value.set(clip.flowOffset+a,clip.flowOffset+b);const pairIndex=clip.flowOffset+a;u.pair.value.set(pairIndex%cols,Math.floor(pairIndex/cols));u.amount.value=step-a;
   const extent=Math.max(1.65,1.6/(cw/ch));[nativeCamera,artCamera].forEach(c=>{c.left=-extent*cw/ch;c.right=extent*cw/ch;c.top=extent;c.bottom=-extent;c.updateProjectionMatrix();});
   renderer.setViewport(0,stacked?ch:0,cw,ch);renderer.setScissor(0,stacked?ch:0,cw,ch);renderer.setClearColor(0x1d2820);renderer.render(nativeScene,nativeCamera);
   renderer.setViewport(stacked?0:cw,0,cw,ch);renderer.setScissor(stacked?0:cw,0,cw,ch);renderer.setClearColor(0x1d2820);renderer.render(artScene,artCamera);slider.value=Math.round(phase*1000);clock.value=t.toFixed(2)+' / '+clip.duration.toFixed(2)+'초';dirty=false;
@@ -38,6 +40,6 @@ try{
  function setPlaying(value){playing=value;play.textContent=playing?'일시 정지':'재생';last=performance.now();}
  function frame(now){requestAnimationFrame(frame);const dt=Math.max(0,(now-last)/1000);last=now;renderer.getSize(renderSize);if(playing){elapsed+=dt*speed;render();}else if(dirty||renderSize.x!==Math.round(canvas.clientWidth)||renderSize.y!==Math.round(canvas.clientHeight))render();}
  document.getElementById('walk').onclick=()=>setClip('walk');document.getElementById('attack').onclick=()=>setClip('attack');play.onclick=()=>setPlaying(!playing);document.getElementById('speed').onchange=e=>speed=Number(e.target.value);slider.oninput=()=>{setPlaying(false);elapsed=Number(slider.value)/1000*manifest.clips[active].duration;render();};
- window.warriorMotion={renderer,model,mixer,manifest,uniforms:u,setClip,setPlaying,setTime(value){setPlaying(false);elapsed=value;render();},get clip(){return active;},get time(){return elapsed;},get playing(){return playing;},get frame(){return {a:u.frameA.value.toArray(),b:u.frameB.value.toArray(),mix:u.amount.value};}};
+ window.warriorMotion={renderer,model,mixer,manifest,equipment,artCamera,artScene,uniforms:u,setClip,setPlaying,setTime(value){setPlaying(false);elapsed=value;render();},get clip(){return active;},get time(){return elapsed;},get playing(){return playing;},get frame(){return {a:u.frameA.value.toArray(),b:u.frameB.value.toArray(),mix:u.amount.value};}};
  setClip('walk');render();play.disabled=false;status.textContent='시안 준비 완료';requestAnimationFrame(frame);
 }catch(error){status.textContent='불러오기 실패: '+error.message;status.classList.add('error');console.error(error);}

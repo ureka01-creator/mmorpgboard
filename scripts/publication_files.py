@@ -4,4 +4,4 @@ def publication_files(root):
  'study.html','arena-study.js','arena-sprite-flow.mjs','assets/sprites/motion/flow.json','assets/sprites/motion/flow.bin.gz',
  'motion-resources.html','motion-resources.mjs','assets/animation-resources/catalog.json',
  *[str(p.relative_to(root))for p in sorted((root/'assets/animation-resources').rglob('*'))if p.is_file()and p.name!='catalog.json'],
- 'warrior-motion.html','warrior-motion.mjs',*[str(p.relative_to(root))for p in sorted((root/'assets/sprites/native-motion').glob('*'))if p.is_file()]]
+ 'warrior-motion.html','warrior-motion.mjs','warrior-equipment.mjs',*[str(p.relative_to(root))for p in sorted((root/'assets/sprites/native-motion').glob('*'))if p.is_file()]]

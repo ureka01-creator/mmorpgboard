@@ -38,3 +38,5 @@ python scripts/verify_public.py
 원본 모션 리소스 비교 페이지는 `motion-resources.html`, `motion-resources.mjs`와 원본 자료/출처 7개 파일을 추가한다. 공개 파일은 `.nojekyll` 제외 42개다. 게임 실행 33개 파일은 이 추가 작업에서 변경하지 않는다. `verify_public.py`는 공개 원본 자료의 해시와 실제 모션 재생·클립 선택도 확인한다.
 
 기사 외형 모션 시안은 `warrior-motion.html`, `warrior-motion.mjs`와 `assets/sprites/native-motion/`의 5개 파일을 추가한다. 공개 파일 총 49개이며 기존 게임 캐릭터/동작은 변경하지 않는다.
+
+모션 시안 수정 2는 독립 장비/관절 구동 다리 모듈 `warrior-equipment.mjs`와 원화 `parts.png`, 측정 정보 `parts.json`을 추가한다. 공개 파일은 52개다. 시안 링크와 모듈·원화 요청을 revision 2로 갱신한다.

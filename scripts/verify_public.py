@@ -1,5 +1,5 @@
 """Compare real HTTPS publication bytes and play the same verified 3D scene in Chromium."""
-import hashlib,mimetypes,time,urllib.request,urllib.error
+import hashlib,mimetypes,time,urllib.request,urllib.error,sys
 from pathlib import Path
 from urllib.parse import urlparse,unquote
 from playwright.sync_api import sync_playwright
@@ -26,7 +26,7 @@ for name in FILES:
 # No TLS verification is disabled to work around the cloud browser's proxy certificate store.
 with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS)
- for entry,version,render_type in [('', '2.14','directional-sprite'),('study.html','2.14','directional-sprite')]:
+ for entry,version,render_type in ([] if '--motion-only' in sys.argv else [('', '2.14','directional-sprite'),('study.html','2.14','directional-sprite')]):
   context=browser.new_context(viewport={'width':1024,'height':768},has_touch=True,is_mobile=True)
   def route(req):
    name=unquote(urlparse(req.request.url).path).removeprefix('/mmorpgboard/')or'index.html'
@@ -55,9 +55,10 @@ with sync_playwright() as pw:
  assert not resource_errors,resource_errors;page.screenshot(path='/tmp/elderfall-public-motion-resources.png');context.close();print('PASS public native walk/sword resource playback and clip selection',result,flush=True)
  context=browser.new_context(viewport={'width':1024,'height':768})
  context.route('https://ureka01-creator.github.io/**',route);page=context.new_page();art_errors=[];page.on('pageerror',lambda e:art_errors.append(str(e)))
- page.goto(BASE+'warrior-motion.html?release=1',wait_until='networkidle');page.wait_for_function('window.warriorMotion',timeout=60000)
- page.click('#walk');page.evaluate('warriorMotion.setTime(.2)');assert page.evaluate('warriorMotion.manifest.clips.walk.frames===24')
+ page.goto(BASE+'warrior-motion.html?release=2',wait_until='networkidle');page.wait_for_function('window.warriorMotion',timeout=60000)
+ page.click('#walk');page.evaluate('warriorMotion.setTime(.2)');assert page.evaluate('warriorMotion.equipment.audit.feet.L.length===2')
  page.click('#attack');page.evaluate('warriorMotion.setTime(.5)');assert page.evaluate('warriorMotion.clip==="attack"&&warriorMotion.manifest.clips.attack.frames===24')
+ regression=page.evaluate('''()=>{const r=warriorMotion;r.setClip('walk');r.setTime(0);const a=r.equipment.audit.feet.L[1]-r.equipment.audit.feet.R[1];r.setTime(r.manifest.clips.walk.duration/2);const b=r.equipment.audit.feet.L[1]-r.equipment.audit.feet.R[1];if(!(a>35&&b<-35))throw Error('Leading foot does not alternate');r.setClip('attack');const id=r.equipment.shield.uuid;for(let i=0;i<48;i++){r.setTime(r.manifest.clips.attack.duration*i/48);if(!r.equipment.shield.visible||r.equipment.shield.material.opacity!==1||r.equipment.shield.uuid!==id)throw Error('Shield disappeared');}return {leadingFeet:[a,b],shieldSamples:48};}''')
  assert not art_errors,art_errors;page.screenshot(path='/tmp/elderfall-public-warrior-motion.png');context.close();print('PASS public illustrated/native comparison, walk/attack selection and rendered poses',flush=True)
  browser.close()
-print(f'PASS {len(FILES)} exact HTTPS publication files, approved illustrated character at both 2.14 entries',flush=True)
+print(f'PASS {len(FILES)} exact HTTPS publication files, '+('illustrated gait alternation and persistent shield' if '--motion-only' in sys.argv else 'approved illustrated character at both 2.14 entries'),flush=True)

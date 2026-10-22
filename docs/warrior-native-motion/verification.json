@@ -4,12 +4,12 @@
     "walk": {
       "duration": 1.3333333730697632,
       "nativePoseSamples": 24,
-      "artFrames": 24
+      "display": "continuous joint-driven legs"
     },
     "attack": {
       "duration": 1.5,
       "nativePoseSamples": 24,
-      "artFrames": 24
+      "display": "24 illustrated poses plus persistent shield"
     }
   },
   "layouts": [
@@ -30,6 +30,37 @@
       800
     ]
   ],
+  "contentRegression": {
+    "leadingFootYDifferences": [
+      65.18360745368548,
+      62.15874686430291,
+      57.990797345295704,
+      53.94932107933991,
+      49.89949857195532,
+      44.19502951890641,
+      34.230430831763385,
+      14.864045516484254,
+      -8.062466170976109,
+      -28.690160385975474,
+      -43.549766410675545,
+      -54.24982310024242,
+      -61.60799500532073,
+      -58.65969284599589,
+      -58.28401526835276,
+      -58.84386609707809,
+      -55.854233379364615,
+      -48.23011349657526,
+      -35.85949185367468,
+      -14.739862558782704,
+      9.864936908756107,
+      31.213440540278015,
+      46.22437276725313,
+      57.29073772374835
+    ],
+    "maxMidframeFootJump": 0.006847383414350536,
+    "shieldVisibleRenderSamples": 48,
+    "minimumShieldPixelContribution": 36.3318042491699
+  },
   "nativeBoneMaxErrorVsOriginalViewer": 0,
   "browserErrors": [],
   "videoFrames": 136
