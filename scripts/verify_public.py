@@ -24,14 +24,14 @@ for name in FILES:
  verified[name]=body;print('PASS deployed SHA256',name,flush=True)
 # Python verifies TLS with system trust; Chromium consumes exactly those verified response bytes.
 # No TLS verification is disabled to work around the cloud browser's proxy certificate store.
+def route(req):
+ name=unquote(urlparse(req.request.url).path).removeprefix('/mmorpgboard/')or'index.html'
+ if name in verified:req.fulfill(status=200,content_type=content_types[name],body=verified[name])
+ else:req.fulfill(status=404,body='')
 with sync_playwright() as pw:
  browser=pw.chromium.launch(executable_path='/usr/bin/chromium',args=ARGS)
  for entry,version,render_type in ([] if '--motion-only' in sys.argv else [('', '2.14','directional-sprite'),('study.html','2.14','directional-sprite')]):
   context=browser.new_context(viewport={'width':1024,'height':768},has_touch=True,is_mobile=True)
-  def route(req):
-   name=unquote(urlparse(req.request.url).path).removeprefix('/mmorpgboard/')or'index.html'
-   if name in verified:req.fulfill(status=200,content_type=content_types[name],body=verified[name])
-   else:req.fulfill(status=404,body='')
   context.route('https://ureka01-creator.github.io/**',route);page=context.new_page();errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
   page.goto(BASE+entry+'?release='+version,wait_until='networkidle');page.wait_for_function('window.arena?.renderer&&document.getElementById("enter").offsetWidth>0',timeout=60000)
   assert page.locator('meta[name="application-version"]').get_attribute('content')==version

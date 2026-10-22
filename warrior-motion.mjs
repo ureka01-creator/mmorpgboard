@@ -1,6 +1,6 @@
 import * as T from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {createEquipment} from './warrior-equipment.mjs?v=2';
+import {createEquipment} from './warrior-equipment.mjs?v=2.1';
 const status=document.getElementById('status'),play=document.getElementById('play'),slider=document.getElementById('time'),clock=document.getElementById('clock');
 try{
  const base='./assets/sprites/native-motion/',manifest=await fetch(base+'manifest.json?v=2').then(r=>{if(!r.ok)throw Error('Manifest HTTP '+r.status);return r.json();});
