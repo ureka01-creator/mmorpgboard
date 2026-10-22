@@ -1,6 +1,6 @@
 # 기사 모션 시안 수정 2 — 양발 교대와 방패 유지
 
-공개 화면: https://ureka01-creator.github.io/mmorpgboard/warrior-motion.html?release=2
+공개 화면: https://ureka01-creator.github.io/mmorpgboard/warrior-motion.html?release=2.1
 
 사용자가 지적한 걷기와 방패 누락은 실제 결함이었다. 이전 걷기 원화는 같은 발을 반복해 내밀었고, 공격 원화 일부에는 방패가 빠져 있었다. 이전의 로딩·재생·마네킹 관절 검사만으로는 이 문제를 잡을 수 없었다.
 
@@ -36,3 +36,11 @@ ARENA_BASE=http://127.0.0.1:8044/ python scripts/verify_warrior_native_art.py
 ```
 
 원본 동작은 Quaternius CC0이며 `assets/animation-resources/quaternius/LICENSE`에 라이선스를 보관한다. 새 원화의 해시와 생성 파일명은 `assets/sprites/native-motion/manifest.json`, `parts.json`에 있다. Nox 원본 그림은 포함하지 않는다.
+
+## 배포 확인
+
+- 최종 실행 소스: `db1d42b` (양발/장비 구현 `b4f8b95` 포함)
+- Pages: `2444cca1d0d13a587f4a58bbffe844580e6538fb`
+- [배포 작업 39718571029](https://github.com/ureka01-creator/mmorpgboard/actions/runs/39718571029): 성공
+- `python scripts/verify_public.py --motion-only`: 공개 파일 52개 SHA256 일치, 원본 리소스 재생, 수정 시안의 양발 교대·공격 48시점 방패 유지 검사 통과. 기존 게임 플레이는 이번 범위에서 다시 실행하지 않았으며, 기존 게임 파일의 공개 바이트가 변경되지 않은 것을 확인했다.
+- 기존 금색 다리 장식이 붉은 천 마스크에 남는 결함도 수정했고, 최종 마스크로 로컬 회귀 검사와 공개 검사를 다시 통과했다. 모듈 요청은 `v=2.1`로 갱신했다.

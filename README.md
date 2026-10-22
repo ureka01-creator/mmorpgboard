@@ -73,4 +73,4 @@ python scripts/verify_arena_browser.py
 
 이전 1.2 유적 전투와 보드게임/2D RPG는 Git 이력으로 복원할 수 있습니다. 기존 브라우저 저장 키는 삭제하지 않습니다.
 
-현재 기사 외형을 원본 걷기·검 공격 자세에 맞춘 시안: https://ureka01-creator.github.io/mmorpgboard/warrior-motion.html?release=2 · [제작 범위와 검증](docs/warrior-native-motion/README.md)
+현재 기사 외형을 원본 걷기·검 공격 자세에 맞춘 시안: https://ureka01-creator.github.io/mmorpgboard/warrior-motion.html?release=2.1 · [제작 범위와 검증](docs/warrior-native-motion/README.md)
